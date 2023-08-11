@@ -1,9 +1,12 @@
 <script setup>
-import HomeMain from '../components/HomeComponents/HomeMain.vue';
+import HomeMain from '../components/home/main.vue';
+import LoginView from './LoginView.vue';
 </script>
 
 <template>
   <main>
-    <HomeMain/>
+    <!-- <HomeMain/> -->
+    <!-- <LoginView/> -->
+    <router-view></router-view>
   </main>
 </template>

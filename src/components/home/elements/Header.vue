@@ -1,4 +1,38 @@
- <template>
+<script setup>
+import { RouterLink } from 'vue-router'; 
+import axios from 'axios';
+import { useForm } from 'vee-validate';
+import * as yup from 'yup';
+import VeeInput from '../../common/VeeInput.vue';
+
+const { handleSubmit } = useForm({
+  validationSchema: yup.object({
+    company_name: yup.string().required(),
+    name: yup.string().required(),
+    email: yup.string().required().email(),
+    phone: yup.string().required(),
+    password: yup.string().required().min(6),
+  }),
+});
+const submitForm = handleSubmit(values => {
+  // alert(JSON.stringify(values, null, 2));
+  axios.post('http://localhost:8000/api/register', values)
+      .then(response => {
+        console.log(response.data);
+        values.company_name = '';
+        values.name = '';
+        values.email = '';
+        values.phone = '';
+        values.password = '';
+        $('#exampleModal').modal('hide');
+      })
+      .catch(error => {
+        console.error(error);
+      });
+
+});
+</script>
+<template>
        <header class="header position-absolute" id="header-wrap">
       <div class="container">
         <!-- Navbar -->
@@ -16,8 +50,9 @@
               </ul>
               <!-- Left links -->
               <div class="d-flex align-items-center">
-                <button type="button" class="btn btn-primary me-3"> Login To Desktop </button>
-                
+                <router-link to="/login" class="btn btn-primary me-3" >Login To Desktop</router-link>
+                <!-- <button type="button" class="btn btn-primary me-3"> Login To Desktop </button> -->
+                <!-- <button type="button" class="btn btn-primary me-3" @click="$router.push('/login')">Login To Desktop</button> -->
               </div>
             </div>
             <!-- Collapsible wrapper -->
@@ -64,13 +99,16 @@
               </button>
             </div>
             <div class="modal-body">
-                <form method="post">
+                <form @submit="submitForm">
                     <div class="form-group">
-                        <input type="text" name="companyname" placeholder="Company Name.." class="form-control input">
-                        <input type="text" name="name" placeholder="Full Name..." class="form-control input">
-                        <input type="text" name="email" placeholder="Email Address..." class="form-control input" autocomplete="new">
-                        <input value="" type="tel" name="phone" placeholder="Phone Number..." class="form-control input" autocomplete="off">
-                        <button type="button" class="btn btn-success" data-dismiss="modal">Submit</button>
+                        <VeeInput name="company_name" placeholder="Company Name.." class="form-control input"/>
+                        <VeeInput name="name" placeholder="Name.." class="form-control input"/>
+                        <VeeInput name="email"  type="email"  placeholder="Email Address.." class="form-control input"/>
+                        <VeeInput name="phone"  placeholder="Phone Number..." class="form-control input"/>
+                        <VeeInput name="password" type="password"  placeholder="Passwrod.."  class="form-control input"/>
+                        
+                        <!-- <input type="password"  v-model="confirm_password" placeholder="Confirm Passwrod" class="form-control input"> -->
+                        <button type="submit" class="btn btn-success">Submit</button>
                     </div>
                 </form>
             </div>
@@ -82,8 +120,10 @@
         </div>
       </div>
     <!-- -------------------popup design code end ------------- -->
-
+    <router-view />   
+   
  </template>
+ 
 
 
 
