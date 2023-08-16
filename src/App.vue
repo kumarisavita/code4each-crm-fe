@@ -6,6 +6,7 @@ import HomeView from './views/HomeView.vue'
 </script>
 
 <template>
-  <HomeView></HomeView>
+  <!-- <HomeView></HomeView> -->
+  <router-view></router-view>
 </template>
 

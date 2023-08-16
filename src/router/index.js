@@ -1,6 +1,18 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import HomeView from '../components/home/main.vue'
 import LoginView from '../components/home/login.vue'
+import DashboardView from '../views/Dashboard.vue'
+import MyHomeView from '../views/HomeView.vue'
+
+// router.beforeEach((to, from, next) => {
+//   const token = getToken(); // Get the token from your storage (localStorage, cookies, etc.)
+//   alert(token);
+//   if (to.meta.requiresAuth && !token) {
+//     // User is not authenticated, redirect to login
+//     next('/login');
+//   } else {
+//     next(); // Proceed to the next route
+//   }
+// });
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -8,12 +20,17 @@ const router = createRouter({
     {
       path: '/',
       name: 'home',
-      component: HomeView
+      component: MyHomeView
     },
     {
       path: '/login',
       name: 'login',
       component: LoginView
+    },
+    {
+      path: '/dashboard',
+      name: 'dashboard',
+      component: DashboardView
     },
     {
       path: '/about',
@@ -24,6 +41,8 @@ const router = createRouter({
       component: () => import('../views/AboutView.vue')
     }
   ]
-})
+});
+
+
 
 export default router

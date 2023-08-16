@@ -120,7 +120,6 @@ const submitForm = handleSubmit(values => {
         </div>
       </div>
     <!-- -------------------popup design code end ------------- -->
-    <router-view />   
    
  </template>
  
