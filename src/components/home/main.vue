@@ -1,4 +1,3 @@
-// import path for including components in this file
 <script setup>
 import Header from './elements/Header.vue';
 import Footer from './elements/Footer.vue';
@@ -12,12 +11,8 @@ import WorkingProcess from './elements/WorkingProcess.vue';
 import SpeedStart from './elements/SpeedStart.vue';
 </script>
 <template>
-    <!-- Include components In ON Common components -->
-    <div>
-    <header>
-      <!-- Header content -->
+    <div >
       <Header></Header>
-    </header>
         <FeatureSection></FeatureSection>
 
         <AboutSection></AboutSection>
@@ -33,14 +28,13 @@ import SpeedStart from './elements/SpeedStart.vue';
         <WorkingProcess></WorkingProcess>
 
         <SpeedStart></SpeedStart>
-
-         <!-- The matched component will be rendered here -->
-      <!-- Footer content -->
       <Footer></Footer>
   </div>
   
-
-   
-
     
 </template>
+
+<style>
+@import '../../assets/style.css';
+
+</style>

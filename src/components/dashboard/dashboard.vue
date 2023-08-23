@@ -220,7 +220,6 @@ const { logout } = useAuth();
     </div>
 </template>
 
-
-<script scoped >
-import '../../assets/dashboard.css';
-</script>
+<style scoped>
+@import '../../assets/dashboard.css';
+</style>

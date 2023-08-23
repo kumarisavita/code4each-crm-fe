@@ -1,4 +1,3 @@
-
 <template>
       <section  class="login-section">
       <img class="wave" src="https://raw.githubusercontent.com/sefyudem/Responsive-Login-Form/master/img/wave.png" >

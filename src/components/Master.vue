@@ -520,7 +520,7 @@
                     <p class="lead">Code4each Amazing Landing Page of businesses need access to development resources.</p>
                 </div>
                 <div class="row align-items-center">
-                    <div class="col-md-4 col-sm-4 col-6">
+                    <!-- <div class="col-md-4 col-sm-4 col-6">
                         <div class="client-logo">
                             <img class="img-fluid" src="https://code4each.com/wp-content/uploads/2021/11/bridgestone_logo.png" alt="">
                         </div>
@@ -549,7 +549,7 @@
                         <div class="client-logo">
                             <img class="img-fluid" src="https://code4each.com/wp-content/uploads/2023/05/360alumninew.png" alt="">
                         </div>
-                    </div>
+                    </div> -->
                     <a href="#" class="btn btn-sm multi-section btn-primary  text-start me-1 mt-5" data-toggle="modal" data-target="#exampleModal"> <i class="la la-apple me-2 ic-2x d-inline-block"></i>
                         <div class="d-inline-block text-center"> <small class="d-block">7 DAY FREE TRIAL</small>
                             <p>Take your agency online with us</p>

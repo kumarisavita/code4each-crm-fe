@@ -1,6 +1,5 @@
 <template>
-    <!-- Pricing section start -->
-<section class="pricing-section">
+    <section class="pricing-section">
     <div class="container">
         <div class="row justify-content-center text-center">
             <div class="col-lg-8">
@@ -219,6 +218,4 @@
         </div>
     </section>
 </section>
-
-<!-- Pricing section end -->
 </template>

@@ -14,21 +14,6 @@
     <div class="pricing-one__shape-4">
         <img src="images/pricing-one-shape-4.png" alt="">
     </div>
-    <div class="pricing-one__shape-5">
-        <img src="images/pricing-one-shape-5.png" alt="">
-    </div>
-    <div class="pricing-one__shape-6">
-        <img src="images/pricing-one-shape-6.png" alt="">
-    </div>
-    <div class="pricing-one__shape-7">
-        <img src="images/pricing-one-shape-7.png" alt="">
-    </div>
-    <div class="pricing-one__shape-8">
-        <img src="images/pricing-one-shape-8.png" alt="">
-    </div>
-    <div class="pricing-one__shape-22">
-        <img src="images/pricing-one-shape-22.png" alt="">
-    </div>
     <div class="pricing-one__shape-9">
         <img src="images/pricing-one-shape-13.png" alt="">
     </div>
@@ -50,9 +35,6 @@
     <div class="pricing-one__shape-15 float-bob-x">
         <img src="images/pricing-one-shape-15.png" alt="">
     </div>
-    <div class="pricing-one__shape-16">
-        <img src="images/pricing-one-shape-16.png" alt="">
-    </div>
     <div class="pricing-one__shape-17">
         <img src="images/pricing-one-shape-17.png" alt="">
     </div>
@@ -61,9 +43,6 @@
     </div>
     <div class="pricing-one__shape-19">
         <img src="images/pricing-one-shape-19.png" alt="">
-    </div>
-    <div class="pricing-one__shape-20">
-        <img src="images/pricing-one-shape-20.png" alt="">
     </div>
     <div class="pricing-one__shape-21">
         <img src="images/pricing-one-shape-21.png" alt="">
