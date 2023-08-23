@@ -1,18 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import LoginView from '../components/home/login.vue'
+import LoginView from '../views/LoginView.vue'
 import DashboardView from '../views/Dashboard.vue'
 import MyHomeView from '../views/HomeView.vue'
-
-// router.beforeEach((to, from, next) => {
-//   const token = getToken(); // Get the token from your storage (localStorage, cookies, etc.)
-//   alert(token);
-//   if (to.meta.requiresAuth && !token) {
-//     // User is not authenticated, redirect to login
-//     next('/login');
-//   } else {
-//     next(); // Proceed to the next route
-//   }
-// });
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -25,24 +14,38 @@ const router = createRouter({
     {
       path: '/login',
       name: 'login',
-      component: LoginView
+      component: LoginView,
+      meta: { title: 'Login' } 
     },
     {
       path: '/dashboard',
       name: 'dashboard',
-      component: DashboardView
+      component: DashboardView,
+      meta: { requiresAuth: true ,title: 'Dashbaord' } // Add this meta field
     },
     {
       path: '/about',
       name: 'about',
-      // route level code-splitting
-      // this generates a separate chunk (About.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
       component: () => import('../views/AboutView.vue')
     }
   ]
 });
 
+// Navigation guard to protect routes that require authentication
+router.beforeEach((to, from, next) => {
+  const pageTitle = to.meta.title || 'Code4Each CRM'; // Use the route's title or a default
+  document.title = pageTitle;
+  if (to.meta.requiresAuth && !isLoggedIn()) {
+    next('/login');
+  } else {
+    document.title = to.meta.title || 'Code4Each CRM';
+    next();
+  }
+});
 
+function isLoggedIn() {
+  // Replace with your actual authentication logic
+  return localStorage.getItem('access_token') !== null && !undefined;
+}
 
-export default router
+export default router;

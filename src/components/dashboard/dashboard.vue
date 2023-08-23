@@ -1,3 +1,24 @@
+<script setup>
+// import axios from 'axios';
+// import { useRouter } from 'vue-router';
+import { useAuth } from '../../service/useAuth';
+const { logout } = useAuth();
+
+// const router = useRouter();
+
+// const signOut = async () => {
+//   try {
+//     await axios.get('http://127.0.0.1:8000/api/logout'); // Adjust the URL based on your Laravel routes
+//     // Perform any necessary client-side cleanup
+//     // Redirect or update the UI as needed
+//     router.push('/login'); // Redirect to the login page or another appropriate page
+//   } catch (error) {
+//     console.error(error);
+//     // Handle error if necessary
+//   }
+// };
+</script>
+
 <template>
     <div class="page">
       <div class="page-main">
@@ -72,7 +93,7 @@
                             <a class="dropdown-item" href="emailservices.html">
                               <i class="dropdown-icon fa fa-comment"></i> Message </a>
                             <div class="dropdown-divider mt-0"></div>
-                            <a class="dropdown-item" href="login.html">
+                            <a class="dropdown-item" @click="logout">
                               <i class="dropdown-icon fa fa-sign-in"></i> Sign out </a>
                           </div>
                         </li>
@@ -198,6 +219,7 @@
       </div>
     </div>
 </template>
+
 
 <script scoped >
 import '../../assets/dashboard.css';

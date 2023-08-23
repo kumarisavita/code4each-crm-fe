@@ -12,14 +12,19 @@
               <img src="https://raw.githubusercontent.com/sefyudem/Responsive-Login-Form/master/img/avatar.svg">
               <h2 class="title">Welcome</h2>
                   <!-- Display loginError message if it's not empty -->
-                <div v-if="loginError" class="error-message">{{ loginError }}</div>
+                <!-- <div v-if="loginError" class="error-message">{{ loginError }}</div> -->
+                <div v-if="loginError.length > 0" >
+                <ul>
+                  <li v-for="error in loginError" :key="error" class="text-danger">{{ error }}</li>
+                </ul>
+              </div>
                     <div class="input-div one">
                        <div class="i">
                           <i class="fa fa-user"></i>
                        </div>
                        <div class="div">
-                          <h5>Username</h5>
-                          <input type="text" v-model="email" class="input">
+                          <!-- <h5>Username</h5> -->
+                          <input type="text" placeholder="Username" v-model="email" class="input">
                        </div>
                     </div>
                     <div class="input-div pass">
@@ -27,8 +32,8 @@
                           <i class="fa fa-lock"></i>
                        </div>
                        <div class="div">
-                          <h5>Password</h5>
-                          <input type="password" v-model="password" class="input">
+                          <!-- <h5>Password</h5> -->
+                          <input type="password" v-model="password" placeholder="Password" class="input">
                        </div>
                     </div>
                     <a href="#">Forgot Password?</a>
@@ -44,41 +49,48 @@
 
 <script setup>
 import { ref } from 'vue';
-import axios from 'axios'; // Import axios or your API client
+import api from '../../service/api';
 import { useRouter } from 'vue-router';
+
+// Define your reactive variables
 const loginSuccess = ref(false);
-const loginError = ref(''); // Initialize loginError as an empty string
+const loginError = ref('');
 const router = useRouter();
 
 const email = ref('');
 const password = ref('');
 
+// Define your login function
 const login = async () => {
   try {
-    const response = await axios.post('http://127.0.0.1:8000/api/login', {
+    const response = await api.post('/login', {
       email: email.value,
       password: password.value,
     });
+
     if (response.status === 200 && response.data.success) {
+      // console.log(response);
       // Successful login
+      const token = response.data.token;
+      localStorage.setItem('access_token', token);
       loginSuccess.value = true;
       router.push('/dashboard');
     } else {
+      console.log(response);
       // Unsuccessful login
       loginError.value = 'Invalid credentials'; // Set an error message
     }
-
-    // Handle successful login
   } catch (error) {
-    // console.log(error.response.data.errors);
-    loginError.value = error.response.data.errors;
-    // Handle login error
+    if (error.response && error.response.data && error.response.data.errors) {
+      // Store the error messages in the loginError ref
+      loginError.value = Object.values(error.response.data.errors).flat();
+    } else {
+      console.error(error);
+    }
   }
 };
-</script>
 
 
-<script>
 const inputs = document.querySelectorAll(".input");
   function addcl(){
     let parent = this.parentNode.parentNode;
@@ -99,6 +111,7 @@ const inputs = document.querySelectorAll(".input");
   });
 
 </script>
+
 
 <style scoped>
 @import '../../assets/login.css';

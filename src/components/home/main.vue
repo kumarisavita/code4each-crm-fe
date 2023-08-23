@@ -18,7 +18,6 @@ import SpeedStart from './elements/SpeedStart.vue';
       <!-- Header content -->
       <Header></Header>
     </header>
-    <main>
         <FeatureSection></FeatureSection>
 
         <AboutSection></AboutSection>
@@ -36,11 +35,8 @@ import SpeedStart from './elements/SpeedStart.vue';
         <SpeedStart></SpeedStart>
 
          <!-- The matched component will be rendered here -->
-    </main>
-    <footer>
       <!-- Footer content -->
       <Footer></Footer>
-    </footer>
   </div>
   
 
