@@ -12,7 +12,8 @@ import SpeedStart from './elements/SpeedStart.vue';
 </script>
 <template>
     <div >
-      <Header></Header>
+          <Header></Header>
+        
         <FeatureSection></FeatureSection>
 
         <AboutSection></AboutSection>
@@ -28,13 +29,10 @@ import SpeedStart from './elements/SpeedStart.vue';
         <WorkingProcess></WorkingProcess>
 
         <SpeedStart></SpeedStart>
-      <Footer></Footer>
+        
+        <Footer></Footer>
   </div>
   
     
 </template>
 
-<style>
-@import '../../assets/style.css';
-
-</style>

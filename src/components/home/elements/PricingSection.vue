@@ -1,5 +1,8 @@
+<script setup>
+ import RegisterButton from '../../common/RegisterButton.vue';
+</script>
 <template>
-    <section class="pricing-section">
+<section class="pricing-section">
     <div class="container">
         <div class="row justify-content-center text-center">
             <div class="col-lg-8">
@@ -199,11 +202,7 @@
                             </div>
                         </div>
                         <div class="col-12 d-flex justify-content-center">
-                            <a href="#" class="btn btn-sm pricing btn-primary  text-start me-1 mt-5" data-toggle="modal" data-target="#exampleModal"> <i class="la la-apple me-2 ic-2x d-inline-block"></i>
-                                <div class="d-inline-block text-center"> <small class="d-block">7 DAY FREE TRIAL</small>
-                                    <p>Take your agency online with us</p>
-                                </div>
-                            </a>
+                            <RegisterButton ButtonClass="pricing btn-primary  text-start me-1 mt-5" />
                         </div>
                     </div>
                 </div>

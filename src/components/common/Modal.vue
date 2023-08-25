@@ -1,30 +1,37 @@
 <template>
-    <div class="modal fade" :class="{ 'show': show }" tabindex="-1" role="dialog" id="myModal">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title">Modal Title</h5>
-            <button type="button" class="close" @click="closeModal">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <p>This is the modal content.</p>
-          </div>
-          <div class="modal-footer">
+  <div :id="modalId" class="modal fade" tabindex="-1" :class="{ 'show': showModal, 'd-block': showModal }">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <slot name="header">
+            <h5 class="modal-title">Modal Header</h5>
+            <button type="button" class="btn-close" @click="closeModal"></button>
+          </slot>
+        </div>
+        <div class="modal-body">
+          <slot></slot>
+        </div>
+        <div class="modal-footer" v-if="showFooter">
+          <slot name="footer">
             <button type="button" class="btn btn-secondary" @click="closeModal">Close</button>
-          </div>
+          </slot>
         </div>
       </div>
     </div>
-  </template>
-  
-  <script setup>
-  import { ref } from 'vue';
-  
-  const show = ref(false);
-  
-  const closeModal = () => {
-    show.value = false;
-  };
-  </script>
+  </div>
+</template>
+
+<script setup>
+import { ref, defineProps, defineEmits } from 'vue';
+const props = defineProps({
+  showModal: Boolean,
+  showFooter: Boolean, 
+  modalId: String,
+});
+
+const emits = defineEmits();
+
+const closeModal = () => {
+  emits('update:showModal', false);
+};
+</script>

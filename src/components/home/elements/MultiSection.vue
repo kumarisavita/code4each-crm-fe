@@ -1,3 +1,6 @@
+<script setup>
+import RegisterButton from '../../common/RegisterButton.vue';
+</script>
 <template>
     <!-----------multi-sec start------------>
 <section class="multi-section" style="background-image: url('images/img.png');">
@@ -58,11 +61,8 @@
                             <img class="img-fluid" src="https://code4each.com/wp-content/uploads/2023/05/360alumninew.png" alt="">
                         </div>
                     </div> -->
-                    <a href="#" class="btn btn-sm multi-section btn-primary  text-start me-1 mt-5" data-toggle="modal" data-target="#exampleModal"> <i class="la la-apple me-2 ic-2x d-inline-block"></i>
-                        <div class="d-inline-block text-center"> <small class="d-block">7 DAY FREE TRIAL</small>
-                            <p>Take your agency online with us</p>
-                        </div>
-                    </a>
+                    
+                    <RegisterButton ButtonClass="multi-section btn-primary  text-start me-1 mt-5"/> 
                 </div>
             </div>
         </div>

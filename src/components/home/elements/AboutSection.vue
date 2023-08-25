@@ -1,3 +1,6 @@
+<script setup>
+import RegisterButton from '../../common/RegisterButton.vue';
+</script>
 <template>
     <!--about start-->
 
@@ -81,11 +84,7 @@
                     </div>
 
                 </div>
-                <a href="#" class="btn btn-sm btn-primary text-start me-1" data-toggle="modal" data-target="#exampleModal"> <i class="la la-apple me-2 ic-2x d-inline-block"></i>
-                    <div class="d-inline-block text-center"> <small class="d-block">7 DAY FREE TRIAL</small>
-                        <p>Take your agency online with us</p>
-                    </div>
-                </a>
+                <RegisterButton ButtonClass = "btn-primary text-start me-1"/>
             </div>
         </div>
     </div>
