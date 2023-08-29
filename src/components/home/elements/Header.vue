@@ -45,7 +45,7 @@ import RegisterButton from '../../common/RegisterButton.vue';
                     <p class="lead text-muted mb-4">We use the latest technologies to build a Beautiful, Clean &amp; Modern Design website with flexible Bootstrap components.</p>
 
                     <!-- Button to open the modal using Vue -->
-                    <RegisterButton ButtonClass="btn-primary text-start me-1"/>
+                    <RegisterButton buttonClass="btn-sm btn-primary text-start me-1" :paragraph="true"/>
                 </div>
             </div>
         </div>

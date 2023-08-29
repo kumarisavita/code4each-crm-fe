@@ -31,9 +31,8 @@ const router = createRouter({
   ]
 });
 
-// Navigation guard to protect routes that require authentication
 router.beforeEach((to, from, next) => {
-  const pageTitle = to.meta.title || 'Code4Each CRM'; // Use the route's title or a default
+  const pageTitle = to.meta.title || 'Code4Each CRM'; 
   document.title = pageTitle;
   if (to.meta.requiresAuth && !isLoggedIn()) {
     next('/login');

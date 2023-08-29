@@ -62,7 +62,7 @@ import RegisterButton from '../../common/RegisterButton.vue';
                         </div>
                     </div> -->
                     
-                    <RegisterButton ButtonClass="multi-section btn-primary  text-start me-1 mt-5"/> 
+                    <RegisterButton buttonClass="btn-sm multi-section btn-primary  text-start me-1 mt-5" :paragraph="true"/>
                 </div>
             </div>
         </div>

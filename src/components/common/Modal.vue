@@ -1,5 +1,5 @@
 <template>
-  <div :id="modalId" class="modal fade" tabindex="-1" :class="{ 'show': showModal, 'd-block': showModal }">
+  <div :id="modalId" class="modal fade" tabindex="-1" :class="{ 'show': showModal, 'd-block': showModal }"  aria-hidden="true" aria-labelledby="exampleModalLabel" >
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">

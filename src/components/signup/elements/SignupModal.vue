@@ -1,5 +1,5 @@
 <script setup>
-import {  defineProps, defineEmits} from 'vue';
+import {defineEmits} from 'vue';
 import Modal from '@/components/common/Modal.vue'; 
 import VeeInput from '@/components/common/VeeInput.vue';
 
@@ -14,12 +14,12 @@ const closeModal = () => {
 
 </script>
 <template>
-  <Modal :show-modal="props.showModal"  @update:show-modal="props.showModal= $event" modal-id="exampleModal" :show-footer="false" >
+  <Modal :show-modal="props.showModal" @update:show-modal="props.showModal= $event" modal-id="exampleModal" :show-footer="false" >
        <template #header>
         <h4 class="modal-title text-center" id="exampleModalLabel">Start Your 7 Day Free Trial Today!</h4>
-        <button type="button" class="close" @click="closeModal"><span aria-hidden="true">×</span></button>
+        <button type="button" class="close" @click="closeModal" data-dismiss="modal"><span aria-hidden="true">×</span></button>
       </template>
-      <form @submit="submitForm" slot="body">
+      <form @submit.prevent="submitForm" slot="body">
       <div class="form-group">
         <VeeInput name="company_name" placeholder="Company Name.." class="form-control input" />
         <VeeInput name="name" placeholder="Name.." class="form-control input" />

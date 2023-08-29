@@ -5,11 +5,11 @@
 	list-style:none;
 	box-shadow: border-box; */
 }
-body {
+#dasboardPage body {
     font-family: 'Poppins', sans-serif;
     background-color: #f7f8f9;
 }
-.page {
+#dasboardPage .page {
     display: -ms-flexbox;
     display: flex;
     -ms-flex-direction: column;
@@ -20,13 +20,13 @@ body {
 }
 
 /*--------------header css start----------------*/
-#wrapper {
+#dasboardPage #wrapper {
   padding-left: 0;
   transition: all 0.5s ease;
   position: relative;
 }
 
-#sidebar-wrapper {
+#dasboardPage #sidebar-wrapper {
     z-index: 1000;
     position: fixed;
     left: 250px;
@@ -51,10 +51,10 @@ body {
     top: 0;
     z-index: 999;
 }*/
-#wrapper.toggled #sidebar-wrapper {
+#dasboardPage #wrapper.toggled #sidebar-wrapper {
   width: 250px;
 }
-.sidebar-brand {
+#dasboardPage .sidebar-brand {
     position: absolute;
     top: 0;
     width: 100%;
@@ -62,27 +62,27 @@ body {
     padding: 13px 15px;
     border-block-end: 2px solid #e9edf2;
 }
-.sidebar-brand h2 {
+#dasboardPage .sidebar-brand h2 {
   margin: 0;
   font-weight: 600;
   font-size: 24px;
   color: #fff;
   font-family: 'Poppins', sans-serif;
 }
-.sidebar-brand img {
+#dasboardPage .sidebar-brand img {
     
     width: 170px;
   
 }
 
-.form-control:focus {
+#dasboardPage .form-control:focus {
     color: var(--color);
     background-color: var(--background);
     outline: 0;
     box-shadow: none;
     border: 1px solid rgba(25, 41, 64, 0.05) !important;
 }
-.sidebar-nav {
+#dasboardPage .sidebar-nav {
   position: absolute;
   top: 110px;
   width: 250px;
@@ -90,11 +90,11 @@ body {
   padding: 0;
   list-style: none;
 }
-.sidebar-nav > li {
+#dasboardPage .sidebar-nav > li {
   text-indent: 10px;
   line-height: 42px;
 }
-.sidebar-nav > li a {
+ .sidebar-nav > li a {
     display: block;
     text-decoration: none;
     color: #757575;
@@ -102,16 +102,16 @@ body {
     font-size: 15px;
     font-family: 'Poppins', sans-serif;
 }
-.sidebar-nav > li > a:hover, .sidebar-nav > li.active > a {
+ .sidebar-nav > li > a:hover, .sidebar-nav > li.active > a {
     text-decoration: none;
     color: #34c39f;
 }
-.sidebar-nav > li > a i.fa {
+#dasboardPage .sidebar-nav > li > a i.fa {
     font-size: 20px;
     width: 50px;
 }
 
-#navbar-wrapper {
+#dasboardPage #navbar-wrapper {
     width: 100%;
     position: absolute;
     z-index: 2;
@@ -119,72 +119,72 @@ body {
     border-block-end: 2px solid #e9edf4;
     font-family: 'Poppins', sans-serif;
 }
-#wrapper.toggled #navbar-wrapper {
+#dasboardPage #wrapper.toggled #navbar-wrapper {
     position: absolute;
     margin-right: -250px;
 }
-#navbar-wrapper .navbar {
+#dasboardPage #navbar-wrapper .navbar {
     border-width: 0 0 0 0;
     background-color: #fff;
     font-size: 40px;
     margin-bottom: 0;
     border-radius: 0;
 }
-#navbar-wrapper .navbar a {
+#dasboardPage #navbar-wrapper .navbar a {
   color: #757575;
   font-family: 'Poppins', sans-serif;
 }
-#navbar-wrapper .navbar a:hover {
+#dasboardPage #navbar-wrapper .navbar a:hover {
   color: #F8BE12;
 }
-#navbar-wrapper .navbar a:hover {
+#dasboardPage #navbar-wrapper .navbar a:hover {
     color: #19b714;
 }/*
 section#content-wrapper\ main-content\ side-content {
     padding-top: 70px;
 }*/
-#content-wrapper {
+#dasboardPage #content-wrapper {
   width: 100%;
   position: absolute;
   padding: 15px;
   top: 100px;
 }
-#wrapper.toggled #content-wrapper {
+#dasboardPage #wrapper.toggled #content-wrapper {
   position: absolute;
   margin-right: -250px;
 }
 
-.main-header-left {
+#dasboardPage .main-header-left {
     display: flex;
     align-items: center;
 }
 
 
-.main-header-right {
+#dasboardPage .main-header-right {
     display: flex;
     align-items: center;
 }
 
-.navbar {
+#dasboardPage .navbar {
     position: relative;
     display: flex;
 }
 
-.navbar-collapse {
+#dasboardPage .navbar-collapse {
     flex-basis: 100%;
     flex-grow: 1;
     align-items: center;
 }
-.navbar-nav-right {
+#dasboardPage .navbar-nav-right {
     align-items: center;
 }
-.dropdown {
+#dasboardPage .dropdown {
     display: block;
 }
-.main-header-right .nav-link.icon {
+#dasboardPage .main-header-right .nav-link.icon {
     color: var(--color);
 }
-.nav-link.icon {
+#dasboardPage .nav-link.icon {
     margin: 5px;
     padding: 0px 12px;
     text-align: center;
@@ -194,13 +194,13 @@ section#content-wrapper\ main-content\ side-content {
     position: relative;
     border-radius: 50%;
 }
-.icon i {
+#dasboardPage .icon i {
     vertical-align: -1px;
 }
-.header-search .dropdown-menu {
+#dasboardPage .header-search .dropdown-menu {
     inset-block-start: 50px;
 }
-.header-search .dropdown-menu {
+#dasboardPage .header-search .dropdown-menu {
     width: 300px;
     position: absolute;
     inset-block-start: 50px;
@@ -212,7 +212,7 @@ section#content-wrapper\ main-content\ side-content {
     border-width: 1px;
     box-shadow: 0 8px 16px 0 rgba(162, 169, 204, 0.24);
 }
-.main-form-search .form-control {
+#dasboardPage .main-form-search .form-control {
     border-color: var(--border);
     border-width: 1px;
     background-color: var(--white);
@@ -220,10 +220,10 @@ section#content-wrapper\ main-content\ side-content {
     height: 20px;
     width: 90%;
 }
-.btn:not(:disabled):not(.disabled) {
+#dasboardPage .btn:not(:disabled):not(.disabled) {
     cursor: pointer;
 }
-.main-form-search .btn, .main-form-search .sp-container button, .sp-container .main-form-search button {
+#dasboardPage .main-form-search .btn, .main-form-search .sp-container button, .sp-container .main-form-search button {
     position: absolute;
     inset-block-start: 4px;
     inset-inline-end: 5px;
@@ -234,16 +234,16 @@ section#content-wrapper\ main-content\ side-content {
     font-size: 16px;
     padding-inline-end: 13px;
 }
-.leading-none {
+#dasboardPage .leading-none {
     line-height: 1 !important;
 }
-.brround {
+#dasboardPage .brround {
     border-radius: 50%;
 }
-.cover-image {
+#dasboardPage .cover-image {
     background-size: cover !important;
 }
-.avatar {
+#dasboardPage .avatar {
     width: 2rem;
     height: 2rem;
     line-height: 2rem;
@@ -259,7 +259,7 @@ section#content-wrapper\ main-content\ side-content {
     -ms-user-select: none;
     user-select: none;
 }
-.dropdown-item {
+#dasboardPage .dropdown-item {
     display: block;
     width: 100%;
     padding: 0.5rem 1.5rem;
@@ -271,16 +271,16 @@ section#content-wrapper\ main-content\ side-content {
     background-color: transparent;
     border: 0;
 }
-.dropdown-menu {
+#dasboardPage .dropdown-menu {
     box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
     min-width: 12rem;
 }
-.float-end {
+#dasboardPage .float-end {
     float: right!important;
 }
 
 
-.dropdown-icon {
+#dasboardPage .dropdown-icon {
     color: #9aa0ac;
     margin-inline-end: 0.5rem;
     margin-inline-start: -0.5rem;
@@ -289,19 +289,19 @@ section#content-wrapper\ main-content\ side-content {
     text-align: center;
     vertical-align: -1px;
 }
-.drop-heading {
+#dasboardPage .drop-heading {
     padding: 1rem 1rem;
 }
-.dropdown-divider {
+#dasboardPage .dropdown-divider {
     height: 0;
     margin: 0.5rem 0;
     overflow: hidden;
     border-block-start: 1px solid var(--border);
 }
-.main-header-right .nav-link.icon {
+#dasboardPage .main-header-right .nav-link.icon {
     color: var(--color);
 }
-.nav-link.icon {
+#dasboardPage .nav-link.icon {
     margin: 5px;
     padding: 10px 12px;
     text-align: center;
@@ -311,18 +311,18 @@ section#content-wrapper\ main-content\ side-content {
     position: relative;
     border-radius: 50%;
 }
-.dropdown-menu.show {
+#dasboardPage .dropdown-menu.show {
     display: block;
     margin: 0;
     border: 1px solid #e9edf4!important;
 }
-.drop-heading {
+#dasboardPage .drop-heading {
     padding: 1rem 1rem;
 }
-.side-header .header-search .dropdown-menu {
+#dasboardPage .side-header .header-search .dropdown-menu {
     inset-block-start: 50px;
 }
-.main-form-search .btn, .main-form-search .sp-container button, .sp-container .main-form-search button {
+#dasboardPage .main-form-search .btn, .main-form-search .sp-container button, .sp-container .main-form-search button {
     position: absolute;
     inset-block-start: 4px;
     inset-inline-end: 5px;
@@ -333,7 +333,7 @@ section#content-wrapper\ main-content\ side-content {
     font-size: 16px;
     padding-inline-end: 13px;
 }
-.main-form-search .form-control {
+#dasboardPage .main-form-search .form-control {
     border-color: #e9edf4;
     border-width: 1px;
     background-color: #fff;
@@ -341,7 +341,7 @@ section#content-wrapper\ main-content\ side-content {
     height: 37px;
     width: 100%;
 }
-.dropdown-menu.show{
+#dasboardPage .dropdown-menu.show{
     
     position: absolute;
     inset-block-start: 50px;
@@ -351,30 +351,30 @@ section#content-wrapper\ main-content\ side-content {
     padding: 0;
 }
 
-.img-fluid {
+#dasboardPage .img-fluid {
     max-width: 100%;
     height: auto;
     width: 100%;
 }
-h2.display-4.mb-3 {
+#dasboardPage h2.display-4.mb-3 {
     font-size: 40px;
     line-height: 30px;
     font-weight: 600;
 }
-h2.display-4.mb-3 span.font-w-4.d-block {
+#dasboardPage h2.display-4.mb-3 span.font-w-4.d-block {
     font-weight: 400;
 }
-p.lead {
+#dasboardPage p.lead {
     margin-top: 20px;
     margin-bottom: 20px;
 }
-.card {
+#dasboardPage .card {
     display: flex;
     justify-content: center;
     width: 100%;
 }
 
-.card-body {
+#dasboardPage .card-body {
     display: flex;
     margin: 0px auto;
     justify-content: center;
@@ -382,10 +382,10 @@ p.lead {
 }
 
 /*----------header contentcss start------------*/
-.page-header {
+#dasboardPage .page-header {
     margin: 30px 0px 1.5rem 0px;
 }
-.page-header {
+#dasboardPage .page-header {
     display: -ms-flexbox;
     display: flex;
     -ms-flex-align: center;
@@ -399,14 +399,14 @@ p.lead {
     background: none;
     box-shadow: none;
 }
-.page-header .breadcrumb {
+#dasboardPage .page-header .breadcrumb {
     font-size: 16px;
     padding-inline-start: 0 !important;
 }
-li.breadcrumb-item a {
+#dasboardPage li.breadcrumb-item a {
     text-decoration: none;
 }
-.breadcrumb {
+#dasboardPage .breadcrumb {
     display: flex;
     flex-wrap: wrap;
     margin-block-end: 0;
@@ -418,27 +418,27 @@ li.breadcrumb-item a {
     color: #fff;
     background: none;
 }
-.breadcrumb-item a {
+#dasboardPage .breadcrumb-item a {
     color: #334151;
 }
-h3.mb-0.breadcrump-tittle {
+#dasboardPage h3.mb-0.breadcrump-tittle {
     color:#000;
     font-weight: 600;
     font-size: 21px;
 }
-a.btn.btn-white.button-icon.me-3.mt-1.mb-1 span {
+#dasboardPage a.btn.btn-white.button-icon.me-3.mt-1.mb-1 span {
     font-size: 15px;
     font-weight: 500;
 }
-.button-icon i {
+#dasboardPage .button-icon i {
     margin-inline: 8px;
 }
-.btn-white {
+#dasboardPage .btn-white {
     color: #334151;
     background-color: #fff;
     border-color: #e9edf4;
 }
-.banner {
+#dasboardPage .banner {
     background: rgba(0, 111, 255, 0.1);
     display: -webkit-box;
     display: -ms-flexbox;
@@ -451,68 +451,68 @@ a.btn.btn-white.button-icon.me-3.mt-1.mb-1 span {
     padding: 10px 15px;
     border: 1px solid rgba(0, 111, 255, 0.12);
 }
-a.btn.btn-white.button-icon.me-3.mt-1.mb-1 {
+#dasboardPage a.btn.btn-white.button-icon.me-3.mt-1.mb-1 {
     padding: 6px 20px 6px 15px;
 }
-.page-content {
+#dasboardPage .page-content {
     margin: 0.75rem 0;
 }
 
-a.btn.btn-primary.button-icon.me-3.mt-1.mb-1 {
+#dasboardPage a.btn.btn-primary.button-icon.me-3.mt-1.mb-1 {
     color: #fff !important;
     background: #556ee7 !important;
     border-color:#556ee7;
     box-shadow: 0 5px 10px rgba(237, 49, 76, 0.17);
 }
-.btn-success {
+#dasboardPage .btn-success {
     color: #fff !important;
     background: #34c39f!important;
     border-color:#34c39f;
     box-shadow: 0 5px 10px rgba(59, 208, 152, 0.17);
 }
 
-a.btn.btn-white.button-icon.me-3.mt-1.mb-1 {
+#dasboardPage a.btn.btn-white.button-icon.me-3.mt-1.mb-1 {
     padding: 5px 20px 5px 19px;
    
 }
-.image {
+#dasboardPage .image {
     position: relative;
     width: 100%;
 }
-.nav.nav-item.header-icons.navbar-nav-right {
+#dasboardPage .nav.nav-item.header-icons.navbar-nav-right {
     align-items: center;
 }
 
-span.font-weight-bold.text-primary {
+#dasboardPage span.font-weight-bold.text-primary {
     color: #15a782 !important;
 }
 
 
-.img-fluid {
+#dasboardPage .img-fluid {
     max-width: 100%;
     height: auto;
     width: 100%;
 }
-h2.display-4.mb-3 {
+#dasboardPage h2.display-4.mb-3 {
     font-size: 40px;
     line-height: 35px;
     font-weight: 600;
     display: grid;
 }
-h2.display-4.mb-3 span.font-w-4.d-block {
+#dasboardPage h2.display-4.mb-3 span.font-w-4.d-block {
     font-weight: 400;
 }
-p.lead {
+#dasboardPage p.lead {
     margin-top: 20px;
     margin-bottom: 20px;
 }
-.card {
+#dasboardPage .card {
     display: flex;
     justify-content: center;
     width: 100%;
 }
 
-.card-body {
+#dasboardPage .card-body {
     display: flex;
     margin: 0px auto;
     justify-content: center;
@@ -520,16 +520,16 @@ p.lead {
    
 }
 
-.card-header.custom-header {
+#dasboardPage .card-header.custom-header {
     background: #fff;
 }
 
-span.span-text {
+#dasboardPage span.span-text {
     font-size: 20px;
     text-align: left;
     font-weight: 500;
 }
-a.btn.btn-sm.btn-primary.text-center {
+#dasboardPage a.btn.btn-sm.btn-primary.text-center {
     display: flex;
     justify-content: center;
     margin: 0px auto;
@@ -540,70 +540,70 @@ a.btn.btn-sm.btn-primary.text-center {
     transition: 350ms ease-in-out;
     font-weight: 700;
 }
-a.btn.btn-sm.btn-primary.text-center:hover {
+#dasboardPage a.btn.btn-sm.btn-primary.text-center:hover {
     color: #2f2f41;
     background-color: rgba(1, 164, 121, 0.1);
     border-color: #31b896;
     box-shadow: none;
 }
 
-a.btn.btn-sm.btn-primary.text-center .d-inline-block.text-center  small{
+#dasboardPage a.btn.btn-sm.btn-primary.text-center .d-inline-block.text-center  small{
     font-weight: 700;
     font-size: 15px;
 }
 /*----------header contentcss end---------------*/
-@media (min-width: 998px) {
+@media  (min-width: 998px) {
     .dropdown {
     position: initial;
 }
-.side-content {
+#dasboardPage .side-content {
     margin-inline-start: 265px;
 }
-    .navbar-expand-lg.responsive-navbar .navbar-collapse {
+#dasboardPage  .navbar-expand-lg.responsive-navbar .navbar-collapse {
     display: flex !important;
     flex-basis: auto;
     background: transparent;
 }
-  #wrapper {
+#dasboardPage #wrapper {
     padding-left: 250px;
   }
   
-  #wrapper.toggled {
+#dasboardPage #wrapper.toggled {
     padding-left: 60px;
   }
 
-  #sidebar-wrapper {
+#dasboardPage #sidebar-wrapper {
     width: 250px;
   }
   
-  #wrapper.toggled #sidebar-wrapper {
+  #dasboardPage  #wrapper.toggled #sidebar-wrapper {
     width: 60px;
   }
   
-  #wrapper.toggled #navbar-wrapper {
+  #dasboardPage  #wrapper.toggled #navbar-wrapper {
     position: absolute;
     margin-right: -190px;
 }
   
-  #wrapper.toggled #content-wrapper {
+#dasboardPage #wrapper.toggled #content-wrapper {
     position: absolute;
     margin-right: -190px;
   }
 
-  #navbar-wrapper {
+  #dasboardPage #navbar-wrapper {
     position: relative;
   }
 
-  #wrapper.toggled {
+  #dasboardPage #wrapper.toggled {
     padding-left: 60px;
   }
 
-  #content-wrapper {
+  #dasboardPage #content-wrapper {
     position: relative;
     top: 0;
   }
 
-  #wrapper.toggled #navbar-wrapper,
+  #dasboardPage #wrapper.toggled #navbar-wrapper,
   #wrapper.toggled #content-wrapper {
     position: relative;
     margin-right: 60px;
@@ -618,10 +618,10 @@ a.btn.btn-sm.btn-primary.text-center .d-inline-block.text-center  small{
     visibility: visible;
     top: 0;
 }*/
-    .modal-dialog {
+#dasboardPage .modal-dialog {
     max-width: 95%;
 }
-    nav.navbar.navbar-inverse {
+#dasboardPage nav.navbar.navbar-inverse {
     position: fixed;
     inset-inline-start: 0;
     inset-inline-end: 0;
@@ -629,13 +629,13 @@ a.btn.btn-sm.btn-primary.text-center .d-inline-block.text-center  small{
     top: 0;
     z-index: 999;
 }
-.main-content.side-content {
+#dasboardPage .main-content.side-content {
     margin-inline-start: 265px;
 }
-section#content-wrapper\ main-content\ side-content {
+#dasboardPage section#content-wrapper\ main-content\ side-content {
     padding-top: 70px;
 }
-.box-2 {
+#dasboardPage .box-2 {
     max-width:unset  !important;
     padding: 20px 40px !important;
 }
@@ -648,7 +648,7 @@ section#content-wrapper\ main-content\ side-content {
     margin-block-end: 0 !important;
     padding: 0;
 }
-.responsive-navbar.navbar .navbar-collapse {
+#dasboardPage .responsive-navbar.navbar .navbar-collapse {
     width: 100%;
     background: #fff;
     margin-block-start: 0;
@@ -671,41 +671,41 @@ section#content-wrapper\ main-content\ side-content {
     top: 0;
     z-index: 999;
 }
-  #wrapper {
+#dasboardPage  #wrapper {
     padding-left: 60px;
   }
- .card-body {
+  #dasboardPage .card-body {
     display: block;
     width: 100%;
 }
-  #sidebar-wrapper {
+#dasboardPage  #sidebar-wrapper {
     width: 60px;
   }
   
-#wrapper.toggled #navbar-wrapper {
+  #dasboardPage #wrapper.toggled #navbar-wrapper {
     position: absolute;
     margin-right: -250px;
 }
   
-  #wrapper.toggled #content-wrapper {
+#dasboardPage #wrapper.toggled #content-wrapper {
     position: absolute;
     margin-right: -250px;
   }
 
-  #navbar-wrapper {
+#dasboardPage #navbar-wrapper {
     position: relative;
   }
 
-  #wrapper.toggled {
+  #dasboardPage #wrapper.toggled {
     padding-left: 250px;
   }
 
-  #content-wrapper {
+  #dasboardPage  #content-wrapper {
     position: relative;
     top: 0;
   }
 
-  #wrapper.toggled #navbar-wrapper,
+  #dasboardPage #wrapper.toggled #navbar-wrapper,
   #wrapper.toggled #content-wrapper {
     position: relative;
     margin-right: 250px;
@@ -713,41 +713,41 @@ section#content-wrapper\ main-content\ side-content {
 }
 
 @media (max-width: 767px) {
-  #wrapper {
+    #dasboardPage  #wrapper {
     padding-left: 0;
   }
 
-  #sidebar-wrapper {
+  #dasboardPage  #sidebar-wrapper {
     width: 0;
   }
 
-  #wrapper.toggled #sidebar-wrapper {
+  #dasboardPage #wrapper.toggled #sidebar-wrapper {
     width: 250px;
   }
-  #wrapper.toggled #navbar-wrapper {
+  #dasboardPage #wrapper.toggled #navbar-wrapper {
     position: absolute;
     margin-right: -250px;
   }
 
-  #wrapper.toggled #content-wrapper {
+  #dasboardPage  #wrapper.toggled #content-wrapper {
     position: absolute;
     margin-right: -250px;
   }
 
-  #navbar-wrapper {
+  #dasboardPage #navbar-wrapper {
     position: relative;
   }
 
-  #wrapper.toggled {
+  #dasboardPage #wrapper.toggled {
     padding-left: 250px;
   }
 
-  #content-wrapper {
+  #dasboardPage #content-wrapper {
     position: relative;
     top: 0;
   }
 
-  #wrapper.toggled #navbar-wrapper,
+#dasboardPage #wrapper.toggled #navbar-wrapper,
   #wrapper.toggled #content-wrapper {
     position: relative;
     margin-right: 250px;

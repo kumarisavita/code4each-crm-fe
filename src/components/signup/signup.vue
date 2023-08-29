@@ -1,11 +1,12 @@
-<script setup>
-import { reactive, onBeforeMount} from 'vue';
+<script setup lang="ts">
+import { reactive, onBeforeMount, computed} from 'vue';
 import SignupModalVue from './elements/SignupModal.vue';
 import api from '@/service/api';
 import { useForm } from 'vee-validate';
 import * as yup from 'yup';
+import WordpressService from '@/service/WordpressService';
 
-
+const emits = defineEmits();
 const { handleSubmit } = useForm({
   validationSchema: yup.object({
     company_name: yup.string().required(),
@@ -16,17 +17,15 @@ const { handleSubmit } = useForm({
   }),
 });
 
-const submitForm = handleSubmit(values => {
-  api.post('/register', values)
-    .then(response => {
-      if (response.status === 200 && response.data.success) {
-        closeModal();
-        // Reset form fields
-      }
-    })
-    .catch(error => {
-      console.error(error);
-    });
+const registerUser = handleSubmit(async (values) => {
+  try {
+    const response = await WordpressService.registerUser(values)
+    if (response.status === 200 && response.data.success) {
+      hideModal();
+    }
+  } catch (error) {
+    console.error(error);
+  }
 });
 
 
@@ -38,11 +37,13 @@ onBeforeMount(() => {
   localState.showModal = true
 });
 
-const closeModal = () => {
-  showModal.value = false;
-};
+const hideModal = () => {
+  localState.showModal=false
+  emits('hide-modal');
+
+}; 
 </script>
 <template>
 <SignupModalVue :showModal="localState.showModal"
-@hide-modal="localState.showModal=false" @submit="submitForm" />
+@hide-modal="hideModal" @submit="registerUser" />
 </template>

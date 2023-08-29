@@ -70,10 +70,7 @@
                                             <span class="price display-4 font-w-6 text-primary mb-0">23</span>
                                             <span class="text-muted h4 mb-1 align-self-end">/mo</span>
                                         </div>
-                                        <a href="#" class="btn btn-sm pricing pricing-test btn-primary text-start me-1" data-toggle="modal" data-target="#exampleModal"> <i class="la la-apple me-2 ic-2x d-inline-block"></i>
-                                            <div class="d-inline-block"> <small class="d-block">7 DAY FREE TRIAL</small>
-                                            </div>
-                                        </a>
+                                        <RegisterButton buttonClass="btn-sm pricing pricing-test btn-primary text-start me-1"/>
                                     </div>
                                 </div>
                             </div>
@@ -131,10 +128,7 @@
                                             <span class="text-muted h4 mb-1 align-self-end">/mo</span>
                                         </div>
                                         <!-- Button -->
-                                        <a href="#" class="btn btn-sm pricing pricing-test btn-primary text-start me-1" data-toggle="modal" data-target="#exampleModal"> <i class="la la-apple me-2 ic-2x d-inline-block"></i>
-                                            <div class="d-inline-block"> <small class="d-block">7 DAY FREE TRIAL</small>
-                                            </div>
-                                        </a>
+                                        <RegisterButton buttonClass="btn-sm pricing pricing-test btn-primary text-start me-1"/>
                                     </div>
                                 </div>
                             </div>
@@ -192,17 +186,14 @@
                                             <span class="text-muted h4 mb-1 align-self-end">/mo</span>
                                         </div>
                                         <!-- Button -->
-                                        <a href="#" class="btn btn-sm pricing pricing-test btn-primary text-start me-1" data-toggle="modal" data-target="#exampleModal"> <i class="la la-apple me-2 ic-2x d-inline-block"></i>
-                                            <div class="d-inline-block"> <small class="d-block">7 DAY FREE TRIAL</small>
-                                            </div>
-                                        </a>
+                                        <RegisterButton buttonClass="btn-sm pricing pricing-test btn-primary text-start me-1"/>
                                     </div>
 
                                 </div>
                             </div>
                         </div>
                         <div class="col-12 d-flex justify-content-center">
-                            <RegisterButton ButtonClass="pricing btn-primary  text-start me-1 mt-5" />
+                            <RegisterButton buttonClass="btn-sm pricing btn-primary text-start me-1 mt-5" :paragraph="true"/>
                         </div>
                     </div>
                 </div>

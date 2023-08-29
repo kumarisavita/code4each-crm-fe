@@ -46,10 +46,11 @@
 
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { ref } from 'vue';
-import api from '../../service/api';
 import { useRouter } from 'vue-router';
+import WordpressService from '@/service/WordpressService';
+
 
 // Define your reactive variables
 const loginSuccess = ref(false);
@@ -60,29 +61,56 @@ const email = ref('');
 const password = ref('');
 
 // Define your login function
+// const login = async () => {
+//   try {
+//     const response = await api.post('/login', {
+//       email: email.value,
+//       password: password.value,
+//     });
+
+//     if (response.status === 200 && response.data.success) {
+//       // console.log(response);
+//       // Successful login
+//       const token = response.data.token;
+//       localStorage.setItem('access_token', token);
+//       loginSuccess.value = true;
+//       router.push('/dashboard');
+//     } else {
+//       console.log(response);
+//       // Unsuccessful login
+//       loginError.value = 'Invalid credentials'; // Set an error message
+//     }
+//   } catch (error) {
+//     if (error.response && error.response.data && error.response.data.errors) {
+//       // Store the error messages in the loginError ref
+//       loginError.value = Object.values(error.response.data.errors).flat();
+//     } else {
+//       console.error(error);
+//     }
+//   }
+// };
+
 const login = async () => {
   try {
-    const response = await api.post('/login', {
+    const response = await WordpressService.loginUser( {
       email: email.value,
       password: password.value,
-    });
-
+    })
     if (response.status === 200 && response.data.success) {
-      // console.log(response);
-      // Successful login
       const token = response.data.token;
       localStorage.setItem('access_token', token);
       loginSuccess.value = true;
       router.push('/dashboard');
-    } else {
-      console.log(response);
-      // Unsuccessful login
-      loginError.value = 'Invalid credentials'; // Set an error message
+    }else {
+      console.log(response.data.message);
+      loginError.value = response.data.message; // Set an error message
     }
   } catch (error) {
+    console.log(error?.response?.data?.message)
+        loginError.value = error?.response?.data?.message; // Set an error message
     if (error.response && error.response.data && error.response.data.errors) {
       // Store the error messages in the loginError ref
-      loginError.value = Object.values(error.response.data.errors).flat();
+      // loginError.value = Object.values(error.response.data.errors).flat();
     } else {
       console.error(error);
     }
