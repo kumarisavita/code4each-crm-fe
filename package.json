@@ -24,6 +24,7 @@
     "@vue/test-utils": "^2.4.1",
     "@vuelidate/core": "^2.0.3",
     "jsdom": "^22.1.0",
+    "typescript": "^5.2.2",
     "vite": "^4.4.6",
     "vitest": "^0.33.0"
   }
