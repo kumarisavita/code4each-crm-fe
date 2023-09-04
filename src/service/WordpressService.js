@@ -6,6 +6,13 @@ const WordpressService = {
   },
   loginUser: (data) => {
     return requests(baseUrl).post(`/login`, data)
+  },
+  fetchDashboardData: (data) => {
+    return requests(baseUrl).get(`/dashboard`)
+  },
+  resendLink: (data) => {
+    return requests(baseUrl).get(`/email/resend`)
   }
+  
 }
 export default WordpressService

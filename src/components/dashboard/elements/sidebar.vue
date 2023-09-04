@@ -7,7 +7,7 @@
             <ul class="sidebar-nav">
               <li class="active">
                 <a href="index.html">
-                  <i class="fa fa-wordpress"></i>Wordpress Dashboard</a>
+                  <i class="fa fa-wordpress"></i>Dashboard</a>
               </li>
               <!-- <li>
                 <a href="wordpress.html">

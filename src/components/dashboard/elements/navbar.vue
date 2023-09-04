@@ -1,5 +1,5 @@
 <script setup>
-import { defineEmits, ref } from 'vue';
+import { defineEmits, ref,defineProps } from 'vue';
 
 const emits = defineEmits();
 const isSidebarToggled = ref(false);
@@ -11,6 +11,12 @@ const toggleSidebar = () => {
 const logout = () => {
     emits('logout');
 }
+
+const props = defineProps({
+  dashboardData: Object,
+});
+// consol(props.dashboardData);
+
 </script>
 <template>
       <div id="navbar-wrapper">
@@ -52,8 +58,8 @@ const logout = () => {
                           <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
                             <div class="drop-heading">
                               <div class="text-center">
-                                <h5 class="text-dark mb-0">Code4each</h5>
-                                <small class="text-muted">Administrator</small>
+                                <h5 class="text-dark mb-0">{{dashboardData.name}}</h5>
+                                <small class="text-muted">{{dashboardData.agency.name}}</small>
                               </div>
                             </div>
                             <div class="dropdown-divider m-0"></div>

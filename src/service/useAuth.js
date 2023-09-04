@@ -1,6 +1,6 @@
 import { useRouter } from 'vue-router';
 import { ref } from 'vue';
-import api from './api';
+import WordpressService from '@/service/WordpressService';
 
 
 export function useAuth() {
@@ -10,7 +10,7 @@ const router = useRouter();
 
   const logout = async () => {
     try {
-      await api.post('/logout');
+      await WordpressService.post('/logout');
     } catch (error) {
       // Handle logout error
     }

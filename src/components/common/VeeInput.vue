@@ -13,5 +13,5 @@ const { value, errorMessage } = useField(() => props.name);
 
 <template>
     <input v-model="value" :type="type || 'text'" :placeholder="placeholder" :class="class"  />
-    <div class="text-danger">{{ errorMessage }}</div>
+    <div class="text-danger" >{{ errorMessage }}</div>
   </template>

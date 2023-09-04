@@ -1,4 +1,31 @@
+<script setup>
+import { ref,defineProps } from 'vue';
+import Alert from './Alert.vue';
+const props = defineProps({
+  dashboardData: Object,
+  error: String,
+  loading: Boolean,
+  resendLink: Function,
+});
+
+</script>
 <template>
+    <Alert v-if="dashboardData" :notification="dashboardData" :resendLink="resendLink"/>
+        <div>
+        <div v-if="loading">
+          <div class="spinner-container" >
+            <div class="spinner-border  text-warning" role="status">
+              <span class="visually-hidden">Loading...</span>
+            </div>
+          </div>
+        </div>
+          <div v-else>
+            <p v-if="error">Error fetching dashboard data.</p>
+            <ul v-else>
+              <!-- <p v-if="dashboardData">{{ dashboardData }} <a href="#" @click="resendLink">Resend Link</a></p> -->
+            </ul>
+          </div>
+        </div>
           <section id="content-wrapper main-content side-content">
             <div class="side-app"> 
                 <div class="main-container container-fluid">
@@ -105,3 +132,23 @@
             </div>
           </section>
 </template>
+<style>
+.spinner-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.5); 
+  z-index: 9999; 
+}
+
+.spinner-border {
+  width: 3rem; 
+  height: 3rem;
+}
+
+</style>

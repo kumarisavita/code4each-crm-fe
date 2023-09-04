@@ -21,7 +21,7 @@ const router = createRouter({
       path: '/dashboard',
       name: 'dashboard',
       component: DashboardView,
-      meta: { requiresAuth: true ,title: 'Dashbaord' } // Add this meta field
+      meta: { requiresAuth: true ,title: 'Dashbaord' } 
     },
     {
       path: '/about',
@@ -34,17 +34,32 @@ const router = createRouter({
 router.beforeEach((to, from, next) => {
   const pageTitle = to.meta.title || 'Code4Each CRM'; 
   document.title = pageTitle;
-  if (to.meta.requiresAuth && !isLoggedIn()) {
-    next('/login');
+  if (to.path === "/login" && isLoggedIn()) {
+    next("/dashboard");
+  } else if (to.matched.some((record) => record.meta.requiresAuth)) {
+    if (!isLoggedIn()) {
+      next("/login");
+    } else {
+      next();
+    }
   } else {
-    document.title = to.meta.title || 'Code4Each CRM';
     next();
   }
 });
 
 function isLoggedIn() {
-  // Replace with your actual authentication logic
   return localStorage.getItem('access_token') !== null && !undefined;
 }
+
+// router.beforeEach((to, from, next) => {
+//   const pageTitle = to.meta.title || 'Code4Each CRM'; 
+//   document.title = pageTitle;
+//   if (to.meta.requiresAuth && !isLoggedIn()) {
+//     next('/login');
+//   } else {
+//     document.title = to.meta.title || 'Code4Each CRM';
+//     next();
+//   }
+// });
 
 export default router;
