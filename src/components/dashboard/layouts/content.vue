@@ -1,6 +1,9 @@
 <script setup>
 import { ref,defineProps } from 'vue';
-import Alert from './Alert.vue';
+import Alert from '../elements/Alert.vue';
+// import RegisterButton from '@/components/common/RegisterButton.vue';
+import AgencyButton from '../elements/AgencyButton.vue';
+
 const props = defineProps({
   dashboardData: Object,
   error: String,
@@ -10,7 +13,7 @@ const props = defineProps({
 
 </script>
 <template>
-    <Alert v-if="dashboardData" :notification="dashboardData" :resendLink="resendLink"/>
+    <Alert v-if="dashboardData.notification" :notification="dashboardData.notification" :resendLink="resendLink"/>
         <div>
         <div v-if="loading">
           <div class="spinner-container" >
@@ -77,7 +80,7 @@ const props = defineProps({
                             <div class="card"> 
                                 <div class="card-header custom-header"> 
                                     <div> 
-                                        <h3 class="card-title">Wordpres </h3> 
+                                        <h3 class="card-title">CRM </h3> 
                                     </div> 
                                 </div> 
                                 <div class="card-body">  
@@ -86,7 +89,7 @@ const props = defineProps({
                                     </div>
                                     <div class="col-12 col-lg-7 col-xl-5">
                                         <div>
-                                          <h2 class="display-4 mb-3">Wordpress Hosting   
+                                          <h2 class="display-4 mb-3">CRM Hosting   
                                             <span class="span-text"> Powered By  Google Cloud</span>
                                           </h2>
                                           
@@ -120,11 +123,12 @@ const props = defineProps({
                                       </div>
 
                                 </div>
-                                <a href="wordpress.html" class="btn btn-sm btn-primary text-center mb-5"  data-target="#exampleModal"> <i class="la la-apple me-2 ic-2x d-inline-block"></i>
+                                <!-- <a href="wordpress.html" class="btn btn-sm btn-primary text-center mb-5"  data-target="#exampleModal"> <i class="la la-apple me-2 ic-2x d-inline-block"></i>
                                         <div class="d-inline-block text-center"> <small class="d-block">7 DAY FREE TRIAL</small>
                                           <p>Take your agency online with us</p>
                                           </div>
-                                        </a>
+                                        </a> -->
+                                        <AgencyButton  buttonClass="btn-sm btn-primary text-center mb-5"  :paragraph="true" :dashboardData="dashboardData" />
                             </div> 
                         </div> <!-- COL END --> 
                     </div>

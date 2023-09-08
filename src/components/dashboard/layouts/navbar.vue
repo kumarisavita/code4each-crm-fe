@@ -58,8 +58,8 @@ const props = defineProps({
                           <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
                             <div class="drop-heading">
                               <div class="text-center">
-                                <h5 class="text-dark mb-0">{{dashboardData.name}}</h5>
-                                <small class="text-muted">{{dashboardData.agency.name}}</small>
+                                <h5 class="text-dark mb-0">{{dashboardData?.name}}</h5>
+                                <small class="text-muted">{{dashboardData?.agency.name}}</small>
                               </div>
                             </div>
                             <div class="dropdown-divider m-0"></div>

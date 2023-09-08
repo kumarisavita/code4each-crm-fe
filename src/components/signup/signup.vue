@@ -14,8 +14,8 @@ const router = useRouter();
 const emits = defineEmits();
 const { handleSubmit } = useForm({
   validationSchema: yup.object({
-    company_name: yup.string().required(),
-    name: yup.string().required(),
+    company_name: yup.string().required('company name is required.'),
+    name: yup.string().required('user name is required.'),
     email: yup.string().required().email(),
     phone: yup.string().required().matches(/^\d+$/, 'Must be a number').max(10).min(10),
     password: yup.string().required().min(6),
@@ -62,8 +62,7 @@ const hideModal = () => {
         </div>
       </div>
     </div>
-<SignupModalVue :showModal="localState.showModal"
-@hide-modal="hideModal" @submit="registerUser" />
+<SignupModalVue :showModal="localState.showModal" @hide-modal="hideModal" @submit="registerUser" />
 </template>
 <style>
 .spinner-container {

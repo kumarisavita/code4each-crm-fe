@@ -1,7 +1,7 @@
 <script setup>
-import NavBar from './elements/navbar.vue';
-import SideBar from './elements/sidebar.vue';
-import Content from './elements/content.vue';
+import NavBar from './layouts/navbar.vue';
+import SideBar from './layouts/sidebar.vue';
+import Content from './layouts/content.vue';
 import { useAuth } from '../../service/useAuth';
 import { useRouter } from 'vue-router';
 import { ref,defineProps,onMounted } from 'vue';
@@ -26,7 +26,6 @@ const userData = ref([]);
 const fetchDashboardData = async () => {
   try {
     const response = await WordpressService.fetchDashboardData();
-    console.log(response);
     if (response.status === 200 && response.data.success) {
       loading.value = false;
       dashboardData.value = response.data;    
@@ -56,7 +55,6 @@ onMounted(() => {
   fetchDashboardData();
 });
 
-
 </script>
 
 <template>
@@ -65,7 +63,7 @@ onMounted(() => {
         <div id="wrapper" :class="{'toggled': isSidebarToggled}">
           <SideBar></SideBar>
           <NavBar @logout="logout" @nav-bar-toggle="navBarToggle"  :dashboardData="dashboardData?.user"></NavBar>
-          <Content :dashboardData="dashboardData.notification" :loading="loading"  :resendLink="resendLink"></Content>
+          <Content :dashboardData="dashboardData" :loading="loading"  :resendLink="resendLink"></Content>
         </div>
       </div>
   </div>

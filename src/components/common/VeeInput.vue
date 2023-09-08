@@ -5,13 +5,24 @@ const props = defineProps({
   type: String,
   placeholder: String,
   class:String,
+  label:String,
+  textarea:Boolean,
+  hiddenValue:String,
 });
-// The `name` is returned in a function because we want to make sure it stays reactive
-// If the name changes you want `useField` to be able to pick it up
+
 const { value, errorMessage } = useField(() => props.name);
+const hiddenValue = props.hiddenValue;
+
+if (hiddenValue !== undefined) {
+  value.value = hiddenValue;
+}
 </script>
 
+
 <template>
-    <input v-model="value" :type="type || 'text'" :placeholder="placeholder" :class="class"  />
-    <div class="text-danger" >{{ errorMessage }}</div>
+  <!-- {{ value }} -->
+    <label v-if="label" for="" class="form-label">{{ label }}</label>
+    <textarea v-if="textarea" v-model="value"  class="form-control" :placeholder="placeholder" rows="3"></textarea>
+    <input v-else v-model="value"  :type="type || 'text'" :placeholder="placeholder" :class="class"/>
+     <div class="text-danger" >{{ errorMessage }}</div>
   </template>
