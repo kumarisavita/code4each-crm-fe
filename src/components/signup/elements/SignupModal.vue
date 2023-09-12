@@ -21,11 +21,11 @@ const closeModal = () => {
       </template>
       <form @submit.prevent="submitForm" slot="body">
       <div class="form-group">
-        <VeeInput name="company_name" placeholder="Company Name.." class="form-control input" />
-        <VeeInput name="name" placeholder="Name.." class="form-control input" />
-        <VeeInput name="email" type="email" placeholder="Email Address.." class="form-control input" />
-        <VeeInput name="phone" placeholder="Phone Number..." class="form-control input" />
-        <VeeInput name="password" type="password" placeholder="Password.." class="form-control input" />
+        <VeeInput name="company_name" placeholder="Company Name.."  class="form-control input" />
+        <VeeInput name="name" placeholder="Name.."  class="form-control input" />
+        <VeeInput name="email" type="email" placeholder="Email Address.."   class="form-control input" />
+        <VeeInput name="phone" placeholder="Phone Number..."  class="form-control input" />
+        <VeeInput name="password" type="password"  placeholder="Password.." class="form-control input" />
         <button type="submit" class="btn btn-success">Submit</button>
       </div>
       </form>

@@ -12,7 +12,7 @@ import SpeedStart from './elements/SpeedStart.vue';
 </script>
 <template>
     <div >
-          <Header></Header>
+        <Header></Header>
         
         <FeatureSection></FeatureSection>
 

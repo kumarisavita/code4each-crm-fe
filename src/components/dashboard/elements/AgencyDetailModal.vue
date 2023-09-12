@@ -11,7 +11,6 @@ const errorMessage = ref('');
 const message = ref('');
 const countdown = ref(5);
 
-
 const props = defineProps({
   showModal: true,
   dashboardData: Object,
@@ -44,13 +43,9 @@ const submitAgencyDetail = handleSubmit(async (values) => {
     // loading.value = true;
     const response = await WordpressService.agencyDetails(values);
     if (response.status === 200 && response.data.success) {
-      console.log(response.data.message)
       message.value = response?.data?.message;
       startCountdown();
-      values.category_id = ''
-      values.description = ''
-      values.address = ''
-      console.log(values);
+      clearFormValues(values);
 
       // loading.value = false;
     }
@@ -60,6 +55,12 @@ const submitAgencyDetail = handleSubmit(async (values) => {
     console.error(error);
   }
 });
+
+const clearFormValues = (values) => {
+  values.category_id = '';
+  values.description = '';
+  values.address = '';
+};
 
 const startCountdown = () => {
   const timer = setInterval(() => {
