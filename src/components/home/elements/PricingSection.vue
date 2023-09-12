@@ -23,7 +23,7 @@
                             <div class="card bg-white border-0 shadow">
                                 <!-- Body -->
                                 <div class="card-body py-5 px-4">
-                                    <img class="f-icon" src="images/predictive.png" alt="">
+                                    <img class="f-icon" src="/images/predictive.png" alt="">
                                     <!-- Badge -->
                                     <div class="my-4"> <span class="h2">Basic</span>
                                         <p class="mb-0 text-muted">Perfect For Small Business</p>
@@ -80,7 +80,7 @@
                             <div class="card  border-0 shadow" style="background: #d0faec;">
                                 <!-- Body -->
                                 <div class="card-body py-5 px-4">
-                                    <img class="f-icon" src="images/predictive.png" alt="">
+                                    <img class="f-icon" src="/images/predictive.png" alt="">
                                     <!-- Badge -->
                                     <div class="my-4 bg-dark p-3 rounded"> <span class="h2 text-white">Standard</span>
                                         <p class="mb-0  text-light">Perfect For Small Business</p>
@@ -138,7 +138,7 @@
                             <div class="card bg-white border-0 shadow">
                                 <!-- Body -->
                                 <div class="card-body py-5 px-4">
-                                    <img class="f-icon" src="images/eco-light.png" alt="">
+                                    <img class="f-icon" src="/images/eco-light.png" alt="">
                                     <!-- Badge -->
                                     <div class="my-4"> <span class="h2">Premium</span>
                                         <p class="mb-0  text-muted">Perfect For Small Business</p>

@@ -16,7 +16,7 @@
                 <div class="row align-items-center justify-content-between">
                     <div class="col-lg-5 col-md-12 order-1 order-lg-0">
                         <div class="img-wrap">
-                            <img src="images/office-img-1.jpg" alt="work process" class="img-fluid rounded-custom">
+                            <img src="/images/office-img-1.jpg" alt="work process" class="img-fluid rounded-custom">
                         </div>
                     </div>
                     <div class="col-lg-6 col-md-12 order-0 order-lg-1">

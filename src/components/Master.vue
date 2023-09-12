@@ -4,7 +4,7 @@
         <!-- Navbar -->
         <nav class="navbar navbar-expand-lg  navbar-dark navbar-bg-light">
             <div class="navbar-brand" href="#">
-                <a href="index.html"><img src="images/black-logo.png"></a>
+                <a href="index.html"><img src="/images/black-logo.png"></a>
             </div>
             <button class="navbar-toggler  ms-auto ms-md-2" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -32,7 +32,7 @@
         <div class="row align-items-center">
             <div class="col-12 col-lg-5 col-xl-6 order-lg-2 mb-8 mb-lg-0">
                 <!-- Image -->
-                <img src="images/02.png" class="img-fluid" alt="...">
+                <img src="/images/02.png" class="img-fluid" alt="...">
             </div>
             <div class="col-12 col-lg-7 col-xl-6 order-lg-1">
                 <h1 class="display-4 mb-3">
@@ -126,7 +126,7 @@
         <div class="row align-items-center mt-5">
             <div class="col-lg-4 col-md-6">
                 <div class="p-5 card-color" data-bg-color="#d0faec" style="background-color: rgb(189 241 224);">
-                    <div class="f-icon"><img src="images/prototype.png">
+                    <div class="f-icon"><img src="/images/prototype.png">
                     </div>
                     <h5 class="mt-4 mb-3">Awesome Design</h5>
                     <p class="mb-0">Design systems help organize product-related knowledge and centralize it.</p>
@@ -134,7 +134,7 @@
             </div>
             <div class="col-lg-4 col-md-6 mt-4 mt-md-0">
                 <div class="p-5 card-color" data-bg-color="#ffeff8" style="background-color: rgb(249 217 235);">
-                    <div class="f-icon"><img src="images/light-bulb.png">
+                    <div class="f-icon"><img src="/images/light-bulb.png">
                     </div>
                     <h5 class="mt-4 mb-3">Easy to Use</h5>
                     <p class="mb-0">Ease of use is a basic concept that describes how easily users can use a product.</p>
@@ -142,7 +142,7 @@
             </div>
             <div class="col-lg-4 col-md-6 mt-4 mt-lg-0">
                 <div class="p-5  card-color" data-bg-color="#d3f6fe" style="background-color: rgb(188 238 249);">
-                    <div class="f-icon"><img src="images/friendship.png">
+                    <div class="f-icon"><img src="/images/friendship.png">
                     </div>
                     <h5 class="mt-4 mb-3">User Friendly</h5>
                     <p class="mb-0">Manage all your websites in a single user-friendly yet very easy to use.</p>
@@ -158,75 +158,75 @@
 
 <section class="about-section">
     <div class="pricing-one__shape-1 zoom-fade">
-        <img src="images/pricing-one-shape-1.png" alt="">
+        <img src="/images/pricing-one-shape-1.png" alt="">
     </div>
     <div class="pricing-one__shape-2 float-bob-x">
-        <img src="images/pricing-one-shape-2.png" alt="">
+        <img src="/images/pricing-one-shape-2.png" alt="">
     </div>
     <div class="pricing-one__shape-3 float-bob-y">
-        <img src="images/pricing-one-shape-3.png" alt="">
+        <img src="/images/pricing-one-shape-3.png" alt="">
     </div>
     <div class="pricing-one__shape-4">
-        <img src="images/pricing-one-shape-4.png" alt="">
+        <img src="/images/pricing-one-shape-4.png" alt="">
     </div>
     <div class="pricing-one__shape-5">
-        <img src="images/pricing-one-shape-5.png" alt="">
+        <img src="/images/pricing-one-shape-5.png" alt="">
     </div>
     <div class="pricing-one__shape-6">
-        <img src="images/pricing-one-shape-6.png" alt="">
+        <img src="/images/pricing-one-shape-6.png" alt="">
     </div>
     <div class="pricing-one__shape-7">
-        <img src="images/pricing-one-shape-7.png" alt="">
+        <img src="/images/pricing-one-shape-7.png" alt="">
     </div>
     <div class="pricing-one__shape-8">
-        <img src="images/pricing-one-shape-8.png" alt="">
+        <img src="/images/pricing-one-shape-8.png" alt="">
     </div>
     <div class="pricing-one__shape-22">
-        <img src="images/pricing-one-shape-22.png" alt="">
+        <img src="/images/pricing-one-shape-22.png" alt="">
     </div>
     <div class="pricing-one__shape-9">
-        <img src="images/pricing-one-shape-13.png" alt="">
+        <img src="/images/pricing-one-shape-13.png" alt="">
     </div>
     <div class="pricing-one__shape-10 zoominout">
-        <img src="images/pricing-one-shape-10.png" alt="">
+        <img src="/images/pricing-one-shape-10.png" alt="">
     </div>
     <div class="pricing-one__shape-11">
-        <img src="images/pricing-one-shape-11.png" alt="">
+        <img src="/images/pricing-one-shape-11.png" alt="">
     </div>
     <div class="pricing-one__shape-12 zoominout">
-        <img src="images/pricing-one-shape-10.png" alt="">
+        <img src="/images/pricing-one-shape-10.png" alt="">
     </div>
     <div class="pricing-one__shape-13">
-        <img src="images/pricing-one-shape-13.png" alt="">
+        <img src="/images/pricing-one-shape-13.png" alt="">
     </div>
     <div class="pricing-one__shape-14">
-        <img src="images/pricing-one-shape-14.png" alt="">
+        <img src="/images/pricing-one-shape-14.png" alt="">
     </div>
     <div class="pricing-one__shape-15 float-bob-x">
-        <img src="images/pricing-one-shape-15.png" alt="">
+        <img src="/images/pricing-one-shape-15.png" alt="">
     </div>
     <div class="pricing-one__shape-16">
-        <img src="images/pricing-one-shape-16.png" alt="">
+        <img src="/images/pricing-one-shape-16.png" alt="">
     </div>
     <div class="pricing-one__shape-17">
-        <img src="images/pricing-one-shape-17.png" alt="">
+        <img src="/images/pricing-one-shape-17.png" alt="">
     </div>
     <div class="pricing-one__shape-18">
-        <img src="images/pricing-one-shape-18.png" alt="">
+        <img src="/images/pricing-one-shape-18.png" alt="">
     </div>
     <div class="pricing-one__shape-19">
-        <img src="images/pricing-one-shape-19.png" alt="">
+        <img src="/images/pricing-one-shape-19.png" alt="">
     </div>
     <div class="pricing-one__shape-20">
-        <img src="images/pricing-one-shape-20.png" alt="">
+        <img src="/images/pricing-one-shape-20.png" alt="">
     </div>
     <div class="pricing-one__shape-21">
-        <img src="images/pricing-one-shape-21.png" alt="">
+        <img src="/images/pricing-one-shape-21.png" alt="">
     </div>
     <div class="container">
         <div class="row align-items-center justify-content-between">
             <div class="col-12 col-lg-6 mb-6 mb-lg-0">
-                <img src="images/04.png" alt="Image" class="img-fluid">
+                <img src="/images/04.png" alt="Image" class="img-fluid">
             </div>
             <div class="col-12 col-lg-6 col-xl-5">
                 <div>
@@ -291,7 +291,7 @@
                             <div class="card bg-white border-0 shadow">
                                 <!-- Body -->
                                 <div class="card-body py-5 px-4">
-                                    <img class="f-icon" src="images/predictive.png" alt="">
+                                    <img class="f-icon" src="/images/predictive.png" alt="">
                                     <!-- Badge -->
                                     <div class="my-4"> <span class="h2">Basic</span>
                                         <p class="mb-0 text-muted">Perfect For Small Business</p>
@@ -351,7 +351,7 @@
                             <div class="card  border-0 shadow" style="background: #d0faec;">
                                 <!-- Body -->
                                 <div class="card-body py-5 px-4">
-                                    <img class="f-icon" src="images/predictive.png" alt="">
+                                    <img class="f-icon" src="/images/predictive.png" alt="">
                                     <!-- Badge -->
                                     <div class="my-4 bg-dark p-3 rounded"> <span class="h2 text-white">Standard</span>
                                         <p class="mb-0  text-light">Perfect For Small Business</p>
@@ -412,7 +412,7 @@
                             <div class="card bg-white border-0 shadow">
                                 <!-- Body -->
                                 <div class="card-body py-5 px-4">
-                                    <img class="f-icon" src="images/eco-light.png" alt="">
+                                    <img class="f-icon" src="/images/eco-light.png" alt="">
                                     <!-- Badge -->
                                     <div class="my-4"> <span class="h2">Premium</span>
                                         <p class="mb-0  text-muted">Perfect For Small Business</p>
@@ -498,7 +498,7 @@
             <div class="col-12 col-lg-6 mb-5 mb-lg-0">
                 <div class="card border-0  rounded">
                     <div class="position-relative p-3">
-                        <img src="images/09.jpg" alt="Image" class="card-img-top">
+                        <img src="/images/09.jpg" alt="Image" class="card-img-top">
                         <!-- <div class="video-btn video-btn-pos"> <a class="play-btn popup-youtube" href="https://www.youtube.com/watch?v=P_wKDMcr1Tg"><i class="la la-play"></i></a>
                       <div class="spinner-eff">
                         <div class="spinner-circle circle-1"></div>
@@ -570,7 +570,7 @@
             <div class="col-xl-6 col-lg-6">
                 <div class="why-choose-one__left fadeInRight">
                     <div class="why-choose-one__img float-bob-y">
-                        <img src="images/why-choose-one-img-1.png" alt="">
+                        <img src="/images/why-choose-one-img-1.png" alt="">
                     </div>
                 </div>
             </div>
@@ -621,7 +621,7 @@
     <div class="container">
         <div class="row align-items-center justify-content-between">
             <div class="col-12 col-lg-6">
-                <img src="images/portfolio-6.jpg" alt="Image" class="img-fluid ">
+                <img src="/images/portfolio-6.jpg" alt="Image" class="img-fluid ">
             </div>
             <div class="col-12 col-lg-5 mt-5 mt-lg-0">
                 <div class="mb-4">
@@ -736,7 +736,7 @@
         <div class="row align-items-center justify-content-between">
             <div class="col-lg-5 col-md-12 order-1 order-lg-0">
                 <div class="img-wrap">
-                    <img src="images/office-img-1.jpg" alt="work process" class="img-fluid rounded-custom">
+                    <img src="/images/office-img-1.jpg" alt="work process" class="img-fluid rounded-custom">
                 </div>
             </div>
             <div class="col-lg-6 col-md-12 order-0 order-lg-1">
@@ -836,7 +836,7 @@
     <div class="container">
         <div class="row">
             <div class="col-12 col-lg-5 col-xl-4 me-auto mb-5 mb-lg-0"> <a class="footer-logo h2 text-primary mb-0 font-w-7" href="index.html">
-                    <img src="images/black-logo.png"></a>
+                    <img src="/images/black-logo.png"></a>
                 <p class="my-3">Winck - Bootstrap 5 Multipurpose Landing Page Is fully responsible, Build whatever you like with the Winck.</p>
 
                 <ul class="list-inline">

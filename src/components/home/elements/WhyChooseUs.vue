@@ -7,7 +7,7 @@
       <div class="col-xl-6 col-lg-6">
         <div class="why-choose-one__left fadeInRight">
           <div class="why-choose-one__img float-bob-y">
-            <img src="images/why-choose-one-img-1.png" alt="">
+            <img src="/images/why-choose-one-img-1.png" alt="">
           </div>
         </div>
       </div>

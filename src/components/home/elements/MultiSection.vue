@@ -9,7 +9,7 @@ import RegisterButton from '../../common/RegisterButton.vue';
             <div class="col-12 col-lg-6 mb-5 mb-lg-0">
                 <div class="card border-0  rounded">
                     <div class="position-relative p-3">
-                        <img src="images/09.jpg" alt="Image" class="card-img-top">
+                        <img src="/images/09.jpg" alt="Image" class="card-img-top">
                         <!-- <div class="video-btn video-btn-pos"> <a class="play-btn popup-youtube" href="https://www.youtube.com/watch?v=P_wKDMcr1Tg"><i class="la la-play"></i></a>
                       <div class="spinner-eff">
                         <div class="spinner-circle circle-1"></div>
