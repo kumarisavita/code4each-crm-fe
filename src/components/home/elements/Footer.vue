@@ -4,7 +4,7 @@
   <div class="container">
     <div class="row">
       <div class="col-12 col-lg-5 col-xl-4 me-auto mb-5 mb-lg-0"> <a class="footer-logo h2 text-primary mb-0 font-w-7" href="index.html">
-             <img src="images/black-logo.png"></a>
+             <img src="/images/black-logo.png"></a>
         <p class="my-3">Winck - Bootstrap 5 Multipurpose Landing Page Is fully responsible, Build whatever you like with the Winck.</p>
         
             <ul class="list-inline">

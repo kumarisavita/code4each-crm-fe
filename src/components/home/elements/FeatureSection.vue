@@ -41,7 +41,7 @@
         <div class="row align-items-center mt-5">
             <div class="col-lg-4 col-md-6">
                 <div class="p-5 card-color" data-bg-color="#d0faec" style="background-color: rgb(189 241 224);">
-                    <div class="f-icon"><img src="images/prototype.png">
+                    <div class="f-icon"><img src="/images/prototype.png">
                     </div>
                     <h5 class="mt-4 mb-3">Awesome Design</h5>
                     <p class="mb-0">Design systems help organize product-related knowledge and centralize it.</p>
@@ -49,7 +49,7 @@
             </div>
             <div class="col-lg-4 col-md-6 mt-4 mt-md-0">
                 <div class="p-5 card-color" data-bg-color="#ffeff8" style="background-color: rgb(249 217 235);">
-                    <div class="f-icon"><img src="images/light-bulb.png">
+                    <div class="f-icon"><img src="/images/light-bulb.png">
                     </div>
                     <h5 class="mt-4 mb-3">Easy to Use</h5>
                     <p class="mb-0">Ease of use is a basic concept that describes how easily users can use a product.</p>
@@ -57,7 +57,7 @@
             </div>
             <div class="col-lg-4 col-md-6 mt-4 mt-lg-0">
                 <div class="p-5  card-color" data-bg-color="#d3f6fe" style="background-color: rgb(188 238 249);">
-                    <div class="f-icon"><img src="images/friendship.png">
+                    <div class="f-icon"><img src="/images/friendship.png">
                     </div>
                     <h5 class="mt-4 mb-3">User Friendly</h5>
                     <p class="mb-0">Manage all your websites in a single user-friendly yet very easy to use.</p>
