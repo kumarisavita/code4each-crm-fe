@@ -21,7 +21,7 @@ const buttonLabel = computed(() => {
 });
 
 const startCountdown = () => {
-  countdown.value = 2; // Set the initial countdown time (2 seconds)
+  countdown.value = 300; // Set the initial countdown time (2 seconds)
   const timer = setInterval(() => {
     countdown.value--;
     if (countdown.value === 0) {
@@ -59,10 +59,12 @@ const remainingTime = computed(() => {
     <div class="alert-msg m-4">
         <div class="alert alert-warning alert-dismissible fade show">
             <h4 class="alert-heading"><i class="fa fa-exclamation-triangle" style="color:#000;"></i> Email Verification Alert</h4>
-            <p>{{notification}} If you not receive the verification message on your email please click the Link Below To Got link.</p>
+            <p>Welcome to our platform!  To unlock all features and secure your account, please verify your email. Check your inbox for a verification link. Thank you for choosing us! . If you not receive the verification link on your email please click the Button Below To Get link.</p>
             <hr>
             <a  href="#" @click="handleResendClick" class="btn btn-warning" :disabled="isButtonDisabled">{{ buttonLabel }}</a>
-            <p v-if="clickLimitReached" >You've reached the click limit. Retry in {{ remainingTime }} seconds.</p>
+            <!-- <p v-if="clickLimitReached" >You've reached the click limit. Retry in {{ remainingTime }} seconds.</p> -->
+            <p v-if="clickLimitReached" >You've reached the click limit.</p>
+
         </div>
     </div>
 </template>

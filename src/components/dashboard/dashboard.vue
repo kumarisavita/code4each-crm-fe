@@ -4,6 +4,7 @@ import SideBar from './layouts/sidebar.vue';
 import Content from './layouts/content.vue';
 import { useAuth } from '../../service/useAuth';
 import { useRouter } from 'vue-router';
+import Swal from 'sweetalert2'
 import { ref,defineProps,onMounted } from 'vue';
 import WordpressService from '@/service/WordpressService';
 
@@ -30,18 +31,25 @@ const fetchDashboardData = async () => {
       loading.value = false;
       dashboardData.value = response.data;    
     }
+
   } catch (error) {
-    console.error('Error fetching dashboard data', error);
-    router.push('/login');
-    error.value = true;
-    loading.value = false;
+      if (error.response && error.response.status === 401) {
+        console.error('Authentication failed. Please log in.',error);
+        error.value = true;
+        loading.value = false;
+        localStorage.removeItem('access_token');
+        router.push('/login');
+    } else {
+      console.error('An error occurred:', error.message);
+    }
   }
 };
 
 const resendLink = async () => {
   try {
     const response = await WordpressService.resendLink();
-    alert(response.data.message);
+    Swal.fire(response.data.message);
+    // alert(response.data.message);
 
   } catch (error) {
     console.log(error);

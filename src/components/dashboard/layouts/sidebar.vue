@@ -2,7 +2,7 @@
     
     <aside id="sidebar-wrapper">
             <div class="sidebar-brand">
-              <!-- <img src="/images/black-logo.png"> -->
+              <img src="/images/black-logo.png">
             </div>
             <ul class="sidebar-nav">
               <li class="active">

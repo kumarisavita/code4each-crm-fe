@@ -3,6 +3,7 @@ import { ref } from 'vue';
 import Signup from '@/components/signup/signup.vue';
 import AgencyDetailModal from './AgencyDetailModal.vue';
 import WordpressService from '@/service/WordpressService';
+import Swal from 'sweetalert2'
 
 const showModal = ref(false);
 const categories = ref([]);
@@ -25,6 +26,9 @@ const openModalWithCategories = async () => {
     }
   } catch (error) {
     console.error(error);
+    if(error.response.status === 403 && error.response.data.message === "Your email address is not verified." ){
+      Swal.fire('Please Verify Your Email to Proceed Further');
+    }
   }
 
 };
