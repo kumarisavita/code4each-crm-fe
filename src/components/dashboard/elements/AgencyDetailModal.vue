@@ -111,7 +111,7 @@ const startCountdown = () => {
         <VeeInput name="logo" placeholder="Website Logo" class="form-control input" label="Website Logo" type="file" />
         <VeeInput name="description" :textarea="true" placeholder="Description..(optional)" class="form-control input"
           label="Description" />
-        <VeeInput name="agency_id" type="hidden" :hiddenValue="dashboardData?.user?.agency_id" />
+        <VeeInput name="agency_id" type="hidden" :hiddenValue="dashboardData.user.agency_id" />
         <button type="submit" class="btn btn-success mt-4">Submit</button>
       </div>
     </form>
