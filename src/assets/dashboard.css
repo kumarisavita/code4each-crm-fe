@@ -639,7 +639,7 @@ section#content-wrapper\ main-content\ side-content {
     max-width:unset  !important;
     padding: 20px 40px !important;
 }
-    .responsive-navbar.navbar {
+#dasboardPage  .responsive-navbar.navbar {
     position: relative !important;
     display: -ms-flexbox;
     display: flex;

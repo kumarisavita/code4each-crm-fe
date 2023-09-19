@@ -8,7 +8,7 @@ import RegisterButton from '../../common/RegisterButton.vue';
             <!-- Navbar -->
             <nav class="navbar navbar-expand-lg  navbar-dark navbar-bg-light">
                 <div class="navbar-brand" href="#">
-                    <a href="index.html"><img src="//images/black-logo.png"></a>
+                    <a href="index.html"><img src="/images/black-logo.png"></a>
                 </div>
                 <button class="navbar-toggler  ms-auto ms-md-2" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -36,7 +36,7 @@ import RegisterButton from '../../common/RegisterButton.vue';
             <div class="row align-items-center">
                 <div class="col-12 col-lg-5 col-xl-6 order-lg-2 mb-8 mb-lg-0">
                     <!-- Image -->
-                    <!-- <img src="/images/02.png" class="img-fluid" alt="..."> -->
+                    <img src="/images/02.png" class="img-fluid" alt="...">
                 </div>
                 <div class="col-12 col-lg-7 col-xl-6 order-lg-1">
                     <h1 class="display-4 mb-3">

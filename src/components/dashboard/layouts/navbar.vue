@@ -52,7 +52,7 @@ const props = defineProps({
                         <li class="dropdown profile-1">
                           <a href="#" data-bs-toggle="dropdown" class="nav-link  leading-none d-flex">
                             <span>
-                              <!-- <img src="/images/15.jpg" alt="profile-user" class="avatar  profile-user brround cover-image"> -->
+                              <img src="/images/15.jpg" alt="profile-user" class="avatar  profile-user brround cover-image">
                             </span>
                           </a>
                           <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">

@@ -13,8 +13,8 @@ const WordpressService = {
   resendLink: (data) => {
     return requests(baseUrl).get(`/email/resend`)
   },
-  agencyDetails: (data) => {
-    return requests(baseUrl).post(`/agency-details`, data)
+  agencyDetails: (data,headers) => {
+    return requests(baseUrl).post(`/agency-website-details`, data, {headers} )
   },
   getCategoryOption: () => {
     return requests(baseUrl).get(`/get-website-categories`)
