@@ -14,7 +14,9 @@ const getHeader = () => {
 }
 
 export const requests = (host?: string, apiKey?: string) => {
-  const baseUrl = 'http://127.0.0.1:8000/api'
+  // const baseUrl = 'http://127.0.0.1:8000/api'
+  const baseUrl = 'https://crmapi.code4each.com/api'
+  
 
   const axiosInstance = axios.create({
     baseURL: baseUrl,
