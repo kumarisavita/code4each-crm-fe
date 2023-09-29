@@ -60,7 +60,6 @@ const submitAgencyDetail = handleSubmit(async (values) => {
       startCountdown();
       clearFormValues(values);
       window.location.reload();
-      // console.log(values)
       loading.value = false;
     }
   } catch (error) {
@@ -115,10 +114,18 @@ const startCountdown = () => {
         <button type="submit" class="btn btn-success mt-4">Submit</button>
       </div>
     </form>
+    <div v-if="loading">
+          <div class="spinner-container" >
+            <div class="spinner-border  text-warning" role="status">
+              <span class="visually-hidden">Loading...</span>
+            </div>
+          </div>
+        </div>
     <template #footer>
       <button type="button" class="btn btn-success text-center" @click="closeModal">
         Custom Close
       </button>
     </template>
   </Modal>
+ 
 </template>
