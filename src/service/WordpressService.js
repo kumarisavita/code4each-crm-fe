@@ -22,8 +22,13 @@ const WordpressService = {
   regenerateWebsite: (data) => {
     return requests(baseUrl).post(`/components/regenerate`, data)
   },
-  getGlobalColors: () => {
-    return requests(baseUrl).get(`/get-global-colors-wordpress-components`)
+  getGlobalColors: (data) => {
+    return requests(baseUrl).get(`/get-components-global-colors`, {
+      params: data
+    },)
+  },
+  updateGlobalColors: (data) => {
+    return requests(baseUrl).post(`/update-global-colors`, data)
   },
 }
 export default WordpressService

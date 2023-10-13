@@ -52,10 +52,13 @@ const resendLink = async () => {
   }
 };
 
+const loadingOnOff = async (value) => {
+  loading.value = value;
+};
 onMounted(() => {
   fetchDashboardData();
   EventBus.on("fetchDashboardData", fetchDashboardData);
-  EventBus.on("getGlobalColors", getGlobalColors);
+  EventBus.on("loadingOnOff", loadingOnOff);
 });
 
 const regenerateWebsite = async () => {
@@ -75,21 +78,10 @@ const regenerateWebsite = async () => {
   loading.value = false;
 };
 
-const getGlobalColors = async () => {
-  let globalColors = [];
-  try {
-    const response = await WordpressService.getGlobalColors();
-    console.log(response.data, "rrrrrrrrrrrrrrrrr");
-    if (response.status === 200 && response.data.success) {
-      globalColors = response.data;
-    }
-  } catch (error) {
-    console.log(error);
-    console.error("Error Occur while getting global colors", error);
-  }
-  return globalColors;
-};
-provide("dashBoardMethods", { regenerateWebsite, fetchDashboardData });
+provide("dashBoardMethods", {
+  regenerateWebsite,
+  fetchDashboardData,
+});
 </script>
 
 <template>
