@@ -44,7 +44,9 @@ const fetchDashboardData = async () => {
 
 const getDefaultColors = async () => {
   try {
-    const response = await WordpressService.CustomizeColors.getDefaulColors();
+    const response = await WordpressService.CustomizeColors.getDefaulColors({
+      website_url: dashboardData?.value?.agency_website_info[0].website_domain,
+    });
     if (response.status === 200 && response.data) {
       console.log(response, "ddddd");
       defaultColors.value = response.data;
@@ -62,18 +64,16 @@ onMounted(async () => {
 
 const changeDefaultColors = async (colorSetId) => {
   loadingForColors.value = true;
-  console.log(colorSetId, "iiiiiiiiii");
   try {
     loadingForColors.value = true;
-    // const response = await WordpressService.Components.changeComponent({
-    //   website_url: dashboardData?.value?.agency_website_info[0].website_domain,
-    //   component_unique_id_old: oldComponent.value,
-    //   component_unique_id_new: newComponent.value,
-    // });
+    const response = await WordpressService.CustomizeColors.changeDefaulColors({
+      website_url: dashboardData?.value?.agency_website_info[0].website_domain,
+      color_id: colorSetId,
+    });
 
-    // if (response.status === 200) {
-    //   await getDefaultColors();
-    // }
+    if (response.status === 200) {
+      await getDefaultColors();
+    }
   } catch (error) {
     console.error("An error occurred:", error);
   }
@@ -114,9 +114,11 @@ const changeDefaultColors = async (colorSetId) => {
               <button
                 class="btn btn-sm btn-primary changeColorBtn"
                 @click="changeDefaultColors(colorSet.id)"
+                v-if="colorSet.active === false"
               >
                 Choose
               </button>
+              <span v-else class="active-span">Active</span>
             </div>
           </div>
         </section>
@@ -144,5 +146,21 @@ const changeDefaultColors = async (colorSetId) => {
 
 .default-color {
   margin: 30px;
+}
+.active-span {
+  background-color: #27a125; /* Blue background color */
+  color: #fff; /* White text color */
+  padding: 4px 4px; /* Padding for better spacing */
+  border-radius: 5px; /* Rounded corners */
+  font-weight: bold; /* Bold text */
+  text-transform: uppercase; /* Uppercase text */
+  text-align: center; /* Center the text */
+  cursor: pointer; /* Change the cursor to a pointer when hovering */
+  transition: background-color 0.3s; /* Add a smooth transition */
+  margin-left: 20px;
+}
+
+.active-span:hover {
+  background-color: #0056b3; /* Darker blue on hover */
 }
 </style>

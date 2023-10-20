@@ -46,8 +46,13 @@ const WordpressService = {
     },
   },
   CustomizeColors: {
-    getDefaulColors: () => {
-      return requests(baseUrl).get(`/color-combinations`)
+    getDefaulColors: (data) => {
+      return requests(baseUrl).get(`/color-combinations`, {
+        params: data
+      },)
+    },
+    changeDefaulColors: (data) => {
+      return requests(baseUrl).post(`/update-color-combination`, data)
     },
   }
 }
