@@ -15,12 +15,8 @@
           />
         </div>
         <div class="login-content">
-          <ForgetPasswordSendEmail
-            v-if="showForgetForm"
-            @show-login="showForgetForm = false"
-          />
-          <div v-else>
-            <form @submit.prevent="login">
+          <div>
+            <form @submit.prevent="resetPassword">
               <img
                 src="https://raw.githubusercontent.com/sefyudem/Responsive-Login-Form/master/img/avatar.svg"
               />
@@ -47,22 +43,20 @@
                 </div>
               </div>
               <LoginInputDiv
-                class="one"
-                iconClass="fa-user"
-                fieldLabel="Username"
-                fieldName="email"
-              />
-              <LoginInputDiv
-                class="pass"
+                class="on"
                 iconClass="fa-lock"
                 fieldLabel="Password"
                 fieldName="password"
                 type="password"
               />
-              <a href="#" class="forgetLink" @click="handleForgotPasswordClick"
-                >Forgot Password?</a
-              >
-              <button type="submit" class="btn-link">Login</button>
+              <LoginInputDiv
+                class="pass"
+                iconClass="fa-lock"
+                fieldLabel="Confirm"
+                fieldName="confirm_password"
+                type="password"
+              />
+              <button type="submit" class="btn-link">Save</button>
             </form>
           </div>
         </div>
@@ -78,7 +72,6 @@ import WordpressService from "@/service/WordpressService";
 import { useForm } from "vee-validate";
 import * as yup from "yup";
 import LoginInputDiv from "@/components/login/elements/LoginInputDiv.vue";
-import Alert from "@/components/common/Alert.vue";
 import ForgetPasswordSendEmail from "@/components/forget_password/ForgetPasswordSendEmail.vue";
 
 const loginSuccess = ref(false);
@@ -92,44 +85,44 @@ const email = ref("");
 const password = ref("");
 const { handleSubmit } = useForm({
   validationSchema: yup.object({
-    email: yup.string().required().email(),
     password: yup.string().required().min(6),
+    confirm_password: yup
+      .string()
+      .oneOf([yup.ref("password"), null], "Passwords must match")
+      .required("Confirm password is required"),
   }),
 });
 
-const login = handleSubmit(async (values) => {
+const resetPassword = handleSubmit(async (values) => {
   try {
-    const response = await WordpressService.loginUser(values);
-    if (response.status === 200 && response.data.success) {
-      const token = response.data.token;
-      localStorage.setItem("access_token", token);
-      const fetchDashboardData = await WordpressService.fetchDashboardData();
-      if (
-        fetchDashboardData.status === 200 &&
-        fetchDashboardData.data.success
-      ) {
-        loginSuccess.value = true;
-        router.push("/dashboard");
-      } else {
-        loginSuccess.value = false;
-        router.push("/login");
-      }
-    } else {
-      errorMesssage.value = response.data.message; // Set an error message
-    }
+    console.log("hhhhhhhhhhhhhhh");
+    // const response = await WordpressService.loginUser(values);
+    // if (response.status === 200 && response.data.success) {
+    //   const token = response.data.token;
+    //   localStorage.setItem("access_token", token);
+    //   const fetchDashboardData = await WordpressService.fetchDashboardData();
+    //   if (
+    //     fetchDashboardData.status === 200 &&
+    //     fetchDashboardData.data.success
+    //   ) {
+    //     loginSuccess.value = true;
+    //     router.push("/dashboard");
+    //   } else {
+    //     loginSuccess.value = false;
+    //     router.push("/login");
+    //   }
+    // } else {
+    //   errorMesssage.value = response.data.message; // Set an error message
+    // }
   } catch (error) {
-    if (error.response && error.response.data && error.response.data.errors) {
-      bakendError.value = Object.values(error.response.data.errors).flat();
-    } else {
-      console.error(error);
-      errorMesssage.value = error?.response?.data?.message; // Set an error message
-    }
+    // if (error.response && error.response.data && error.response.data.errors) {
+    //   bakendError.value = Object.values(error.response.data.errors).flat();
+    // } else {
+    //   console.error(error);
+    //   errorMesssage.value = error?.response?.data?.message; // Set an error message
+    // }
   }
 });
-
-const handleForgotPasswordClick = async () => {
-  showForgetForm.value = true;
-};
 </script>
 <style >
 @import "../../assets/login.css";

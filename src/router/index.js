@@ -2,6 +2,10 @@ import { createRouter, createWebHistory } from 'vue-router'
 import LoginView from '../views/LoginView.vue'
 import DashboardView from '../views/Dashboard.vue'
 import MyHomeView from '../views/HomeView.vue'
+import CustomizeView from '../views/CustomizeView.vue'
+import CustomizeColors from '../views/CustomizeWebsiteColors.vue'
+import CustomizeWebsiteFonts from '../views/CustomizeWebsiteFonts.vue'
+import RessetPassword from "@/components/forget_password/RessetPassword.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -15,24 +19,49 @@ const router = createRouter({
       path: '/login',
       name: 'login',
       component: LoginView,
-      meta: { title: 'Login' } 
+      meta: { title: 'Login' }
     },
     {
       path: '/dashboard',
       name: 'dashboard',
       component: DashboardView,
-      meta: { requiresAuth: true ,title: 'Dashbaord' } 
+      meta: { requiresAuth: true, title: 'Dashbaord' }
     },
     {
       path: '/about',
       name: 'about',
       component: () => import('../views/AboutView.vue')
+    },
+    {
+      path: '/customize',
+      name: 'customize',
+      component: CustomizeView,
+    },
+    {
+      path: '/reset-password',
+      name: 'reset-password',
+      component: RessetPassword,
+    },
+    {
+      path: '/customize/colors',
+      name: 'customize_colors',
+      component: CustomizeColors
+    },
+    {
+      path: '/customize/components',
+      name: 'customize_components',
+      component: CustomizeView
+    },
+    {
+      path: '/customize/fonts',
+      name: 'customize_fonts',
+      component: CustomizeWebsiteFonts
     }
   ]
 });
 
 router.beforeEach((to, from, next) => {
-  const pageTitle = to.meta.title || 'Code4Each CRM'; 
+  const pageTitle = to.meta.title || 'Code4Each CRM';
   document.title = pageTitle;
   if (to.path === "/login" && isLoggedIn()) {
     next("/dashboard");
@@ -50,16 +79,5 @@ router.beforeEach((to, from, next) => {
 function isLoggedIn() {
   return localStorage.getItem('access_token') !== null && !undefined;
 }
-
-// router.beforeEach((to, from, next) => {
-//   const pageTitle = to.meta.title || 'Code4Each CRM'; 
-//   document.title = pageTitle;
-//   if (to.meta.requiresAuth && !isLoggedIn()) {
-//     next('/login');
-//   } else {
-//     document.title = to.meta.title || 'Code4Each CRM';
-//     next();
-//   }
-// });
 
 export default router;

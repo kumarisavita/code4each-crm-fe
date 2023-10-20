@@ -1,6 +1,6 @@
 <script setup>
-import Dashboard from '../components/dashboard/dashboard.vue';
+import Dashboard from "../components/dashboard/dashboard.vue";
 </script>
 <template>
-    <Dashboard/>
+  <Dashboard />
 </template>

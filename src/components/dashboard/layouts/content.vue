@@ -48,9 +48,9 @@ const props = defineProps({
           <!-- End breadcrumb -->
           <div class="ms-auto">
             <div>
-              <a href="#" class="btn btn-primary button-icon me-3 mt-1 mb-1">
+              <!-- <a href="#" class="btn btn-primary button-icon me-3 mt-1 mb-1">
                 <span> <i class="fa fa-download"></i>Download </span>
-              </a>
+              </a> -->
             </div>
           </div>
         </div>
@@ -62,17 +62,17 @@ const props = defineProps({
             <div class="page-content col-xl-7 col-lg-6 col-md-8">
               <h3 class="mb-1">
                 Welcome back!
-                <span class="font-weight-bold text-primary">Code4aech</span>
+                <!-- <span class="font-weight-bold text-primary">Code4aech</span> -->
               </h3>
               <p class="mb-0 fs-16">
                 Want to be the first to know about Flaira updates? Subscribe Now
               </p>
             </div>
             <div class="col-xl-4 col-lg-4 col-md-12 text-lg-end">
-              <a href="#" class="btn btn-success me-3 mt-1 mb-1" id="skip"
+              <!-- <a href="#" class="btn btn-success me-3 mt-1 mb-1" id="skip"
                 >Skip</a
               >
-              <a href="#" class="btn btn-danger mt-1 mb-1">Subscribe Now</a>
+              <a href="#" class="btn btn-danger mt-1 mb-1">Subscribe Now</a> -->
             </div>
           </div>
         </div>

@@ -88,7 +88,7 @@ provide("dashBoardMethods", {
   <div class="page" id="dasboardPage">
     <div class="page-main">
       <div id="wrapper" :class="{ toggled: isSidebarToggled }">
-        <SideBar></SideBar>
+        <SideBar :dashboardData="dashboardData?.user"></SideBar>
         <NavBar
           @logout="logout"
           @nav-bar-toggle="navBarToggle"

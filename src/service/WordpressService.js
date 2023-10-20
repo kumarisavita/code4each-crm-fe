@@ -30,5 +30,25 @@ const WordpressService = {
   updateGlobalColors: (data) => {
     return requests(baseUrl).post(`/update-global-colors`, data)
   },
+  Components: {
+    getActiveComponents: (data) => {
+      return requests(baseUrl).get(`/fetch-active-components-detail`, {
+        params: data
+      },)
+    },
+    getAllComponents: (data) => {
+      return requests(baseUrl).get(`/fetch-components`, {
+        params: data
+      },)
+    },
+    changeComponent: (data) => {
+      return requests(baseUrl).post(`/change-component`, data)
+    },
+  },
+  CustomizeColors: {
+    getDefaulColors: () => {
+      return requests(baseUrl).get(`/color-combinations`)
+    },
+  }
 }
 export default WordpressService
