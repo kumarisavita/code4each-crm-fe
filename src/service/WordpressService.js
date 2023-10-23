@@ -54,6 +54,16 @@ const WordpressService = {
     changeDefaulColors: (data) => {
       return requests(baseUrl).post(`/update-color-combination`, data)
     },
+  },
+  CustomizeFonts: {
+    getDefaulFonts: (data) => {
+      return requests(baseUrl).get(`/get-fonts`, {
+        params: data
+      },)
+    },
+    changeDefaulFonts: (data) => {
+      return requests(baseUrl).post(`/change-font-family`, data)
+    },
   }
 }
 export default WordpressService

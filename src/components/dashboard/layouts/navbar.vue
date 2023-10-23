@@ -49,7 +49,7 @@ const props = defineProps({
             <div class="collapse navbar-collapse" id="navbarSupportedContent-4">
               <ul class="nav nav-item header-icons navbar-nav-right ms-auto">
                 <!-- Country-selector-->
-                <li class="dropdown header-search">
+                <!-- <li class="dropdown header-search">
                   <a
                     class="nav-link icon header-search"
                     data-bs-toggle="dropdown"
@@ -69,7 +69,7 @@ const props = defineProps({
                       </button>
                     </div>
                   </div>
-                </li>
+                </li> -->
                 <!-- CART -->
                 <li class="dropdown profile-1">
                   <a
@@ -99,7 +99,7 @@ const props = defineProps({
                       </div>
                     </div>
                     <div class="dropdown-divider m-0"></div>
-                    <a class="dropdown-item" href="profile.html">
+                    <!-- <a class="dropdown-item" href="profile.html">
                       <i class="dropdown-icon fa fa-user"></i> Profile
                     </a>
                     <a class="dropdown-item" href="settings.html">
@@ -112,13 +112,13 @@ const props = defineProps({
                     <a class="dropdown-item" href="emailservices.html">
                       <i class="dropdown-icon fa fa-comment"></i> Message
                     </a>
-                    <div class="dropdown-divider mt-0"></div>
+                    <div class="dropdown-divider mt-0"></div> -->
                     <a class="dropdown-item" @click="logout">
                       <i class="dropdown-icon fa fa-sign-in"></i> Sign out
                     </a>
                   </div>
                 </li>
-                <li class="dropdown header-settings">
+                <!-- <li class="dropdown header-settings">
                   <a
                     href="javascript:void(0);"
                     class="nav-link icon"
@@ -127,7 +127,7 @@ const props = defineProps({
                   >
                     <i class="fa fa-align-right"></i>
                   </a>
-                </li>
+                </li> -->
               </ul>
             </div>
           </div>

@@ -47,33 +47,7 @@ const props = defineProps({
           </ol>
           <!-- End breadcrumb -->
           <div class="ms-auto">
-            <div>
-              <!-- <a href="#" class="btn btn-primary button-icon me-3 mt-1 mb-1">
-                <span> <i class="fa fa-download"></i>Download </span>
-              </a> -->
-            </div>
-          </div>
-        </div>
-        <div class="">
-          <div class="banner banner-color mt-0 row">
-            <div class="col-xl-1 col-lg-2 col-md-2 p-0">
-              <img src="/images/02.png" alt="image" class="image" />
-            </div>
-            <div class="page-content col-xl-7 col-lg-6 col-md-8">
-              <h3 class="mb-1">
-                Welcome back!
-                <!-- <span class="font-weight-bold text-primary">Code4aech</span> -->
-              </h3>
-              <p class="mb-0 fs-16">
-                Want to be the first to know about Flaira updates? Subscribe Now
-              </p>
-            </div>
-            <div class="col-xl-4 col-lg-4 col-md-12 text-lg-end">
-              <!-- <a href="#" class="btn btn-success me-3 mt-1 mb-1" id="skip"
-                >Skip</a
-              >
-              <a href="#" class="btn btn-danger mt-1 mb-1">Subscribe Now</a> -->
-            </div>
+            <div></div>
           </div>
         </div>
         <div class="row">

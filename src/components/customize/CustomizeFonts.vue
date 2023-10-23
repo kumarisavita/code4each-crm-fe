@@ -25,11 +25,7 @@ const loading = ref(true);
 const error = ref(false);
 const errors = ref([]);
 const dashboardData = ref([]);
-const userData = ref([]);
-const showModal = ref(false);
-const loadingForComonents = ref(true);
-const oldComponent = ref();
-const defaultColors = ref();
+const loadingForFonts = ref(true);
 
 const fetchDashboardData = async () => {
   try {
@@ -51,21 +47,14 @@ const fetchDashboardData = async () => {
   }
 };
 
-const getDefaultColors = async () => {
+const getDefaultFonts = async () => {
   try {
-    defaultColors.value = [
-      ["#3366FF", "#FF33AA", "#33FF00", "#FF9900", "#33AAFF"],
-      ["#FF3300", "#33FF99", "#FF00CC", "#33CCFF", "#FF0066"],
-      ["#FF5733", "#33FF6A", "#336AFF", "#FF33B8", "#33FFEF"],
-      ["#FFAA33", "#33FF10", "#3351FF", "#FFA733", "#33FF77"],
-    ];
-    // const response = await WordpressService.Components.getActiveComponents({
-    //   website_url: dashboardData?.value?.agency_website_info[0].website_domain,
-    // });
-    // if (response.status === 200 && response.data.success) {
-    //   activeComponentsDetail.value = response.data.components_detail;
-    // }
-    // console.log(activeComponentsDetail.value, "ddddd");
+    const response = await WordpressService.CustomizeFonts.getDefaulFonts({
+      website_url: dashboardData?.value?.agency_website_info[0].website_domain,
+    });
+    if (response.status === 200 && response.data.success) {
+      defaultUrls.value = response.data.fonts;
+    }
   } catch (error) {}
 };
 
@@ -75,62 +64,31 @@ const loadingOnOff = async (value) => {
 
 onMounted(async () => {
   await fetchDashboardData();
-  await getDefaultColors();
-  loadingForComonents.value = false;
+  await getDefaultFonts();
+  loadingForFonts.value = false;
   EventBus.on("fetchDashboardData", fetchDashboardData);
   EventBus.on("loadingOnOff", loadingOnOff);
 });
 
-provide("dashBoardMethods", {
-  fetchDashboardData,
-});
+const defaultUrls = ref();
 
-const closeModal = () => {
-  allComponentsDetailAccToType.value = [];
-  showModal.value = false;
-  selectedImage.value = null;
-};
+const changeDefaultFonts = async (fontSetId) => {
+  loadingForFonts.value = true;
+  try {
+    loadingForFonts.value = true;
+    const response = await WordpressService.CustomizeFonts.changeDefaulFonts({
+      website_url: dashboardData?.value?.agency_website_info[0].website_domain,
+      font_id: fontSetId,
+    });
 
-const showSelectedComponent = (component_unique_id, imgPath) => {
-  selectedImage.value = component_unique_id;
-  console.log(component_unique_id, "iiii");
-  newComponent.value = component_unique_id;
-
-  Swal.fire({
-    width: 900,
-    imageUrl: imgPath,
-    imageWidth: 800,
-    imageHeight: 400,
-    imageAlt: "Custom image",
-    confirmButtonText: "Change Component",
-    showCloseButton: true,
-  }).then((result) => {
-    if (result.isConfirmed) {
-      changeComponent();
+    if (response.status === 200) {
+      await getDefaultFonts();
     }
-  });
+  } catch (error) {
+    console.error("An error occurred:", error);
+  }
+  loadingForFonts.value = false;
 };
-
-const changeComponent = async () => {
-  console.log("ssssssssssssssss");
-  loadingForComonents.value = true;
-  showModal.value = false;
-  await getActiveComponentsData();
-  loadingForComonents.value = false;
-};
-const defaultFonts = ref([
-  { id: "Alumni Sans Collegiate One", name: "Alumni Sans Collegiate One" },
-  { id: "Lato", name: "Lato" },
-  { id: "Playfair Display", name: "Playfair Display" },
-  { id: "Merriweather", name: "Merriweather" },
-]);
-
-const defaultFontsSelectBox = computed(() =>
-  defaultFonts.value.map((category) => ({
-    label: category.name,
-    value: category.id,
-  }))
-);
 </script>
 
 <template>
@@ -143,17 +101,37 @@ const defaultFontsSelectBox = computed(() =>
           @nav-bar-toggle="navBarToggle"
           :dashboardData="dashboardData?.user"
         ></NavBar>
-        <div>
-          <SelectBox
-            name="font_id"
-            inputClass="form-select"
-            ariaLabel="Select an option"
-            :options="defaultFontsSelectBox"
-            defaultText="Open this select menu"
-            defaultValue=""
-            label="Fonts"
-          >
-          </SelectBox>
+        <div v-if="loadingForFonts">
+          <div class="spinner-container">
+            <div class="spinner-border text-warning" role="status">
+              <span class="visually-hidden">Loading...</span>
+            </div>
+          </div>
+        </div>
+        <div class="side-app">
+          <div class="main-container container-fluid">
+            <div class="row">
+              <div
+                v-for="(val, index) in defaultUrls"
+                :key="index"
+                class="image-container"
+              >
+                <img
+                  :src="'https://devcrmapi.code4each.com/' + val.preview"
+                  alt="Dynamic"
+                  width="300"
+                />
+                <button
+                  class="btn btn-sm btn-primary changeColorBtn"
+                  @click="changeDefaultFonts(val.id)"
+                  v-if="val.active === false"
+                >
+                  Choose
+                </button>
+                <span v-else class="active-span">Active</span>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -161,29 +139,24 @@ const defaultFontsSelectBox = computed(() =>
 </template>
 
 <style scoped>
-@import url("https://fonts.googleapis.com/css?family=Alumni Sans Collegiate One");
-@import url("https://fonts.googleapis.com/css?family=Alumni Sans Collegiate One");
+.changeColorBtn {
+  margin-left: 20px;
+}
 
-/* Montserrat Font */
-.heading1 {
-  font-family: "Alumni Sans Collegiate One";
+.active-span {
+  background-color: #27a125; /* Blue background color */
+  color: #fff; /* White text color */
+  padding: 4px 4px; /* Padding for better spacing */
+  border-radius: 5px; /* Rounded corners */
+  font-weight: bold; /* Bold text */
+  text-transform: uppercase; /* Uppercase text */
+  text-align: center; /* Center the text */
+  cursor: pointer; /* Change the cursor to a pointer when hovering */
+  transition: background-color 0.3s; /* Add a smooth transition */
+  margin-left: 20px;
 }
-.heading2 {
-  font-family: "Open Sans";
-}
-.heading3 {
-  font-family: "Lato";
-}
-.heading4 {
-  font-family: "Montserrat";
-}
-.heading5 {
-  font-family: "Raleway";
-}
-.heading6 {
-  font-family: "Playfair Display";
-}
-.heading7 {
-  font-family: "Nunito";
+
+.active-span:hover {
+  background-color: #0056b3; /* Darker blue on hover */
 }
 </style>
