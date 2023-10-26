@@ -73,6 +73,7 @@ const getGlobalColors = async () => {
 };
 onMounted(() => {
   getGlobalColors();
+  reloadIframe();
   EventBus.on("reloadIframe", reloadIframe);
 });
 
@@ -92,11 +93,11 @@ provide("reloadIframe", "reloadIframe");
               <div class="img-wrapper">
                 <iframe
                   ref="websiteIframe"
-                  v-if="websiteData['0']?.website_domain"
+                  v-if="websiteData.length >= 1"
                   class="websiteLinkFrame"
                   height="450"
                   frameborder="0"
-                  :src="websiteData['0'].website_domain"
+                  :src="websiteData[0].website_domain"
                 ></iframe>
                 <img v-else src="/images/wordpres.png" />
               </div>

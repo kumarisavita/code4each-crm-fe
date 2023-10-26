@@ -93,9 +93,11 @@ const closeModal = () => {
 };
 
 const showSelectedComponent = (component_unique_id, imgPath) => {
+  if (component_unique_id === oldComponent.value) {
+    return;
+  }
   selectedImage.value = component_unique_id;
   newComponent.value = component_unique_id;
-
   Swal.fire({
     width: 900,
     imageUrl: imgPath,
@@ -188,14 +190,26 @@ const changeComponent = async () => {
                   )
                 "
               >
-                <img
-                  :src="
-                    'https://devcrmapi.code4each.com/' +
-                    allComponentValue.preview
-                  "
-                  alt="Dynamic"
-                  class="testimonialImg"
-                />
+                <div
+                  class=""
+                  :class="{
+                    imageContainer:
+                      allComponentValue.component_unique_id === oldComponent,
+                  }"
+                >
+                  <img
+                    :src="
+                      'https://devcrmapi.code4each.com/' +
+                      allComponentValue.preview
+                    "
+                    alt="Dynamic"
+                    class="testimonialImg"
+                    :class="{
+                      'disabled-image':
+                        allComponentValue.component_unique_id === oldComponent,
+                    }"
+                  />
+                </div>
               </div>
             </div>
           </Modal>
@@ -284,7 +298,19 @@ const changeComponent = async () => {
   width: 150px;
   height: 120px;
 }
+.imageContainer {
+  display: inline-block;
+  position: relative;
+}
 
+.imageContainer::before {
+  content: "\2714"; /* Unicode checkmark character */
+  position: absolute;
+  left: 111%;
+  transform: translate(-50%, -50%);
+  font-size: 24px;
+  color: green;
+}
 p {
   font-size: 16px;
   line-height: 1.5;
@@ -297,5 +323,10 @@ p {
   width: 300px;
   border: 2px solid green;
   box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.5);
+}
+
+.disabled-image {
+  opacity: 0.5; /* Reduce opacity to make it appear disabled */
+  pointer-events: none; /* Disable pointer events to prevent interaction */
 }
 </style>

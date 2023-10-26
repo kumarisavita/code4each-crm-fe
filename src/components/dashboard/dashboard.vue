@@ -55,8 +55,8 @@ const resendLink = async () => {
 const loadingOnOff = async (value) => {
   loading.value = value;
 };
-onMounted(() => {
-  fetchDashboardData();
+onMounted(async () => {
+  await fetchDashboardData();
   EventBus.on("fetchDashboardData", fetchDashboardData);
   EventBus.on("loadingOnOff", loadingOnOff);
 });
@@ -68,13 +68,12 @@ const regenerateWebsite = async () => {
       agency_id: dashboardData.value.user.agency_id,
       website_url: dashboardData.value.agency_website_info[0].website_domain,
     });
-
-    fetchDashboardData();
-    EventBus.emit("reloadIframe");
+    await fetchDashboardData();
   } catch (error) {
     console.log(error);
     console.error("Error Occur while regenerating website", error);
   }
+  EventBus.emit("reloadIframe");
   loading.value = false;
 };
 
