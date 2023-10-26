@@ -64,6 +64,16 @@ const WordpressService = {
     changeDefaulFonts: (data) => {
       return requests(baseUrl).post(`/change-font-family`, data)
     },
+  },
+  WebsiteSettings: {
+    getSiteDetail: (data) => {
+      return requests(baseUrl).get(`/settings`, {
+        params: data
+      },)
+    },
+    updateSiteSettings: (data, headers) => {
+      return requests(baseUrl).post(`/update-settings`, data, { headers })
+    },
   }
 }
 export default WordpressService

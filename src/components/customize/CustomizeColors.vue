@@ -48,7 +48,6 @@ const getDefaultColors = async () => {
       website_url: dashboardData?.value?.agency_website_info[0].website_domain,
     });
     if (response.status === 200 && response.data) {
-      console.log(response, "ddddd");
       defaultColors.value = response.data;
     }
   } catch (error) {
@@ -85,7 +84,7 @@ const changeDefaultColors = async (colorSetId) => {
   <div class="page" id="dasboardPage">
     <div class="page-main">
       <div id="wrapper" :class="{ toggled: isSidebarToggled }">
-        <SideBar :dashboardData="dashboardData?.user"></SideBar>
+        <SideBar :dashboardData="dashboardData"></SideBar>
         <NavBar
           @logout="logout"
           @nav-bar-toggle="navBarToggle"

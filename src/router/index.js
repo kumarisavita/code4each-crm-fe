@@ -4,6 +4,7 @@ import DashboardView from '../views/Dashboard.vue'
 import MyHomeView from '../views/HomeView.vue'
 import CustomizeView from '../views/CustomizeView.vue'
 import CustomizeColors from '../views/CustomizeWebsiteColors.vue'
+import SiteSettings from '../views/SiteSettings.vue'
 import CustomizeWebsiteFonts from '../views/CustomizeWebsiteFonts.vue'
 import RessetPassword from "@/components/forget_password/RessetPassword.vue";
 
@@ -56,6 +57,11 @@ const router = createRouter({
       path: '/customize/fonts',
       name: 'customize_fonts',
       component: CustomizeWebsiteFonts
+    },
+    {
+      path: '/settings',
+      name: 'site_settings',
+      component: SiteSettings
     }
   ]
 });
