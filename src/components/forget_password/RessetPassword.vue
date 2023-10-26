@@ -120,7 +120,7 @@ const resetPassword = handleSubmit(async (values) => {
       bakendError.value = Object.values(error.response.data.errors).flat();
     } else {
       console.error(error);
-      errorMesssage.value = "server error try after some time"; // Set an error message
+      errorMesssage.value = error?.response?.data?.error; // Set an error message
     }
   }
 });
