@@ -43,6 +43,15 @@
                 </div>
               </div>
               <LoginInputDiv
+                class="one"
+                iconClass="fa-user"
+                fieldLabel="Email"
+                fieldName="email"
+                :disabled="true"
+                :hiddenValue="email"
+              />
+
+              <LoginInputDiv
                 class="on"
                 iconClass="fa-lock"
                 fieldLabel="Password"
@@ -67,12 +76,14 @@
 
 <script setup lang="ts">
 import { ref } from "vue";
-import { useRouter } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 import WordpressService from "@/service/WordpressService";
 import { useForm } from "vee-validate";
 import * as yup from "yup";
 import LoginInputDiv from "@/components/login/elements/LoginInputDiv.vue";
 import ForgetPasswordSendEmail from "@/components/forget_password/ForgetPasswordSendEmail.vue";
+import Swal from "sweetalert2";
+const route = useRoute();
 
 const loginSuccess = ref(false);
 const showForgetForm = ref(false);
@@ -81,7 +92,7 @@ const bakendError = ref("");
 const errorMesssage = ref("");
 const router = useRouter();
 
-const email = ref("");
+const email = ref(route.query.email);
 const password = ref("");
 const { handleSubmit } = useForm({
   validationSchema: yup.object({
@@ -95,32 +106,22 @@ const { handleSubmit } = useForm({
 
 const resetPassword = handleSubmit(async (values) => {
   try {
-    console.log("hhhhhhhhhhhhhhh");
-    // const response = await WordpressService.loginUser(values);
-    // if (response.status === 200 && response.data.success) {
-    //   const token = response.data.token;
-    //   localStorage.setItem("access_token", token);
-    //   const fetchDashboardData = await WordpressService.fetchDashboardData();
-    //   if (
-    //     fetchDashboardData.status === 200 &&
-    //     fetchDashboardData.data.success
-    //   ) {
-    //     loginSuccess.value = true;
-    //     router.push("/dashboard");
-    //   } else {
-    //     loginSuccess.value = false;
-    //     router.push("/login");
-    //   }
-    // } else {
-    //   errorMesssage.value = response.data.message; // Set an error message
-    // }
+    const response = await WordpressService.ResetPassword.resetPassword({
+      email: route.query.email,
+      token: route.query.token,
+      password: values.password,
+      password_confirmation: values.confirm_password,
+    });
+    if (response.status === 200 && response.data.success) {
+      Swal.fire("Done!", "Password updated Sucessfully!", "success");
+    }
   } catch (error) {
-    // if (error.response && error.response.data && error.response.data.errors) {
-    //   bakendError.value = Object.values(error.response.data.errors).flat();
-    // } else {
-    //   console.error(error);
-    //   errorMesssage.value = error?.response?.data?.message; // Set an error message
-    // }
+    if (error.response && error.response.data && error.response.data.errors) {
+      bakendError.value = Object.values(error.response.data.errors).flat();
+    } else {
+      console.error(error);
+      errorMesssage.value = "server error try after some time"; // Set an error message
+    }
   }
 });
 </script>

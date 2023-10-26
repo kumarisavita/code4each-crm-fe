@@ -7,6 +7,7 @@ import { ref, defineProps, onMounted, provide, inject } from "vue";
 import WordpressService from "@/service/WordpressService";
 import Modal from "@/components/common/Modal.vue";
 import Swal from "sweetalert2";
+import EditSiteSettingsFormBuilder from "@/components/common/EditSiteSettingsFormBuilder.vue";
 
 const router = useRouter();
 const { logout } = useAuth();
@@ -28,6 +29,8 @@ const showModal = ref(false);
 const loadingForComonents = ref(true);
 const oldComponent = ref();
 const newComponent = ref();
+const showEditComponentFieldModal = ref(false);
+const siteSettingsFormFields = ref([]);
 
 const fetchDashboardData = async () => {
   try {
@@ -89,6 +92,7 @@ provide("dashBoardMethods", {
 const closeModal = () => {
   allComponentsDetailAccToType.value = [];
   showModal.value = false;
+  showEditComponentFieldModal.value = false;
   selectedImage.value = null;
 };
 
@@ -131,6 +135,30 @@ const changeComponent = async () => {
   }
   loadingForComonents.value = false;
   showModal.value = false;
+};
+
+const handleEditComponentBtnClick = async () => {
+  siteSettingsFormFields.value = [
+    {
+      input_type: "textarea",
+      name: "filed_1",
+      value: "filed value here",
+      label: "filed 1",
+    },
+    {
+      input_type: "input",
+      name: "filed_2",
+      value: "filed2 value here",
+      label: "filed 2",
+    },
+    {
+      input_type: "file",
+      name: "filed_3",
+      value: "google.png",
+      label: "filed 3",
+    },
+  ];
+  showEditComponentFieldModal.value = true;
 };
 </script>
 
@@ -213,6 +241,36 @@ const changeComponent = async () => {
               </div>
             </div>
           </Modal>
+          <Modal
+            :show-modal="showEditComponentFieldModal"
+            @update:show-modal="showEditComponentFieldModal = $event"
+            modal-id="customizeModal"
+            :show-footer="false"
+          >
+            <template #header>
+              <h4 class="modal-title text-center" id="customizeModalLabel">
+                Edit Component Settings
+              </h4>
+              <button
+                type="button"
+                class="close"
+                @click="closeModal"
+                data-dismiss="modal"
+              >
+                <span aria-hidden="true">×</span>
+              </button>
+            </template>
+            <EditSiteSettingsFormBuilder
+              :siteSettingsFormFields="siteSettingsFormFields"
+            />
+            <div v-if="loading">
+              <div class="spinner-container">
+                <div class="spinner-border text-warning" role="status">
+                  <span class="visually-hidden">Loading...</span>
+                </div>
+              </div>
+            </div>
+          </Modal>
           <div class="side-app">
             <div class="main-container container-fluid">
               <div class="row">
@@ -233,7 +291,10 @@ const changeComponent = async () => {
                     >
                       Change
                     </button>
-                    <button class="btn btn-primary custom-button image-button">
+                    <button
+                      class="btn btn-primary custom-button image-button"
+                      @click="handleEditComponentBtnClick"
+                    >
                       Edit
                     </button>
                   </div>

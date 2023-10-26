@@ -32,7 +32,7 @@ const handleFileChange = (event) => {
   <textarea
     v-if="textarea"
     v-model="value"
-    class="form-control"
+    :class="class"
     :placeholder="placeholder"
     rows="3"
   ></textarea>

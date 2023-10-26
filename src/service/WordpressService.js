@@ -74,6 +74,14 @@ const WordpressService = {
     updateSiteSettings: (data, headers) => {
       return requests(baseUrl).post(`/update-settings`, data, { headers })
     },
+  },
+  ResetPassword: {
+    resetPassword: (data) => {
+      return requests(baseUrl).post(`/reset-password`, data)
+    },
+    forgotPassword: (data) => {
+      return requests(baseUrl).post(`/forgot-password`, data)
+    },
   }
 }
 export default WordpressService
