@@ -113,7 +113,13 @@ const resetPassword = handleSubmit(async (values) => {
       password_confirmation: values.confirm_password,
     });
     if (response.status === 200 && response.data.success) {
-      Swal.fire("Done!", "Password updated Sucessfully!", "success");
+      Swal.fire("Done!", "Password updated Sucessfully!", "success").then(
+        (result) => {
+          if (result.isConfirmed) {
+            router.push("/login");
+          }
+        }
+      );
     }
   } catch (error) {
     if (error.response && error.response.data && error.response.data.errors) {
