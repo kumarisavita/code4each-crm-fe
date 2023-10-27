@@ -83,8 +83,8 @@ import * as yup from "yup";
 import LoginInputDiv from "@/components/login/elements/LoginInputDiv.vue";
 import ForgetPasswordSendEmail from "@/components/forget_password/ForgetPasswordSendEmail.vue";
 import Swal from "sweetalert2";
-const route = useRoute();
 
+const route = useRoute();
 const loginSuccess = ref(false);
 const showForgetForm = ref(false);
 
