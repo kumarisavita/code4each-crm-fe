@@ -82,6 +82,17 @@ const WordpressService = {
     forgotPassword: (data) => {
       return requests(baseUrl).post(`/forgot-password`, data)
     },
+  },
+  ComponentsFormField: {
+
+    getComponentsFormField: (data) => {
+      return requests(baseUrl).get(`/get-component-form-fields`, {
+        params: data
+      },)
+    },
+    updateComponentsFormField: (data) => {
+      return requests(baseUrl).post(`/update-component-form-fields`, data)
+    },
   }
 }
 export default WordpressService

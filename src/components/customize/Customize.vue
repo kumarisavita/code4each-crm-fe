@@ -3,11 +3,12 @@ import NavBar from "@/components/dashboard/layouts/navbar.vue";
 import SideBar from "@/components/dashboard/layouts/sidebar.vue";
 import { useAuth } from "@/service/useAuth";
 import { useRouter } from "vue-router";
-import { ref, defineProps, onMounted, provide, inject } from "vue";
+import { ref, defineProps, onMounted, provide, inject, watch } from "vue";
 import WordpressService from "@/service/WordpressService";
 import Modal from "@/components/common/Modal.vue";
 import Swal from "sweetalert2";
 import EditSiteSettingsFormBuilder from "@/components/common/EditSiteSettingsFormBuilder.vue";
+import { useStore } from "@/stores/store";
 
 const router = useRouter();
 const { logout } = useAuth();
@@ -15,6 +16,7 @@ const isSidebarToggled = ref(false);
 const activeComponentsDetail = ref([]);
 const allComponentsDetailAccToType = ref();
 const selectedImage = ref();
+const store = useStore();
 
 const navBarToggle = (value) => {
   isSidebarToggled.value = value;
@@ -31,6 +33,7 @@ const oldComponent = ref();
 const newComponent = ref();
 const showEditComponentFieldModal = ref(false);
 const siteSettingsFormFields = ref([]);
+const siteSettingsDeatil = ref();
 
 const fetchDashboardData = async () => {
   try {
@@ -57,6 +60,7 @@ const getActiveComponentsData = async () => {
     const response = await WordpressService.Components.getActiveComponents({
       website_url: dashboardData?.value?.agency_website_info[0].website_domain,
     });
+
     if (response.status === 200 && response.data.success) {
       activeComponentsDetail.value = response.data.components_detail;
     }
@@ -79,11 +83,22 @@ const openModal = async (compType, oldComponentUniqueeId) => {
   }
   showModal.value = true;
 };
+
 onMounted(async () => {
   await fetchDashboardData();
   await getActiveComponentsData();
+  await getSiteDeatils();
   loadingForComonents.value = false;
 });
+
+watch(
+  () => store.websiteId,
+  async (newWebsiteId, oldWebsiteId) => {
+    await fetchDashboardData();
+    await getActiveComponentsData();
+    await getSiteDeatils();
+  }
+);
 
 provide("dashBoardMethods", {
   fetchDashboardData,
@@ -94,6 +109,7 @@ const closeModal = () => {
   showModal.value = false;
   showEditComponentFieldModal.value = false;
   selectedImage.value = null;
+  siteSettingsFormFields.value = null;
 };
 
 const showSelectedComponent = (component_unique_id, imgPath) => {
@@ -137,28 +153,46 @@ const changeComponent = async () => {
   showModal.value = false;
 };
 
-const handleEditComponentBtnClick = async () => {
-  siteSettingsFormFields.value = [
-    {
-      input_type: "textarea",
-      name: "filed_1",
-      value: "filed value here",
-      label: "filed 1",
-    },
-    {
-      input_type: "input",
-      name: "filed_2",
-      value: "filed2 value here",
-      label: "filed 2",
-    },
-    {
-      input_type: "file",
-      name: "filed_3",
-      value: "google.png",
-      label: "filed 3",
-    },
-  ];
+const handleEditComponentBtnClick = async (componentUniqueId) => {
+  try {
+    const response =
+      await WordpressService.ComponentsFormField.getComponentsFormField({
+        component_unique_id: componentUniqueId,
+        website_url: siteSettingsDeatil.value?.website_domain,
+      });
+    if (response.status === 200 && response.data.success) {
+      siteSettingsFormFields.value = response.data.data;
+    }
+  } catch (error) {
+    console.error("An error occurred:", error);
+  }
   showEditComponentFieldModal.value = true;
+};
+
+const submitCustomFields = async (data) => {
+  try {
+    const response =
+      await WordpressService.ComponentsFormField.updateComponentsFormField(
+        formData
+      );
+    if (response.status === 200 && response.data.success) {
+    }
+  } catch (error) {
+    console.error("An error occurred:", error);
+  }
+  showEditComponentFieldModal.value = true;
+};
+const getSiteDeatils = async () => {
+  try {
+    const response = await WordpressService.WebsiteSettings.getSiteDetail({
+      website_id: store.websiteId,
+    });
+    if (response.status === 200 && response.data.success) {
+      siteSettingsDeatil.value = response.data.settings_detail;
+    }
+  } catch (error) {
+    console.error("An error occurred:", error);
+  }
 };
 </script>
 
@@ -262,6 +296,7 @@ const handleEditComponentBtnClick = async () => {
             </template>
             <EditSiteSettingsFormBuilder
               :siteSettingsFormFields="siteSettingsFormFields"
+              @submit-custom-fields="submitCustomFields"
             />
             <div v-if="loading">
               <div class="spinner-container">
@@ -293,7 +328,7 @@ const handleEditComponentBtnClick = async () => {
                     </button>
                     <button
                       class="btn btn-primary custom-button image-button"
-                      @click="handleEditComponentBtnClick"
+                      @click="handleEditComponentBtnClick(compValue.id)"
                     >
                       Edit
                     </button>
