@@ -34,6 +34,10 @@ const newComponent = ref();
 const showEditComponentFieldModal = ref(false);
 const siteSettingsFormFields = ref([]);
 const siteSettingsDeatil = ref();
+const componentsFieldsUnderEdit = ref({
+  id: null,
+  type: null,
+});
 
 const fetchDashboardData = async () => {
   try {
@@ -63,6 +67,7 @@ const getActiveComponentsData = async () => {
 
     if (response.status === 200 && response.data.success) {
       activeComponentsDetail.value = response.data.components_detail;
+      console.log(activeComponentsDetail.value, "ccccccccc");
     }
   } catch (error) {
     console.error("An error occurred:", error);
@@ -153,7 +158,9 @@ const changeComponent = async () => {
   showModal.value = false;
 };
 
-const handleEditComponentBtnClick = async (componentUniqueId) => {
+const handleEditComponentBtnClick = async (componentUniqueId, type) => {
+  componentsFieldsUnderEdit.value.id = componentUniqueId;
+  componentsFieldsUnderEdit.value.type = type;
   try {
     const response =
       await WordpressService.ComponentsFormField.getComponentsFormField({
@@ -162,25 +169,31 @@ const handleEditComponentBtnClick = async (componentUniqueId) => {
       });
     if (response.status === 200 && response.data.success) {
       siteSettingsFormFields.value = response.data.data;
+      showEditComponentFieldModal.value = true;
     }
   } catch (error) {
     console.error("An error occurred:", error);
   }
-  showEditComponentFieldModal.value = true;
 };
 
 const submitCustomFields = async (data) => {
   try {
+    const formFields = Object.keys(data).map((key) => ({
+      field_name: key,
+      field_value: data[key],
+      type: componentsFieldsUnderEdit.value.type,
+    }));
+
     const response =
-      await WordpressService.ComponentsFormField.updateComponentsFormField(
-        formData
-      );
-    if (response.status === 200 && response.data.success) {
-    }
+      await WordpressService.ComponentsFormField.updateComponentsFormField({
+        website_url: siteSettingsDeatil.value?.website_domain,
+        component_unique_id: componentsFieldsUnderEdit.value.id,
+        form_fields: formFields,
+      });
   } catch (error) {
     console.error("An error occurred:", error);
   }
-  showEditComponentFieldModal.value = true;
+  showEditComponentFieldModal.value = false;
 };
 const getSiteDeatils = async () => {
   try {
@@ -328,7 +341,12 @@ const getSiteDeatils = async () => {
                     </button>
                     <button
                       class="btn btn-primary custom-button image-button"
-                      @click="handleEditComponentBtnClick(compValue.id)"
+                      @click="
+                        handleEditComponentBtnClick(
+                          compValue.id,
+                          compValue.type
+                        )
+                      "
                     >
                       Edit
                     </button>

@@ -9,17 +9,8 @@
           :label="field.field_name"
           :type="field.field_type"
           :textarea="field.field_type === 'textarea'"
-          :hiddenValue="field.default_value"
+          :hiddenValue="field.value ? field.value : field.default_value"
         />
-        <!-- 
-        {{ field.default_value }}
-        <FormElement
-          :name="field.field_name"
-          :label="field.field_name"
-          inputType="textarea"
-          :value="field.default_value"
-          :placeholder="field.field_name"
-        /> -->
       </div>
       <button type="submit" class="btn btn-success mt-4">Submit</button>
     </div>
@@ -27,12 +18,12 @@
 </template>
 
 <script setup>
-import { ref, defineProps } from "vue";
+import { ref, defineProps, defineEmits } from "vue";
 import VeeInput from "@/components/common/VeeInput.vue";
-import FormElement from "@/components/common/FormElement.vue";
 import * as yup from "yup";
 import { useForm } from "vee-validate";
 
+const emits = defineEmits();
 const props = defineProps({
   siteSettingsFormFields: Object,
 });
@@ -42,13 +33,8 @@ const { handleSubmit } = useForm({
 });
 
 const submitForm = handleSubmit(async (values) => {
-  console.log(values, "vvvvvvvvvvvvv");
   try {
-    const formData = new FormData(
-      Object.entries(values).map(([key, value]) => [key, value])
-    );
-    // emits("submit-custom-fields", formData);
-    console.log(formData, "vvvvvvvvvvvvv");
+    emits("submit-custom-fields", values);
   } catch (error) {}
 });
 </script>
