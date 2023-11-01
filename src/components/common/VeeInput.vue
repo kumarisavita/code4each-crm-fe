@@ -1,5 +1,5 @@
 <script setup>
-import { defineProps } from "vue";
+import { defineProps, watch } from "vue";
 import { useField } from "vee-validate";
 
 const props = defineProps({
@@ -24,6 +24,13 @@ const handleFileChange = (event) => {
     value.value = event.target.files[0] || null;
   }
 };
+
+watch(
+  () => props.hiddenValue,
+  (newProp, oldProp) => {
+    value.value = props.hiddenValue;
+  }
+);
 </script>
 
 

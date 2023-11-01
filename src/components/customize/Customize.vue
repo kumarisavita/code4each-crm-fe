@@ -9,6 +9,7 @@ import Modal from "@/components/common/Modal.vue";
 import Swal from "sweetalert2";
 import EditSiteSettingsFormBuilder from "@/components/common/EditSiteSettingsFormBuilder.vue";
 import { useStore } from "@/stores/store";
+import { capitalizeAndReplaceChar } from "@/util/helper";
 
 const router = useRouter();
 const { logout } = useAuth();
@@ -17,7 +18,7 @@ const activeComponentsDetail = ref([]);
 const allComponentsDetailAccToType = ref();
 const selectedImage = ref();
 const store = useStore();
-
+const oldComponentType = ref();
 const navBarToggle = (value) => {
   isSidebarToggled.value = value;
 };
@@ -67,7 +68,6 @@ const getActiveComponentsData = async () => {
 
     if (response.status === 200 && response.data.success) {
       activeComponentsDetail.value = response.data.components_detail;
-      console.log(activeComponentsDetail.value, "ccccccccc");
     }
   } catch (error) {
     console.error("An error occurred:", error);
@@ -82,6 +82,7 @@ const openModal = async (compType, oldComponentUniqueeId) => {
     if (response.status === 200 && response.data.success) {
       allComponentsDetailAccToType.value = response.data.component;
       oldComponent.value = oldComponentUniqueeId;
+      oldComponentType.value = compType;
     }
   } catch (error) {
     console.error("An error occurred:", error);
@@ -178,6 +179,7 @@ const handleEditComponentBtnClick = async (componentUniqueId, type) => {
 
 const submitCustomFields = async (data) => {
   try {
+    loadingForComonents.value = true;
     const formFields = Object.keys(data).map((key) => ({
       field_name: key,
       field_value: data[key],
@@ -190,6 +192,21 @@ const submitCustomFields = async (data) => {
         component_unique_id: componentsFieldsUnderEdit.value.id,
         form_fields: formFields,
       });
+    if (response.status === 200 && response.data.success) {
+      loadingForComonents.value = false;
+      Swal.fire({
+        title: "<strong>Saved!</strong>",
+        icon: "success",
+        html:
+          "Changes Saved Successfully, " +
+          '<a href="' +
+          siteSettingsDeatil.value?.website_domain +
+          '" target= "_blank">preview your site</a> ',
+        showCloseButton: true,
+        showCancelButton: true,
+        focusConfirm: false,
+      });
+    }
   } catch (error) {
     console.error("An error occurred:", error);
   }
@@ -235,7 +252,7 @@ const getSiteDeatils = async () => {
           >
             <template #header>
               <h4 class="modal-title text-center" id="customizeModalLabel">
-                All Components
+                Change {{ capitalizeAndReplaceChar(oldComponentType, "_") }}
               </h4>
               <button
                 type="button"
@@ -296,7 +313,10 @@ const getSiteDeatils = async () => {
           >
             <template #header>
               <h4 class="modal-title text-center" id="customizeModalLabel">
-                Edit Component Settings
+                {{
+                  capitalizeAndReplaceChar(componentsFieldsUnderEdit.type, "_")
+                }}
+                Settings
               </h4>
               <button
                 type="button"
