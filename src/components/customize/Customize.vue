@@ -10,6 +10,7 @@ import Swal from "sweetalert2";
 import EditSiteSettingsFormBuilder from "@/components/common/EditSiteSettingsFormBuilder.vue";
 import { useStore } from "@/stores/store";
 import { capitalizeAndReplaceChar } from "@/util/helper";
+import { VueDraggableNext } from "vue-draggable-next";
 
 const router = useRouter();
 const { logout } = useAuth();
@@ -22,7 +23,8 @@ const oldComponentType = ref();
 const navBarToggle = (value) => {
   isSidebarToggled.value = value;
 };
-
+const storeComponentsPosition = ref([]);
+const buttonStates = ref();
 const loading = ref(true);
 const error = ref(false);
 const errors = ref([]);
@@ -39,6 +41,10 @@ const componentsFieldsUnderEdit = ref({
   id: null,
   type: null,
 });
+const saveComponentPositionBtn = ref(false);
+const enabled = ref(true);
+const disableDragDrop = ref(true);
+const itemDraggingStates = ref({});
 
 const fetchDashboardData = async () => {
   try {
@@ -68,6 +74,15 @@ const getActiveComponentsData = async () => {
 
     if (response.status === 200 && response.data.success) {
       activeComponentsDetail.value = response.data.components_detail;
+      console.log(activeComponentsDetail.value);
+
+      activeComponentsDetail.value.forEach((image) => {
+        activeComponentsDetail.dragging = false;
+      });
+      updateItemPositions();
+      buttonStates.value = new Array(activeComponentsDetail.value.length).fill(
+        false
+      );
     }
   } catch (error) {
     console.error("An error occurred:", error);
@@ -212,6 +227,7 @@ const submitCustomFields = async (data) => {
   }
   showEditComponentFieldModal.value = false;
 };
+
 const getSiteDeatils = async () => {
   try {
     const response = await WordpressService.WebsiteSettings.getSiteDetail({
@@ -224,6 +240,58 @@ const getSiteDeatils = async () => {
     console.error("An error occurred:", error);
   }
 };
+
+const onEndComponentPosition = (evt) => {
+  saveComponentPositionBtn.value = true;
+  console.log("end");
+  for (const itemId in itemDraggingStates.value) {
+    itemDraggingStates.value[itemId] = false;
+  }
+};
+
+const onStartComponentPosition = (evt) => {
+  saveComponentPositionBtn.value = false;
+};
+
+const saveComponentPosition = async () => {
+  try {
+    loadingForComonents.value = true;
+    saveComponentPositionBtn.value = false;
+    const response = await WordpressService.Components.changeComponentPosition({
+      updated_positions: storeComponentsPosition.value,
+      website_url: siteSettingsDeatil.value?.website_domain,
+    });
+    if (response.status === 200 && response.data.success) {
+      Swal.fire({
+        title: "<strong>Saved!</strong>",
+        icon: "success",
+        html:
+          "Changes Saved Successfully, " +
+          '<a href="' +
+          siteSettingsDeatil.value?.website_domain +
+          '" target= "_blank">preview your site</a> ',
+        showCloseButton: true,
+        showCancelButton: true,
+        focusConfirm: false,
+      });
+      getActiveComponentsData();
+    }
+  } catch (error) {
+    console.error("An error occurred:", error);
+  }
+  loadingForComonents.value = false;
+};
+
+const updateItemPositions = () => {
+  storeComponentsPosition.value = activeComponentsDetail.value.map(
+    (compo, index) => ({
+      component_unique_id: compo.id,
+      position: index + 1,
+    })
+  );
+};
+
+watch(() => activeComponentsDetail.value, updateItemPositions, { deep: true });
 </script>
 
 <template>
@@ -342,37 +410,60 @@ const getSiteDeatils = async () => {
           <div class="side-app">
             <div class="main-container container-fluid">
               <div class="row">
-                <div
-                  v-for="(compValue, index) in activeComponentsDetail"
-                  :key="index"
-                  class="image-container"
+                <VueDraggableNext
+                  class="dragArea list-group w-full"
+                  :list="activeComponentsDetail"
+                  @end="onEndComponentPosition"
+                  @start="onStartComponentPosition"
+                  dragClass="dragItem"
+                  ghostClass="dropHere"
                 >
-                  <img
-                    :src="'https://devcrmapi.code4each.com' + compValue.preview"
-                    alt="Dynamic"
-                    width="800"
-                  />
-                  <div class="button-container">
-                    <button
-                      class="btn btn-primary custom-button image-button me-2"
-                      @click="openModal(compValue.type, compValue.id)"
-                    >
-                      Change
-                    </button>
-                    <button
-                      class="btn btn-primary custom-button image-button"
-                      @click="
-                        handleEditComponentBtnClick(
-                          compValue.id,
-                          compValue.type
-                        )
+                  <div
+                    v-for="(compValue, index) in activeComponentsDetail"
+                    :key="index"
+                    class="image-container"
+                  >
+                    <img
+                      :src="
+                        'https://devcrmapi.code4each.com' + compValue.preview
                       "
-                    >
-                      Edit
-                    </button>
+                      alt="Dynamic"
+                      width="800"
+                      :class="{
+                        dragItem: compValue.dragging,
+                      }"
+                    />
+                    <div class="button-container">
+                      <button
+                        class="btn btn-primary custom-button image-button me-2"
+                        @click="openModal(compValue.type, compValue.id)"
+                      >
+                        Change
+                      </button>
+                      <button
+                        class="btn btn-primary custom-button image-button"
+                        @click="
+                          handleEditComponentBtnClick(
+                            compValue.id,
+                            compValue.type
+                          )
+                        "
+                      >
+                        Edit
+                      </button>
+                    </div>
                   </div>
-                </div>
+                </VueDraggableNext>
               </div>
+
+              <button
+                type="button"
+                v-if="saveComponentPositionBtn"
+                @click="saveComponentPosition"
+                class="btn btn-success mt-4 me-2"
+              >
+                Submit
+              </button>
             </div>
           </div>
         </section>
@@ -462,5 +553,56 @@ p {
 .disabled-image {
   opacity: 0.5; /* Reduce opacity to make it appear disabled */
   pointer-events: none; /* Disable pointer events to prevent interaction */
+}
+
+.image-button-drag {
+  top: 50%;
+  right: 15%;
+  background-color: rgba(0, 0, 0, 0.7);
+  color: white;
+  padding: 5px 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  display: block;
+}
+
+.dragging {
+  opacity: 0.7; /* Reduce opacity while dragging */
+  border: 2px solid #3498db; /* Add a border */
+  border-radius: 4px; /* Round the corners */
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3); /* Add a shadow */
+}
+
+.dragItem {
+  border: 1px dashed red;
+  background: red;
+  opacity: 0.5;
+}
+.dropHere {
+  border: 5px dashed red;
+}
+
+.dragItem {
+  background-color: #f1f1f1; /* Background color */
+  border: 2px solid #666; /* Border style */
+  color: #333; /* Text color */
+  cursor: grab; /* Cursor style */
+  opacity: 0.7; /* Opacity while dragging */
+  transition: all 0.3s; /* Smooth transition */
+
+  /* Additional styles as needed */
+}
+.dropHere {
+  background-color: #e1e1e1; /* Background color */
+  border: 2px dashed #666; /* Border style */
+  color: #555; /* Text color */
+  cursor: pointer; /* Cursor style */
+
+  /* Additional styles as needed */
+}
+
+.dragArea {
+  cursor: move;
 }
 </style>

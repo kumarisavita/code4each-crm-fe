@@ -44,6 +44,9 @@ const WordpressService = {
     changeComponent: (data) => {
       return requests(baseUrl).post(`/change-component`, data)
     },
+    changeComponentPosition: (data) => {
+      return requests(baseUrl).post(`/update-component-position`, data)
+    },
   },
   CustomizeColors: {
     getDefaulColors: (data) => {
@@ -83,8 +86,8 @@ const WordpressService = {
       return requests(baseUrl).post(`/forgot-password`, data)
     },
   },
-  ComponentsFormField: {
 
+  ComponentsFormField: {
     getComponentsFormField: (data) => {
       return requests(baseUrl).get(`/get-component-form-fields`, {
         params: data
