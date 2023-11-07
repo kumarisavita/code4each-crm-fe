@@ -1,3 +1,10 @@
+<script setup>
+import { ref, defineProps } from "vue";
+const props = defineProps({
+  error: String,
+});
+</script>
+
 <template>
   <section class="mail-error">
     <div class="card">
@@ -15,7 +22,7 @@
       <h1>error</h1>
       <p>
         This is a error message<br />
-        Your email is not verified
+        {{ error }}
       </p>
       <button class="btn btn-success btn-block" data-dismiss="modal">
         Submit

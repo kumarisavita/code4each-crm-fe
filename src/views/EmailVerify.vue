@@ -8,6 +8,8 @@ import { useRoute, useRouter } from "vue-router";
 const verified = ref(false);
 const loading = ref(true);
 const route = useRoute();
+const error = ref();
+const meassage = ref();
 onMounted(async () => {
   await verifyEmail();
 });
@@ -22,11 +24,14 @@ const verifyEmail = async () => {
       },
       route.query.id
     );
-    if (response.status === 200 && response.data.success) {
+    if (response.status === 200 || response.status === 400) {
       verified.value = true;
+      meassage.value = response.data.message;
     }
   } catch (error) {
-    console.error("An error occurred:", error.message);
+    if (error.response && error.response.status === 401) {
+      //   error.value = response.error;
+    }
   }
   loading.value = false;
 };
@@ -40,8 +45,8 @@ const verifyEmail = async () => {
     </div>
   </div>
   <div v-else>
-    <EmailSuccessTempelate v-if="verified" />
-    <EmailFailiureTempelate v-else />
+    <EmailSuccessTempelate v-if="verified" :meassage="meassage" />
+    <EmailFailiureTempelate v-else :error="error" />
   </div>
 </template>
 <style>

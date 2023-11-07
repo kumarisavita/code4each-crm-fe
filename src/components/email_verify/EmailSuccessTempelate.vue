@@ -1,3 +1,9 @@
+<script setup>
+import { ref, defineProps } from "vue";
+const props = defineProps({
+  meassage: String,
+});
+</script>
 <template>
   <section class="mail-verfication">
     <div class="card">
@@ -15,7 +21,7 @@
       <h1>Success</h1>
       <p>
         Congratulations<br />
-        Your email verified successful
+        {{ meassage }}
       </p>
       <button class="btn btn-success btn-block" data-dismiss="modal">
         Submit
