@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import LoginView from '../views/LoginView.vue'
+import EmailVerify from '../views/EmailVerify.vue'
 import DashboardView from '../views/Dashboard.vue'
 import MyHomeView from '../views/HomeView.vue'
 import CustomizeView from '../views/CustomizeView.vue'
@@ -62,7 +63,13 @@ const router = createRouter({
       path: '/settings',
       name: 'site_settings',
       component: SiteSettings
-    }
+    },
+    {
+      path: '/email/verify',
+      name: 'email_verify',
+      component: EmailVerify,
+      meta: { title: 'Email verify' }
+    },
   ]
 });
 
