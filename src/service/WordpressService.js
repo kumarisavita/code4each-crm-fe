@@ -96,6 +96,17 @@ const WordpressService = {
     updateComponentsFormField: (data) => {
       return requests(baseUrl).post(`/update-component-form-fields`, data)
     },
+  },
+
+  VerifyEmail: {
+    verifyEmail: (data, id) => {
+      return requests(baseUrl).get(`/email/verify/${id}`, {
+        params: data, // Add query parameters as an object
+      })
+    },
+
   }
+
+
 }
 export default WordpressService
