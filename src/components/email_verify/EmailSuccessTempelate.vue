@@ -1,8 +1,15 @@
 <script setup>
 import { ref, defineProps } from "vue";
+import { useRouter } from "vue-router";
+
+const router = useRouter();
 const props = defineProps({
   meassage: String,
 });
+
+const navigateToLogin = () => {
+  router.push("/login");
+};
 </script>
 <template>
   <section class="mail-verfication">
@@ -23,8 +30,8 @@ const props = defineProps({
         Congratulations<br />
         {{ meassage }}
       </p>
-      <button class="btn btn-success btn-block" data-dismiss="modal">
-        Submit
+      <button class="btn btn-success btn-block" @click="navigateToLogin">
+        Login
       </button>
     </div>
   </section>

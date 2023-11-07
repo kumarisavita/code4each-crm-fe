@@ -1,8 +1,15 @@
 <script setup>
-import { ref, defineProps } from "vue";
+import { ref, defineProps, watch } from "vue";
+import { useRouter } from "vue-router";
+
+const router = useRouter();
 const props = defineProps({
   error: String,
 });
+
+const navigateToLogin = () => {
+  router.push("/login");
+};
 </script>
 
 <template>
@@ -22,10 +29,10 @@ const props = defineProps({
       <h1>error</h1>
       <p>
         This is a error message<br />
-        {{ error }}
+        {{ props.error }}
       </p>
-      <button class="btn btn-success btn-block" data-dismiss="modal">
-        Submit
+      <button class="btn btn-success btn-block" @click="navigateToLogin">
+        Login
       </button>
     </div>
   </section>

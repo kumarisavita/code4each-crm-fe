@@ -8,7 +8,7 @@ import { useRoute, useRouter } from "vue-router";
 const verified = ref(false);
 const loading = ref(true);
 const route = useRoute();
-const error = ref();
+const errorMesssage = ref();
 const meassage = ref();
 onMounted(async () => {
   await verifyEmail();
@@ -30,7 +30,7 @@ const verifyEmail = async () => {
     }
   } catch (error) {
     if (error.response && error.response.status === 401) {
-      //   error.value = response.error;
+      errorMesssage.value = error.response.data.error;
     }
   }
   loading.value = false;
@@ -46,7 +46,7 @@ const verifyEmail = async () => {
   </div>
   <div v-else>
     <EmailSuccessTempelate v-if="verified" :meassage="meassage" />
-    <EmailFailiureTempelate v-else :error="error" />
+    <EmailFailiureTempelate v-else :error="errorMesssage" />
   </div>
 </template>
 <style>
