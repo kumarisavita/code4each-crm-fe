@@ -27,7 +27,7 @@ import RegisterButton from "../../common/RegisterButton.vue";
             <!-- Left links -->
             <div class="d-flex align-items-center">
               <router-link to="/login" class="btn btn-primary me-3"
-                >Login To Desktop i m here</router-link
+                >Login To Desktop</router-link
               >
             </div>
           </div>
