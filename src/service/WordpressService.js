@@ -96,6 +96,20 @@ const WordpressService = {
     updateComponentsFormField: (data) => {
       return requests(baseUrl).post(`/update-component-form-fields`, data)
     },
+
+    updateComponentImages: (data, headers) => {
+      return requests(baseUrl).post(`/upload-images`, data, { headers })
+    },
+    getComponentsImages: (data) => {
+      return requests(baseUrl).get(`/uploaded-images`, {
+        params: data
+      },)
+    },
+    deleteComponentImage: (data) => {
+      return requests(baseUrl).delete(`/delete-uploaded-images`, {
+        params: data
+      })
+    },
   },
 
   VerifyEmail: {

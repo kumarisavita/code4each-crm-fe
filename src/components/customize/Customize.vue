@@ -45,7 +45,11 @@ const saveComponentPositionBtn = ref(false);
 const enabled = ref(true);
 const disableDragDrop = ref(true);
 const itemDraggingStates = ref({});
-
+const showEditMupltipleImagesModal = ref(false);
+const uploadedFiles = ref([]);
+const disableImageSubmitButton = ref();
+const fileInput = ref(null);
+const componentImagesAcctoType = ref();
 const fetchDashboardData = async () => {
   try {
     const response = await WordpressService.fetchDashboardData();
@@ -74,7 +78,6 @@ const getActiveComponentsData = async () => {
 
     if (response.status === 200 && response.data.success) {
       activeComponentsDetail.value = response.data.components_detail;
-      console.log(activeComponentsDetail.value);
 
       activeComponentsDetail.value.forEach((image) => {
         activeComponentsDetail.dragging = false;
@@ -106,6 +109,7 @@ const openModal = async (compType, oldComponentUniqueeId) => {
 };
 
 onMounted(async () => {
+  fileInput.value = ref.fileInput;
   await fetchDashboardData();
   await getActiveComponentsData();
   await getSiteDeatils();
@@ -131,6 +135,9 @@ const closeModal = () => {
   showEditComponentFieldModal.value = false;
   selectedImage.value = null;
   siteSettingsFormFields.value = null;
+  showEditMupltipleImagesModal.value = false;
+  uploadedFiles.value = [];
+  fileInput.value = null;
 };
 
 const showSelectedComponent = (component_unique_id, imgPath) => {
@@ -194,13 +201,45 @@ const handleEditComponentBtnClick = async (componentUniqueId, type) => {
 
 const submitCustomFields = async (data) => {
   try {
-    loadingForComonents.value = true;
-    const formFields = Object.keys(data).map((key) => ({
-      field_name: key,
-      field_value: data[key],
-      type: componentsFieldsUnderEdit.value.type,
-    }));
+    const formFields = Object.keys(data).reduce((acc, key) => {
+      let meta1 = null;
+      let meta2 = null;
 
+      let modifiedString = key.replace(/-meta1|-meta2/g, "");
+
+      // Check if field_name already exists
+      const existingFieldIndex = acc.findIndex(
+        (field) => field.field_name === modifiedString
+      );
+
+      if (existingFieldIndex !== -1) {
+        // If the field_name already exists, update meta1 and meta2 values
+        const existingField = acc[existingFieldIndex];
+        meta1 =
+          existingField.meta1 ||
+          (key.includes("meta1") ? data[key] : undefined);
+        meta2 =
+          existingField.meta2 ||
+          (key.includes("meta2") ? data[key] : undefined);
+
+        // Update the existing entry
+        acc[existingFieldIndex] = {
+          ...existingField,
+          meta1: meta1,
+          meta2: meta2,
+        };
+      } else {
+        acc.push({
+          field_name: modifiedString,
+          field_value: data[key],
+          type: componentsFieldsUnderEdit.value.type,
+          meta1: meta1,
+          meta2: meta2,
+          field_type: null,
+        });
+      }
+      return acc;
+    }, []);
     const response =
       await WordpressService.ComponentsFormField.updateComponentsFormField({
         website_url: siteSettingsDeatil.value?.website_domain,
@@ -292,6 +331,112 @@ const updateItemPositions = () => {
 };
 
 watch(() => activeComponentsDetail.value, updateItemPositions, { deep: true });
+
+const handleFileUpload = () => {
+  const files = fileInput.value.files;
+  uploadedFiles.value = [];
+  for (let i = 0; i < files.length; i++) {
+    const file = files[i];
+    uploadedFiles.value.push(file);
+  }
+};
+const getImageUrl = (file) => {
+  return window.URL.createObjectURL(file);
+};
+
+const handleEditImagesModal = async (componentUniqueId, type) => {
+  loading.value = true;
+  componentsFieldsUnderEdit.value.id = componentUniqueId;
+  componentsFieldsUnderEdit.value.type = type;
+  showEditMupltipleImagesModal.value = true;
+  getComponentsImages();
+  loading.value = false;
+};
+
+const getComponentsImages = async () => {
+  try {
+    const response =
+      await WordpressService.ComponentsFormField.getComponentsImages({
+        type: componentsFieldsUnderEdit.value.type,
+        website_url: siteSettingsDeatil.value?.website_domain,
+      });
+
+    if (response.status === 200 && response.data.success) {
+      componentImagesAcctoType.value = response.data.data;
+    }
+  } catch (error) {
+    console.error("An error occurred:", error);
+  }
+};
+
+const submitForm = async () => {
+  try {
+    loading.value = true;
+    disableImageSubmitButton.value = true;
+    const formData = new FormData();
+    const files = uploadedFiles.value;
+    for (let i = 0; i < files.length; i++) {
+      formData.append("uploaded_images[]", files[i]);
+    }
+    formData.append("type", componentsFieldsUnderEdit.value.type);
+    formData.append("website_url", siteSettingsDeatil.value?.website_domain);
+
+    const customHeaders = {
+      "Content-Type": "multipart/form-data",
+    };
+
+    const response =
+      await WordpressService.ComponentsFormField.updateComponentImages(
+        formData,
+        customHeaders
+      );
+    if (response.status === 200 && response.data.success) {
+      disableImageSubmitButton.value = false;
+      getComponentsImages();
+    }
+  } catch (error) {
+    console.error(error);
+  }
+  uploadedFiles.value = [];
+  loading.value = false;
+  fileInput.value = null;
+};
+
+const removeFile = (index) => {
+  uploadedFiles.value.splice(index, 1);
+};
+
+const deleteComponentImage = async (imageUrl) => {
+  try {
+    loading.value = true;
+    let deleteImages = [];
+    deleteImages.push(imageUrl);
+    const response =
+      await WordpressService.ComponentsFormField.deleteComponentImage({
+        delete_images: deleteImages,
+        website_url: siteSettingsDeatil.value?.website_domain,
+      });
+
+    if (response.status === 200 && response.data.success) {
+      getComponentsImages();
+    }
+  } catch (error) {
+    console.error("An error occurred:", error);
+  }
+  loading.value = false;
+};
+const deleteComponentImageConfirmShow = (imageUrl) => {
+  Swal.fire({
+    title: "Do you want to delete image?",
+    showCancelButton: true,
+    confirmButtonText: "Delete",
+    denyButtonText: `Cancel`,
+  }).then((result) => {
+    if (result.isConfirmed) {
+      deleteComponentImage(imageUrl);
+    }
+  });
+};
 </script>
 
 <template>
@@ -407,6 +552,109 @@ watch(() => activeComponentsDetail.value, updateItemPositions, { deep: true });
               </div>
             </div>
           </Modal>
+          <Modal
+            :show-modal="showEditMupltipleImagesModal"
+            @update:show-modal="showEditMupltipleImagesModal = $event"
+            modal-id="customizeModal"
+            :show-footer="false"
+          >
+            <template #header>
+              <h4 class="modal-title text-center" id="customizeModalLabel">
+                {{
+                  capitalizeAndReplaceChar(componentsFieldsUnderEdit.type, "_")
+                }}
+                Settings
+              </h4>
+              <button
+                type="button"
+                class="close"
+                @click="closeModal"
+                data-dismiss="modal"
+              >
+                <span aria-hidden="true">×</span>
+              </button>
+            </template>
+            <div class="testimonial-container">
+              <div
+                v-for="(allComponentImage, index) in componentImagesAcctoType"
+                :key="index"
+                class="testimonial"
+              >
+                <div>
+                  <img
+                    :src="allComponentImage.value"
+                    alt="Dynamic"
+                    class="testimonialImg"
+                  />
+                  <button
+                    @click="
+                      deleteComponentImageConfirmShow(allComponentImage.value)
+                    "
+                    style="
+                      position: absolute;
+                      background: white;
+                      border: none;
+                      cursor: pointer;
+                    "
+                    class="ml-2"
+                  >
+                    &#10006;
+                  </button>
+                </div>
+              </div>
+            </div>
+            <form @submit.prevent="submitForm" enctype="multipart/form-data">
+              <input
+                type="file"
+                ref="fileInput"
+                multiple
+                @change="handleFileUpload"
+              />
+
+              <div v-if="uploadedFiles?.length > 0">
+                <h4 class="mt-2">Selected Files:</h4>
+                <ul>
+                  <li v-for="(file, index) in uploadedFiles" :key="index">
+                    <img
+                      :src="getImageUrl(file)"
+                      alt="Uploaded Image"
+                      width="200"
+                      class="mb-3"
+                    />
+                    <button
+                      @click="removeFile(index)"
+                      style="
+                        position: absolute;
+                        background: white;
+                        border: none;
+                        cursor: pointer;
+                      "
+                      class="ml-2"
+                    >
+                      &#10006;
+                    </button>
+                  </li>
+                </ul>
+              </div>
+
+              <button
+                type="submit"
+                :disabled="
+                  uploadedFiles.length <= 0 || disableImageSubmitButton
+                "
+                class="btn btn-success mt-4 me-2"
+              >
+                Submit
+              </button>
+            </form>
+            <div v-if="loading">
+              <div class="spinner-container">
+                <div class="spinner-border text-warning" role="status">
+                  <span class="visually-hidden">Loading...</span>
+                </div>
+              </div>
+            </div>
+          </Modal>
           <div class="side-app">
             <div class="main-container container-fluid">
               <div class="row">
@@ -441,7 +689,7 @@ watch(() => activeComponentsDetail.value, updateItemPositions, { deep: true });
                         Change
                       </button>
                       <button
-                        class="btn btn-primary custom-button image-button"
+                        class="btn btn-primary custom-button image-button me-2"
                         @click="
                           handleEditComponentBtnClick(
                             compValue.id,
@@ -450,6 +698,14 @@ watch(() => activeComponentsDetail.value, updateItemPositions, { deep: true });
                         "
                       >
                         Edit
+                      </button>
+                      <button
+                        class="btn btn-primary custom-button image-button"
+                        @click="
+                          handleEditImagesModal(compValue.id, compValue.type)
+                        "
+                      >
+                        Edit Images
                       </button>
                     </div>
                   </div>

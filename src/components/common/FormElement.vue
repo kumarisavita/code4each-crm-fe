@@ -9,16 +9,18 @@
         :type="inputType"
         :name="name"
         :value="modelValue"
-        @input="modelValue = $event.target.value"
+        @input="$emit('update:modelValue', $event.target.value)"
         :placeholder="placeholder"
         class="form-control"
         :class="inputClass"
+        v-validate="'required'"
       />
+
       <textarea
         v-else-if="inputType === 'textarea'"
         :name="name"
         :value="modelValue"
-        @input="modelValue = $event.target.value"
+        @input="modelValue = $emit('update:modelValue', $event.target.value)"
         :placeholder="placeholder"
         class="form-control"
         :class="inputClass"
@@ -28,7 +30,7 @@
         v-else-if="inputType === 'select'"
         :name="name"
         :value="modelValue"
-        @change="modelValue = $event.target.value"
+        @change="$emit('update:modelValue', $event.target.value)"
         class="form-control"
         :class="inputClass"
       >
@@ -50,9 +52,6 @@
         :class="inputClass"
       />
     </div>
-    <span v-if="fieldErrors?.length > 0" class="error">{{
-      fieldErrors[0]
-    }}</span>
   </div>
 </template>
 
@@ -80,8 +79,8 @@ const {
   "labelClass",
   "rows",
 ]);
-const modelValue = ref(value);
-const { value: fieldValue, errorMessage: fieldErrors } = useField(name);
+// const modelValue = ref(value);
+const { value: modelValue, errorMessage: fieldErrors } = useField(name);
 
 const handleFileChange = (event) => {
   const file = event.target.files[0];
