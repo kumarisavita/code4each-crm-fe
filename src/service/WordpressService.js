@@ -1,5 +1,6 @@
 import { requests } from '.'
-const baseUrl = 'https://reqres.in/api';
+import config from '/config';
+const baseUrl = config.CRM_API_URL + '/api';
 const WordpressService = {
   registerUser: (data) => {
     return requests(baseUrl).post(`/register`, data)
