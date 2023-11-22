@@ -27,8 +27,7 @@ const navigateToLogin = () => {
         <i class="Crossmark">X</i>
       </div>
       <h1>error</h1>
-      <p>
-        This is a error message<br />
+      <p class="text-danger">
         {{ props.error }}
       </p>
       <button class="btn btn-success btn-block" @click="navigateToLogin">
