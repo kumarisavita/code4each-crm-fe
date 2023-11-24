@@ -17,3 +17,9 @@ export const capitalizeAndReplaceChar = (stringToChange: string, charToReplace: 
             .join(' ')
         : null;
 };
+
+export const openLinkInNewTab = (url: string) => {
+    return url
+        ? window.open(url, "_blank")
+        : null;
+}

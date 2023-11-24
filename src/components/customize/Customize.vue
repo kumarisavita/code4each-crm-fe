@@ -8,9 +8,17 @@ import WordpressService from "@/service/WordpressService";
 import Modal from "@/components/common/Modal.vue";
 import Swal from "sweetalert2";
 import EditSiteSettingsFormBuilder from "@/components/common/EditSiteSettingsFormBuilder.vue";
+import EditSiteSettingsButtonFormBuilder from "@/components/common/EditSiteSettingsButtonFormBuilder.vue";
 import { useStore } from "@/stores/store";
 import { capitalizeAndReplaceChar } from "@/util/helper";
 import { VueDraggableNext } from "vue-draggable-next";
+import config from "/config";
+import { openLinkInNewTab } from "@/util/helper";
+import { EventBus } from "@/EventBus";
+import DeleteModal from "@/components/common/DeleteModal.vue";
+import ConfirmModal from "@/components/common/ConfirmModal.vue";
+import ProcessCompleteModal from "@/components/common/ProcessCompleteModal.vue";
+import AnimationLoader from "@/components/common/AnimationLoader.vue";
 
 const router = useRouter();
 const { logout } = useAuth();
@@ -50,6 +58,11 @@ const uploadedFiles = ref([]);
 const disableImageSubmitButton = ref();
 const fileInput = ref(null);
 const componentImagesAcctoType = ref();
+const selectedComponentPreviewImgSrc = ref();
+const btnDisable = ref(false);
+const currentTab = ref("image");
+const selectedDeletedImageUrl = ref(null);
+
 const fetchDashboardData = async () => {
   try {
     const response = await WordpressService.fetchDashboardData();
@@ -73,11 +86,19 @@ const fetchDashboardData = async () => {
 const getActiveComponentsData = async () => {
   try {
     const response = await WordpressService.Components.getActiveComponents({
-      website_url: dashboardData?.value?.agency_website_info[0].website_domain,
+      website_url: siteSettingsDeatil.value?.website_domain,
     });
 
     if (response.status === 200 && response.data.success) {
       activeComponentsDetail.value = response.data.components_detail;
+      let firstActiveComponent = activeComponentsDetail.value[0];
+      console.log(activeComponentsDetail.value[0].id, "ccccccccccc");
+
+      await openModal(
+        firstActiveComponent.type,
+        firstActiveComponent.id,
+        firstActiveComponent.preview
+      );
 
       activeComponentsDetail.value.forEach((image) => {
         activeComponentsDetail.dragging = false;
@@ -92,8 +113,9 @@ const getActiveComponentsData = async () => {
   }
 };
 
-const openModal = async (compType, oldComponentUniqueeId) => {
+const openModal = async (compType, oldComponentUniqueeId, src) => {
   try {
+    newComponent.value = null;
     const response = await WordpressService.Components.getAllComponents({
       type: compType,
     });
@@ -101,6 +123,12 @@ const openModal = async (compType, oldComponentUniqueeId) => {
       allComponentsDetailAccToType.value = response.data.component;
       oldComponent.value = oldComponentUniqueeId;
       oldComponentType.value = compType;
+      selectedComponentPreviewImgSrc.value = src;
+      await getComponentsImages();
+      await handleEditComponentBtnClick(
+        oldComponent.value,
+        oldComponentType.value
+      );
     }
   } catch (error) {
     console.error("An error occurred:", error);
@@ -110,18 +138,18 @@ const openModal = async (compType, oldComponentUniqueeId) => {
 
 onMounted(async () => {
   fileInput.value = ref.fileInput;
+  await getSiteDeatils();
   await fetchDashboardData();
   await getActiveComponentsData();
-  await getSiteDeatils();
   loadingForComonents.value = false;
 });
 
 watch(
   () => store.websiteId,
   async (newWebsiteId, oldWebsiteId) => {
+    await getSiteDeatils();
     await fetchDashboardData();
     await getActiveComponentsData();
-    await getSiteDeatils();
   }
 );
 
@@ -140,33 +168,21 @@ const closeModal = () => {
   fileInput.value = null;
 };
 
-const showSelectedComponent = (component_unique_id, imgPath) => {
+const showSelectedComponent = (component_unique_id) => {
   if (component_unique_id === oldComponent.value) {
     return;
   }
   selectedImage.value = component_unique_id;
   newComponent.value = component_unique_id;
-  Swal.fire({
-    width: 900,
-    imageUrl: imgPath,
-    imageWidth: 800,
-    imageHeight: 400,
-    imageAlt: "Custom image",
-    confirmButtonText: "Change Component",
-    showCloseButton: true,
-  }).then((result) => {
-    if (result.isConfirmed) {
-      changeComponent();
-    }
-  });
 };
 
 const changeComponent = async () => {
   try {
+    btnDisable.value = true;
     loadingForComonents.value = true;
 
     const response = await WordpressService.Components.changeComponent({
-      website_url: dashboardData?.value?.agency_website_info[0].website_domain,
+      website_url: siteSettingsDeatil.value?.website_domain,
       component_unique_id_old: oldComponent.value,
       component_unique_id_new: newComponent.value,
     });
@@ -178,7 +194,7 @@ const changeComponent = async () => {
     console.error("An error occurred:", error);
   }
   loadingForComonents.value = false;
-  showModal.value = false;
+  btnDisable.value = false;
 };
 
 const handleEditComponentBtnClick = async (componentUniqueId, type) => {
@@ -201,6 +217,10 @@ const handleEditComponentBtnClick = async (componentUniqueId, type) => {
 
 const submitCustomFields = async (data) => {
   try {
+    btnDisable.value = true;
+
+    // console.log(data, "ppppppppppp");
+
     const formFields = Object.keys(data).reduce((acc, key) => {
       let meta1 = null;
       let meta2 = null;
@@ -240,6 +260,7 @@ const submitCustomFields = async (data) => {
       }
       return acc;
     }, []);
+
     const response =
       await WordpressService.ComponentsFormField.updateComponentsFormField({
         website_url: siteSettingsDeatil.value?.website_domain,
@@ -248,23 +269,11 @@ const submitCustomFields = async (data) => {
       });
     if (response.status === 200 && response.data.success) {
       loadingForComonents.value = false;
-      Swal.fire({
-        title: "<strong>Saved!</strong>",
-        icon: "success",
-        html:
-          "Changes Saved Successfully, " +
-          '<a href="' +
-          siteSettingsDeatil.value?.website_domain +
-          '" target= "_blank">preview your site</a> ',
-        showCloseButton: true,
-        showCancelButton: true,
-        focusConfirm: false,
-      });
     }
   } catch (error) {
     console.error("An error occurred:", error);
   }
-  showEditComponentFieldModal.value = false;
+  btnDisable.value = false;
 };
 
 const getSiteDeatils = async () => {
@@ -357,7 +366,7 @@ const getComponentsImages = async () => {
   try {
     const response =
       await WordpressService.ComponentsFormField.getComponentsImages({
-        type: componentsFieldsUnderEdit.value.type,
+        type: oldComponentType.value,
         website_url: siteSettingsDeatil.value?.website_domain,
       });
 
@@ -371,8 +380,10 @@ const getComponentsImages = async () => {
 
 const submitForm = async () => {
   try {
-    loading.value = true;
-    disableImageSubmitButton.value = true;
+    if (uploadedFiles.value.length < 1) {
+      return;
+    }
+    btnDisable.value = true;
     const formData = new FormData();
     const files = uploadedFiles.value;
     for (let i = 0; i < files.length; i++) {
@@ -391,7 +402,7 @@ const submitForm = async () => {
         customHeaders
       );
     if (response.status === 200 && response.data.success) {
-      disableImageSubmitButton.value = false;
+      btnDisable.value = false;
       getComponentsImages();
     }
   } catch (error) {
@@ -406,17 +417,16 @@ const removeFile = (index) => {
   uploadedFiles.value.splice(index, 1);
 };
 
-const deleteComponentImage = async (imageUrl) => {
+const deleteComponentImage = async () => {
   try {
     loading.value = true;
     let deleteImages = [];
-    deleteImages.push(imageUrl);
+    deleteImages.push(selectedDeletedImageUrl.value);
     const response =
       await WordpressService.ComponentsFormField.deleteComponentImage({
         delete_images: deleteImages,
         website_url: siteSettingsDeatil.value?.website_domain,
       });
-
     if (response.status === 200 && response.data.success) {
       getComponentsImages();
     }
@@ -426,21 +436,422 @@ const deleteComponentImage = async (imageUrl) => {
   loading.value = false;
 };
 const deleteComponentImageConfirmShow = (imageUrl) => {
-  Swal.fire({
-    title: "Do you want to delete image?",
-    showCancelButton: true,
-    confirmButtonText: "Delete",
-    denyButtonText: `Cancel`,
-  }).then((result) => {
-    if (result.isConfirmed) {
-      deleteComponentImage(imageUrl);
-    }
-  });
+  // selectedDeletedImageUrl.value = allComponentImage.value;
+  // Swal.fire({
+  //   title: "Do you want to delete image?",
+  //   showCancelButton: true,
+  //   confirmButtonText: "Delete",
+  //   denyButtonText: `Cancel`,
+  // }).then((result) => {
+  //   if (result.isConfirmed) {
+  //     deleteComponentImage(imageUrl);
+  //   }
+  // });
+};
+
+const handleTabClick = () => {
+  if (currentTab.value === "field") {
+    EventBus.emit("submitFormChildMethod");
+  } else if (currentTab.value === "button") {
+    EventBus.emit("submitButtonFormChildMethod");
+  } else if (currentTab.value === "image") {
+    submitForm();
+  }
+};
+
+const regenerateWebsite = async () => {
+  try {
+    loading.value = true;
+    const response = await WordpressService.regenerateWebsite({
+      agency_id: dashboardData.value.user.agency_id,
+      website_url: siteSettingsDeatil.value.website_domain,
+    });
+    await getSiteDeatils();
+    await fetchDashboardData();
+    await getActiveComponentsData();
+  } catch (error) {
+    console.log(error);
+    console.error("Error Occur while regenerating website", error);
+  }
+  loading.value = false;
 };
 </script>
 
 <template>
-  <div class="page" id="dasboardPage">
+  <div class="page">
+    <NavBar
+      @logout="logout"
+      @nav-bar-toggle="navBarToggle"
+      :dashboardData="dashboardData?.user"
+    ></NavBar>
+    <SideBar
+      :dashboardData="dashboardData"
+      :toggled="isSidebarToggled"
+    ></SideBar>
+    <section id="content-wrapper main-content side-content">
+      <div class="side-app">
+        <div class="main-container-components container">
+          <div id="wrapper">
+            <div
+              class="eidtor-site"
+              aria-hidden="true"
+              data-toggle="modal"
+              data-target="#exampleModalRight-components"
+            >
+              <div
+                v-for="(compValue, index) in activeComponentsDetail"
+                :key="index"
+              >
+                <div
+                  class="eidtor-img"
+                  @click="
+                    openModal(compValue.type, compValue.id, compValue.preview)
+                  "
+                >
+                  <img :src="config.CRM_API_URL + compValue.preview" />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <div class="right-side">
+      <div class="sidebar-right py-3" id="sidebar-right">
+        <header
+          data-hook="panel-header"
+          class="panel-header panel-header-flex theme-standard without-stripe"
+        >
+          <div class="panel-header-title">
+            <span class="panel-header-title-span">
+              <span class="has-tooltip" data-hook="panel-header-title">
+                <div
+                  class="tooltip-on-ellipsis-content singleLine"
+                  data-hook="tooltip-on-ellipsis-content--container"
+                >
+                  Quick Edit
+                </div>
+              </span>
+            </span>
+          </div>
+        </header>
+        <div class="ifYqM">
+          <div class="control-horizontal-tabs arrowed tabs-block">
+            <div class="tabs">
+              <input type="radio" name="tabs" id="tab1" checked="checked" />
+              <label for="tab1"> <i class="fa fa-pencil"></i>Content</label>
+              <div class="tab">
+                <div class="oQFZy T5IOE">
+                  <div data-hook="switch-layout-panel" class="ITm2u">
+                    <div data-hook="switch-layout-content">
+                      <div class="tabs-wrappers">
+                        <ul
+                          class="nav nav-tabs justify-content-center"
+                          role="tablist"
+                        >
+                          <li class="nav-item" @click="currentTab = 'image'">
+                            <a
+                              class="nav-link active"
+                              data-toggle="tab"
+                              href="#Images"
+                              role="tab"
+                            >
+                              <i class="now-ui-icons objects_umbrella-13"></i>
+                              Images
+                            </a>
+                          </li>
+                          <li class="nav-item" @click="currentTab = 'button'">
+                            <a
+                              class="nav-link"
+                              data-toggle="tab"
+                              href="#Buttons"
+                              role="tab"
+                            >
+                              <i class="now-ui-icons shopping_cart-simple"></i
+                              >Button
+                            </a>
+                          </li>
+
+                          <li class="nav-item" @click="currentTab = 'field'">
+                            <a
+                              class="nav-link"
+                              data-toggle="tab"
+                              href="#Field"
+                              role="tab"
+                            >
+                              <i class="now-ui-icons ui-2_settings-90"></i>Field
+                            </a>
+                          </li>
+                        </ul>
+                      </div>
+                      <div class="tabs-contents">
+                        <div class="tab-content text-center">
+                          <div
+                            class="tab-pane active"
+                            id="Images"
+                            role="tabpanel"
+                          >
+                            <div class="multi-img">
+                              <div
+                                v-for="(
+                                  allComponentImage, index
+                                ) in componentImagesAcctoType"
+                                :key="index"
+                              >
+                                <div class="img-wrapper active">
+                                  <i
+                                    class="fa fa-times"
+                                    aria-hidden="true"
+                                    data-toggle="modal"
+                                    data-target="#MyModal"
+                                    @click="
+                                      selectedDeletedImageUrl =
+                                        allComponentImage.value
+                                    "
+                                  ></i>
+                                  <img :src="allComponentImage.value" />
+                                </div>
+                              </div>
+                            </div>
+                            <div class="upload__box">
+                              <div class="upload__btn-box">
+                                <label class="upload__btn">
+                                  <p>Upload images</p>
+                                  <input
+                                    type="file"
+                                    ref="fileInput"
+                                    multiple
+                                    @change="handleFileUpload"
+                                    data-max_length="20"
+                                    class="upload__inputfile"
+                                  />
+                                </label>
+                              </div>
+
+                              <div
+                                class="upload__img-wrap upload_wrapper_cont"
+                                v-if="uploadedFiles?.length > 0"
+                              >
+                                <div
+                                  v-for="(file, index) in uploadedFiles"
+                                  :key="index"
+                                >
+                                  <div
+                                    class="upload__img-box upload_wrapper_inner_img_cont"
+                                  >
+                                    <img :src="getImageUrl(file)" />
+                                    <div
+                                      class="upload__img-close"
+                                      @click="removeFile(index)"
+                                    ></div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="tab-pane" id="Buttons" role="tabpanel">
+                            <EditSiteSettingsButtonFormBuilder
+                              :siteSettingsFormFields="siteSettingsFormFields"
+                              @submit-custom-fields="submitCustomFields"
+                            />
+                          </div>
+                          <div class="tab-pane" id="Field" role="tabpanel">
+                            <EditSiteSettingsFormBuilder
+                              :siteSettingsFormFields="siteSettingsFormFields"
+                              @submit-custom-fields="submitCustomFields"
+                            />
+                          </div>
+                        </div>
+                      </div>
+                      <div class="button-wrapper">
+                        <button
+                          type="submit"
+                          class="preview-btn"
+                          @click="
+                            openLinkInNewTab(siteSettingsDeatil.website_domain)
+                          "
+                        >
+                          Preview
+                        </button>
+                        <button
+                          type="submit"
+                          class="publish-btn"
+                          @click="handleTabClick"
+                          :disabled="btnDisable"
+                        >
+                          Publish
+                          <AnimationLoader v-if="btnDisable" />
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <input type="radio" name="tabs" id="tab2" />
+              <label for="tab2"> <i class="fa fa-th-large"></i>Layout </label>
+              <div class="tab">
+                <div class="oQFZy T5IOE">
+                  <div data-hook="switch-layout-panel" class="ITm2u">
+                    <div data-hook="switch-layout-content">
+                      <div class="dqqBJ">
+                        <span
+                          data-hook="Text"
+                          data-enable-ellipsis="true"
+                          data-disabled="false"
+                          class="control-text size-small weight-normal skin-standard"
+                        >
+                          <span class="has-tooltip">
+                            <div
+                              class="tooltip-on-ellipsis-content singleLine"
+                              data-hook="tooltip-on-ellipsis-content--container"
+                            >
+                              Current layout
+                            </div>
+                          </span>
+                        </span>
+                        <span class="has-tooltip info-icon-tooltip">
+                          <span
+                            class="control-info-icon"
+                            data-hook="info-icon-root"
+                          >
+                            <i
+                              class="fa fa-exclamation-circle"
+                              aria-hidden="true"
+                            ></i>
+                          </span>
+                        </span>
+                      </div>
+                      <div
+                        :class="newComponent ? 'new-layout' : 'Current-layout'"
+                      >
+                        {{ newComponent }}
+                        <i
+                          class="fa fa-check"
+                          aria-hidden="true"
+                          v-if="!newComponent"
+                        ></i>
+                        <img
+                          :src="
+                            config.CRM_API_URL +
+                            '/' +
+                            selectedComponentPreviewImgSrc
+                          "
+                        />
+                      </div>
+                      <div class="dqqBJ">
+                        <span
+                          data-hook="Text"
+                          data-enable-ellipsis="true"
+                          data-disabled="false"
+                          class="control-text size-small weight-normal skin-standard"
+                        >
+                          <span class="has-tooltip">
+                            <div
+                              class="tooltip-on-ellipsis-content singleLine"
+                              data-hook="tooltip-on-ellipsis-content--container"
+                            >
+                              Choose a new layout
+                            </div>
+                          </span>
+                        </span>
+                        <span class="has-tooltip info-icon-tooltip">
+                          <span
+                            class="control-info-icon"
+                            data-hook="info-icon-root"
+                          >
+                            <i
+                              class="fa fa-exclamation-circle"
+                              aria-hidden="true"
+                            ></i>
+                          </span>
+                        </span>
+                      </div>
+                      <div
+                        v-for="(
+                          allComponentValue, index
+                        ) in allComponentsDetailAccToType"
+                        :key="index"
+                      >
+                        <div
+                          :class="
+                            newComponent ==
+                            allComponentValue.component_unique_id
+                              ? 'Current-layout'
+                              : 'new-layout'
+                          "
+                          v-if="
+                            oldComponent !=
+                            allComponentValue.component_unique_id
+                          "
+                          @click="
+                            newComponent = allComponentValue.component_unique_id
+                          "
+                        >
+                          <i
+                            class="fa fa-check"
+                            aria-hidden="true"
+                            v-if="
+                              newComponent ===
+                              allComponentValue.component_unique_id
+                            "
+                          ></i>
+
+                          <img
+                            :src="
+                              config.CRM_API_URL +
+                              '/' +
+                              allComponentValue.preview
+                            "
+                          />
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="button-wrapper">
+                      <button
+                        type="submit"
+                        class="preview-btn"
+                        @click="
+                          openLinkInNewTab(siteSettingsDeatil.website_domain)
+                        "
+                      >
+                        Preview
+                      </button>
+                      <button
+                        type="submit"
+                        class="publish-btn"
+                        @click="changeComponent"
+                      >
+                        Publish
+                        <AnimationLoader v-if="btnDisable" />
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <DeleteModal @confirm="deleteComponentImage" />
+  <ConfirmModal
+    modalTitle="Confirm!"
+    modalText="Do you really want to regenrate This will regenrate your site redomdally"
+    @confirm="regenerateWebsite"
+    confirmText="Submit"
+  />
+  <ProcessCompleteModal
+    modalTitle="Awesome!"
+    modalText="Your website are Regenerate has been confirmed"
+    confirmText="Preview"
+    @confirm="openLinkInNewTab(siteSettingsDeatil.website_domain)"
+  />
+
+  <!-- <div class="page" id="dasboardPage">
     <div class="page-main">
       <div id="wrapper" :class="{ toggled: isSidebarToggled }">
         <SideBar :dashboardData="dashboardData"></SideBar>
@@ -490,8 +901,7 @@ const deleteComponentImageConfirmShow = (imageUrl) => {
                 @click="
                   showSelectedComponent(
                     allComponentValue.component_unique_id,
-                    'https://devcrmapi.code4each.com/' +
-                      allComponentValue.preview
+                    config.CRM_API_URL + '/' + allComponentValue.preview
                   )
                 "
               >
@@ -503,10 +913,7 @@ const deleteComponentImageConfirmShow = (imageUrl) => {
                   }"
                 >
                   <img
-                    :src="
-                      'https://devcrmapi.code4each.com/' +
-                      allComponentValue.preview
-                    "
+                    :src="config.CRM_API_URL + '/' + allComponentValue.preview"
                     alt="Dynamic"
                     class="testimonialImg"
                     :class="{
@@ -672,9 +1079,7 @@ const deleteComponentImageConfirmShow = (imageUrl) => {
                     class="image-container"
                   >
                     <img
-                      :src="
-                        'https://devcrmapi.code4each.com' + compValue.preview
-                      "
+                      :src="config.CRM_API_URL + compValue.preview"
                       alt="Dynamic"
                       width="800"
                       :class="{
@@ -725,7 +1130,7 @@ const deleteComponentImageConfirmShow = (imageUrl) => {
         </section>
       </div>
     </div>
-  </div>
+  </div> -->
 </template>
 <style>
 .image-container {
@@ -860,5 +1265,18 @@ p {
 
 .dragArea {
   cursor: move;
+}
+
+.upload_wrapper_inner_img_cont img {
+  width: 100%;
+}
+
+.upload_wrapper_inner_img_cont {
+  position: relative;
+}
+
+.upload_wrapper_inner_img_cont .upload__img-close {
+  right: -10px;
+  top: -10px;
 }
 </style>

@@ -3,23 +3,67 @@ import NavBar from "@/components/dashboard/layouts/navbar.vue";
 import SideBar from "@/components/dashboard/layouts/sidebar.vue";
 import { useAuth } from "@/service/useAuth";
 import { useRouter } from "vue-router";
-import { ref, defineProps, onMounted, provide, inject } from "vue";
+import { ref, defineProps, onMounted, provide, inject, watch } from "vue";
 import WordpressService from "@/service/WordpressService";
 import Modal from "@/components/common/Modal.vue";
+import Swal from "sweetalert2";
+import EditSiteSettingsFormBuilder from "@/components/common/EditSiteSettingsFormBuilder.vue";
+import EditSiteSettingsButtonFormBuilder from "@/components/common/EditSiteSettingsButtonFormBuilder.vue";
+import { useStore } from "@/stores/store";
+import { capitalizeAndReplaceChar } from "@/util/helper";
+import { VueDraggableNext } from "vue-draggable-next";
+import config from "/config";
+import { openLinkInNewTab } from "@/util/helper";
+import { EventBus } from "@/EventBus";
+import DeleteModal from "@/components/common/DeleteModal.vue";
+import ConfirmModal from "@/components/common/ConfirmModal.vue";
+import ProcessCompleteModal from "@/components/common/ProcessCompleteModal.vue";
+import AnimationLoader from "@/components/common/AnimationLoader.vue";
 
 const router = useRouter();
 const { logout } = useAuth();
 const isSidebarToggled = ref(false);
-
+const activeComponentsDetail = ref([]);
+const allComponentsDetailAccToType = ref();
+const selectedImage = ref();
+const store = useStore();
+const oldComponentType = ref();
 const navBarToggle = (value) => {
   isSidebarToggled.value = value;
 };
-
+const storeComponentsPosition = ref([]);
+const buttonStates = ref();
 const loading = ref(true);
 const error = ref(false);
 const errors = ref([]);
 const dashboardData = ref([]);
-const loadingForColors = ref(true);
+const userData = ref([]);
+const showModal = ref(false);
+const loadingForComonents = ref(true);
+const oldComponent = ref();
+const newComponent = ref();
+const showEditComponentFieldModal = ref(false);
+const siteSettingsFormFields = ref([]);
+const siteSettingsDeatil = ref();
+const componentsFieldsUnderEdit = ref({
+  id: null,
+  type: null,
+});
+const saveComponentPositionBtn = ref(false);
+const enabled = ref(true);
+const disableDragDrop = ref(true);
+const itemDraggingStates = ref({});
+const showEditMupltipleImagesModal = ref(false);
+const uploadedFiles = ref([]);
+const disableImageSubmitButton = ref();
+const fileInput = ref(null);
+const componentImagesAcctoType = ref();
+const selectedComponentPreviewImgSrc = ref();
+const btnDisable = ref(false);
+const currentTab = ref("image");
+const selectedDeletedImageUrl = ref(null);
+const newActiveColorId = ref(null);
+
 const defaultColors = ref();
 
 const fetchDashboardData = async () => {
@@ -42,6 +86,93 @@ const fetchDashboardData = async () => {
   }
 };
 
+const getActiveComponentsData = async () => {
+  try {
+    const response = await WordpressService.Components.getActiveComponents({
+      website_url: siteSettingsDeatil.value?.website_domain,
+    });
+
+    if (response.status === 200 && response.data.success) {
+      activeComponentsDetail.value = response.data.components_detail;
+      let firstActiveComponent = activeComponentsDetail.value[0];
+      activeComponentsDetail.value.forEach((image) => {
+        activeComponentsDetail.dragging = false;
+      });
+      buttonStates.value = new Array(activeComponentsDetail.value.length).fill(
+        false
+      );
+    }
+  } catch (error) {
+    console.error("An error occurred:", error);
+  }
+};
+
+const changeDefaultColors = async () => {
+  if (!newActiveColorId.value) {
+    return;
+  }
+  try {
+    btnDisable.value = true;
+    const response = await WordpressService.CustomizeColors.changeDefaulColors({
+      website_url: dashboardData?.value?.agency_website_info[0].website_domain,
+      color_id: newActiveColorId.value,
+    });
+
+    if (response.status === 200) {
+      await getDefaultColors();
+    }
+  } catch (error) {
+    console.error("An error occurred:", error);
+  }
+  btnDisable.value = false;
+};
+
+onMounted(async () => {
+  await getSiteDeatils();
+  await fetchDashboardData();
+  await getActiveComponentsData();
+  await getDefaultColors();
+});
+
+watch(
+  () => store.websiteId,
+  async (newWebsiteId, oldWebsiteId) => {
+    await getSiteDeatils();
+    await fetchDashboardData();
+    await getActiveComponentsData();
+    await getDefaultColors();
+  }
+);
+
+const getSiteDeatils = async () => {
+  try {
+    const response = await WordpressService.WebsiteSettings.getSiteDetail({
+      website_id: store.websiteId,
+    });
+    if (response.status === 200 && response.data.success) {
+      siteSettingsDeatil.value = response.data.settings_detail;
+    }
+  } catch (error) {
+    console.error("An error occurred:", error);
+  }
+};
+
+const regenerateWebsite = async () => {
+  try {
+    loading.value = true;
+    const response = await WordpressService.regenerateWebsite({
+      agency_id: dashboardData.value.user.agency_id,
+      website_url: siteSettingsDeatil.value.website_domain,
+    });
+    await getSiteDeatils();
+    await fetchDashboardData();
+    await getActiveComponentsData();
+  } catch (error) {
+    console.log(error);
+    console.error("Error Occur while regenerating website", error);
+  }
+  loading.value = false;
+};
 const getDefaultColors = async () => {
   try {
     const response = await WordpressService.CustomizeColors.getDefaulColors({
@@ -54,112 +185,143 @@ const getDefaultColors = async () => {
     console.error("An error occurred:", error);
   }
 };
-
-onMounted(async () => {
-  await fetchDashboardData();
-  await getDefaultColors();
-  loadingForColors.value = false;
-});
-
-const changeDefaultColors = async (colorSetId) => {
-  loadingForColors.value = true;
-  try {
-    loadingForColors.value = true;
-    const response = await WordpressService.CustomizeColors.changeDefaulColors({
-      website_url: dashboardData?.value?.agency_website_info[0].website_domain,
-      color_id: colorSetId,
-    });
-
-    if (response.status === 200) {
-      await getDefaultColors();
-    }
-  } catch (error) {
-    console.error("An error occurred:", error);
-  }
-  loadingForColors.value = false;
-};
 </script>
 
 <template>
-  <div class="page" id="dasboardPage">
-    <div class="page-main">
-      <div id="wrapper" :class="{ toggled: isSidebarToggled }">
-        <SideBar :dashboardData="dashboardData"></SideBar>
-        <NavBar
-          @logout="logout"
-          @nav-bar-toggle="navBarToggle"
-          :dashboardData="dashboardData?.user"
-        ></NavBar>
-        <div v-if="loadingForColors">
-          <div class="spinner-container">
-            <div class="spinner-border text-warning" role="status">
-              <span class="visually-hidden">Loading...</span>
+  <div class="page">
+    <NavBar
+      @logout="logout"
+      @nav-bar-toggle="navBarToggle"
+      :dashboardData="dashboardData?.user"
+    ></NavBar>
+    <SideBar
+      :dashboardData="dashboardData"
+      :toggled="isSidebarToggled"
+    ></SideBar>
+    <section id="content-wrapper main-content side-content">
+      <div class="side-app">
+        <div class="main-container-components container">
+          <div id="wrapper">
+            <div
+              class="eidtor-site"
+              aria-hidden="true"
+              data-toggle="modal"
+              data-target="#exampleModalRight-components"
+            >
+              <div
+                v-for="(compValue, index) in activeComponentsDetail"
+                :key="index"
+              >
+                <div
+                  class="eidtor-img"
+                  @click="
+                    openModal(compValue.type, compValue.id, compValue.preview)
+                  "
+                >
+                  <img :src="config.CRM_API_URL + compValue.preview" />
+                </div>
+              </div>
             </div>
           </div>
         </div>
-        <section v-else id="content-wrapper main-content side-content">
-          <div class="default-color">
-            <div
-              v-for="(colorSet, setIndex) in defaultColors"
-              :key="setIndex"
-              class="color-set"
-            >
-              <div
-                v-for="(color, colorIndex) in colorSet.colors"
-                :key="colorIndex"
-                class="color-dot"
-                :style="{ backgroundColor: color }"
-              ></div>
-              <button
-                class="btn btn-sm btn-primary changeColorBtn"
-                @click="changeDefaultColors(colorSet.id)"
-                v-if="colorSet.active === false"
+      </div>
+    </section>
+    <div class="right-side">
+      <div class="sidebar-right py-3" id="sidebar-right">
+        <header
+          data-hook="panel-header"
+          class="panel-header panel-header-flex theme-standard without-stripe"
+        >
+          <div class="panel-header-title">
+            <span class="panel-header-title-span">
+              <span class="has-tooltip" data-hook="panel-header-title">
+                <div
+                  class="tooltip-on-ellipsis-content singleLine"
+                  data-hook="tooltip-on-ellipsis-content--container"
+                >
+                  Quick Edit
+                </div>
+              </span>
+            </span>
+          </div>
+        </header>
+        <div class="ifYqM">
+          <div
+            class="eidtor-sitecolor"
+            aria-hidden="true"
+            data-toggle="modal"
+            data-target="#exampleModalRight-components"
+          >
+            <h2>Which colors do you like ?</h2>
+            <p class="text-center">
+              Choose the color combination that best matches your style. You can
+              always change it later on.
+            </p>
+
+            <div class="eyP3_">
+              <i class="fa fa-paint-brush" aria-hidden="true"></i>
+              <h5>Recommended</h5>
+            </div>
+
+            <div v-for="(colorSet, setIndex) in defaultColors" :key="setIndex">
+              <ul
+                class="J4bYN"
+                data-gi-selector="palettes-list"
+                @click="newActiveColorId = colorSet.id"
               >
-                Choose
-              </button>
-              <span v-else class="active-span">Active</span>
+                <li class="TihVb GLbmx" :class="{ active: colorSet.active }">
+                  <i
+                    class="fa fa-check"
+                    v-if="colorSet.active"
+                    aria-hidden="true"
+                  ></i>
+
+                  <span
+                    v-for="(color, colorIndex) in colorSet.colors"
+                    :key="colorIndex"
+                    class="EvlyK"
+                    :style="{ backgroundColor: color }"
+                  >
+                  </span>
+                </li>
+              </ul>
             </div>
           </div>
-        </section>
+          <div class="button-wrapper">
+            <button
+              type="submit"
+              class="preview-btn"
+              @click="openLinkInNewTab(siteSettingsDeatil.website_domain)"
+            >
+              Preview
+            </button>
+            <button
+              type="submit"
+              class="publish-btn"
+              @click="changeDefaultColors()"
+              :disabled="btnDisable"
+            >
+              Publish
+              <AnimationLoader v-if="btnDisable" />
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   </div>
+
+  <DeleteModal @confirm="deleteComponentImage" />
+  <ConfirmModal
+    modalTitle="Confirm!"
+    modalText="Do you really want to regenrate This will regenrate your site redomdally"
+    @confirm="regenerateWebsite"
+    confirmText="Submit"
+  />
+  <ProcessCompleteModal
+    modalTitle="Awesome!"
+    modalText="Your website are Regenerate has been confirmed"
+    confirmText="Preview"
+    @confirm="openLinkInNewTab(siteSettingsDeatil.website_domain)"
+  />
 </template>
 
-<style scoped>
-.color-set {
-  display: flex;
-  margin: 20px;
-}
-
-.color-dot {
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  margin-right: 10px;
-  border: 2px solid #000;
-}
-.changeColorBtn {
-  margin-left: 20px;
-}
-
-.default-color {
-  margin: 30px;
-}
-.active-span {
-  background-color: #27a125; /* Blue background color */
-  color: #fff; /* White text color */
-  padding: 4px 4px; /* Padding for better spacing */
-  border-radius: 5px; /* Rounded corners */
-  font-weight: bold; /* Bold text */
-  text-transform: uppercase; /* Uppercase text */
-  text-align: center; /* Center the text */
-  cursor: pointer; /* Change the cursor to a pointer when hovering */
-  transition: background-color 0.3s; /* Add a smooth transition */
-  margin-left: 20px;
-}
-
-.active-span:hover {
-  background-color: #0056b3; /* Darker blue on hover */
-}
-</style>

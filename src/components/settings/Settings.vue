@@ -21,6 +21,8 @@ import { EventBus } from "@/EventBus";
 import SelectBox from "@/components/common/SelectBox.vue";
 import * as yup from "yup";
 import { useStore } from "@/stores/store";
+import config from "/config";
+import { copyTextToClipboard, openLinkInNewTab } from "@/util/helper";
 
 const router = useRouter();
 const { logout } = useAuth();
@@ -32,7 +34,7 @@ const categories = ref();
 const store = useStore();
 const errorMessage = ref("");
 const message = ref("");
-
+const isCopied = ref(false);
 const navBarToggle = (value) => {
   isSidebarToggled.value = value;
 };
@@ -44,12 +46,16 @@ const dashboardData = ref([]);
 const userData = ref([]);
 const showModal = ref(false);
 const loadingForSettings = ref(true);
+const isDisabled = ref(false);
+const formData = ref({});
+const allErrors = ref({});
+const { Errors, resetForm, handleSubmit } = useForm();
 
 watch(
   () => store.websiteId,
   async (newWebsiteId, oldWebsiteId) => {
     loadingForSettings.value = true;
-    await fetchDashboardData();
+    // await fetchDashboardData();
     await getSiteDeatils();
     await openModalWithCategories();
     loadingForSettings.value = false;
@@ -93,7 +99,10 @@ const openModalWithCategories = async () => {
   try {
     const response = await WordpressService.getCategoryOption();
     if (response.status === 200 && response.data.success) {
-      categories.value = response.data.categories;
+      categories.value = response.data.categories.map((category) => ({
+        label: category.name,
+        value: category.id,
+      }));
     }
   } catch (error) {
     console.error(error);
@@ -116,57 +125,61 @@ const openModal = async (compType, oldComponentUniqueeId) => {
 };
 
 onMounted(async () => {
-  await fetchDashboardData();
+  // await fetchDashboardData();
+  allErrors.value = {};
   await getSiteDeatils();
   await openModalWithCategories();
+  setFormValues();
   loadingForSettings.value = false;
 });
 
-const { handleSubmit } = useForm({
-  validationSchema: yup.object({
-    address: yup.string().required("Address field is required"),
-    category_id: yup.string().required("Category field is required"),
-    website_id: yup.string().required(),
-    business_name: yup.string().required("Business Name field is required"),
+const validationSchema = yup.object({
+  address: yup.string().required("Address field is required"),
+  category_id: yup.string().required("Category field is required"),
+  website_id: yup.string().required(),
+  business_name: yup.string().required("Business Name field is required"),
+  state: yup.string().required("State field is required"),
+  country: yup.string().required("Country field is required"),
+  city: yup.string().required("City field is required"),
+  zip: yup.string().required("Zip Code  field is required"),
+  logo: yup.mixed().test("fileType", "Unsupported file format", (value) => {
+    if (!value) {
+      return true; // Allow empty values (no file selected)
+    }
+
+    const supportedFormats = ["image/jpeg", "image/png", "image/gif"];
+    return value && supportedFormats.includes(value.type);
   }),
 });
 
-const updateWebsiteSettings = handleSubmit(async (values) => {
+const updateWebsiteSettings = handleSubmit(async () => {
   try {
-    loadingForSettings.value = true;
-    const formData = new FormData();
-    let logoValue = values.logo;
-    console.log(values.logo);
-    if (values.logo === undefined) {
-      logoValue = "";
-    }
-    formData.append("logo", logoValue);
-    formData.append("business_name", values.business_name);
-    formData.append("website_id", values.website_id);
-    formData.append("category_id", values.category_id);
-    formData.append("address", values.address);
-    formData.append("description", values.description);
+    isDisabled.value = true;
+    await validationSchema.validate(formData.value, { abortEarly: false });
+    allErrors.value = {};
     const customHeaders = {
       "Content-Type": "multipart/form-data",
     };
 
     const response = await WordpressService.WebsiteSettings.updateSiteSettings(
-      formData,
+      formData.value,
       customHeaders
     );
     if (response.status === 200 && response.data.success) {
       await fetchDashboardData();
       await getSiteDeatils();
       await openModalWithCategories();
-      loadingForSettings.value = false;
-      message.value = response?.data?.message;
-      clearFormValues(values);
+      resetForm();
     }
-  } catch (error) {
-    errorMessage.value = error.response?.data?.message;
-    console.error(error);
+  } catch (validationErrors) {
+    const errors = validationErrors.inner.reduce((acc, error) => {
+      acc[error.path] = error.message;
+      return acc;
+    }, {});
+
+    allErrors.value = errors;
   }
-  loading.value = false;
+  isDisabled.value = false;
 });
 
 const clearFormValues = (values) => {
@@ -176,15 +189,273 @@ const clearFormValues = (values) => {
 };
 
 const categoryOptions = computed(() =>
-  categories.value.map((category) => ({
+  categories?.value?.map((category) => ({
     label: category.name,
     value: category.id,
   }))
 );
+
+const setFormValues = () => {
+  const agencyWebsiteDetail = siteSettingsDeatil?.value?.agency_website_detail;
+  formData.value.category_id = agencyWebsiteDetail?.website_category_id || "";
+  formData.value.business_name = agencyWebsiteDetail?.business_name || "";
+  formData.value.address = agencyWebsiteDetail?.address || "";
+  formData.value.description =
+    agencyWebsiteDetail?.description !== "undefined"
+      ? agencyWebsiteDetail?.description
+      : "";
+  formData.value.country = agencyWebsiteDetail?.country || "";
+  formData.value.city = agencyWebsiteDetail?.city || "";
+  formData.value.zip = agencyWebsiteDetail?.zip || "";
+  formData.value.state = agencyWebsiteDetail?.state || "";
+  formData.value.website_id = agencyWebsiteDetail?.website_id;
+};
+
+const handleCopyClick = (text) => {
+  copyTextToClipboard(text);
+  isCopied.value = true;
+  setTimeout(() => {
+    isCopied.value = false;
+  }, 1000);
+};
+
+watch(
+  () => siteSettingsDeatil,
+  (newsiteSettingsDeatil, OldsiteSettingsDeatil) => {
+    // allDashboardData.value = props.dashboardData;
+    setFormValues();
+  },
+  {
+    deep: true,
+  }
+);
+
+const onFileChange = (event) => {
+  formData.value.logo = event.target.files[0];
+};
 </script>
 
 <template>
-  <div class="page" id="dasboardPage">
+  <div
+    class="modal fade drawer right-align"
+    id="exampleModalRight"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="exampleModalLabel"
+    aria-hidden="true"
+    v-if="siteSettingsDeatil?.agency_website_detail"
+  >
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <!-- <div v-if="siteSettingsDeatil"> -->
+          <img
+            v-if="siteSettingsDeatil?.agency_website_detail?.logo"
+            :src="
+              config.CRM_API_URL + siteSettingsDeatil.agency_website_detail.logo
+            "
+          />
+          <span v-else>{{
+            siteSettingsDeatil?.agency_website_detail?.business_name
+          }}</span>
+          <!-- </div> -->
+          <button
+            type="button"
+            class="close"
+            data-dismiss="modal"
+            aria-label="Close"
+          >
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="box-2">
+            <div class="box-inner-2">
+              <div>
+                <p class="fw-bold">Instance Access</p>
+                <p class="text-wrapper">
+                  Complete your purchase by providing your payment details
+                </p>
+              </div>
+              <form class="text-start mb-2 mt-3">
+                <label for="basic-url" class="form-label">Website URL</label>
+                <div class="form-field mb-4">
+                  <div class="input-group mb-3">
+                    <input
+                      type="url"
+                      class="form-control"
+                      :placeholder="siteSettingsDeatil.website_domain"
+                      :aria-label="siteSettingsDeatil.website_domain"
+                      aria-describedby="button-addon2"
+                    />
+                  </div>
+                  <button
+                    class="btn btn-outline-success btn-success linkBtn"
+                    type="button"
+                    id="button-addon2"
+                    @click="openLinkInNewTab(siteSettingsDeatil.website_domain)"
+                  >
+                    <i class="fa fa-share-square"></i>
+                  </button>
+                  <button
+                    class="btn btn-outline-danger btn-danger text-light linkBtn"
+                    type="button"
+                    id="button-addon3"
+                    @click="handleCopyClick(siteSettingsDeatil.website_domain)"
+                  >
+                    <i
+                      class="fa fa-copy"
+                      data-toggle="tooltip"
+                      data-placement="top"
+                      title="copy"
+                    ></i>
+                  </button>
+                  <div v-if="isCopied" class="success-message">Copied!</div>
+                </div>
+              </form>
+            </div>
+          </div>
+          <section class="Settings-form">
+            <div class="form-wrapper">
+              <div class="row">
+                <div class="col-sm-6 form-group">
+                  <label for="category_id" class="form-label"
+                    >Website Category*</label
+                  >
+                  <select
+                    class="form-select"
+                    aria-label="Select an option"
+                    v-model="formData.category_id"
+                    id="category_id"
+                  >
+                    <option value="" selected>Open this select menu</option>
+                    {{
+                      categories
+                    }}
+                    <option
+                      v-for="option in categories"
+                      :key="option.value"
+                      :value="option.value"
+                    >
+                      {{ option.label }}
+                    </option>
+                  </select>
+                  <div class="text-danger">{{ allErrors.category_id }}</div>
+                </div>
+                <div class="col-sm-6 form-group">
+                  <label for="business_name" class="form-label"
+                    >Business Name*</label
+                  >
+                  <input
+                    type="text"
+                    placeholder="Business Name"
+                    class="form-control input"
+                    v-model="formData.business_name"
+                    id="business_name"
+                  />
+                  <div class="text-danger">{{ allErrors.business_name }}</div>
+                </div>
+                <div class="col-sm-6 form-group">
+                  <label for="address" class="form-label">Address*</label>
+                  <input
+                    type="text"
+                    placeholder="Address"
+                    class="form-control input"
+                    v-model="formData.address"
+                    id="address"
+                  />
+                  <div class="text-danger">{{ allErrors.address }}</div>
+                </div>
+                <div class="col-sm-6 form-group">
+                  <label for="city" class="form-label">City*</label>
+                  <input
+                    type="text"
+                    placeholder="City"
+                    class="form-control input"
+                    v-model="formData.city"
+                    id="city"
+                  />
+                  <div class="text-danger">{{ allErrors.city }}</div>
+                </div>
+                <div class="col-sm-6 form-group">
+                  <label for="city" class="form-label">State*</label>
+                  <input
+                    type="text"
+                    placeholder="State"
+                    class="form-control input"
+                    v-model="formData.state"
+                    id="State"
+                  />
+                  <div class="text-danger">{{ allErrors.state }}</div>
+                </div>
+                <div class="col-sm-6 form-group">
+                  <label for="zip" class="form-label">Zip Code*</label>
+                  <input
+                    type="text"
+                    placeholder="Zip Code"
+                    class="form-control input"
+                    v-model="formData.zip"
+                    id="zip"
+                  />
+                  <div class="text-danger">{{ allErrors.zip }}</div>
+                </div>
+                <div class="col-sm-6 form-group">
+                  <label for="country" class="form-label">Country*</label>
+                  <select
+                    class="form-select"
+                    id="country"
+                    aria-label="Select an option"
+                    v-model="formData.country"
+                  >
+                    <option value="">Open this select menu</option>
+                    <option value="india">India</option>
+                    <option value="europe">Europe</option>
+                    <option value="england">England</option>
+                  </select>
+                  <div class="text-danger">{{ allErrors.country }}</div>
+                </div>
+                <div class="col-sm-6 form-group">
+                  <label for="logo" class="form-label">Website Logo</label>
+                  <input
+                    type="file"
+                    name="logo"
+                    class="form-control input"
+                    accept=".jpg, .jpeg, .png"
+                    @change="onFileChange"
+                    id="logo"
+                  />
+                  <div class="text-danger">{{ allErrors.logo }}</div>
+                </div>
+                <div class="col-sm-12 form-group">
+                  <label for="" class="form-label">Description</label>
+                  <textarea
+                    class="form-control input"
+                    placeholder="Description..(optional)"
+                    rows="3"
+                    v-model="formData.description"
+                  ></textarea>
+                </div>
+              </div>
+            </div>
+          </section>
+        </div>
+
+        <div class="modal-footer">
+          <div class="col-sm-12 form-group">
+            <button
+              type="button"
+              class="btn btn-success mt-4"
+              @click="updateWebsiteSettings"
+              :disabled="isDisabled"
+            >
+              Submit
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- <div class="page" id="dasboardPage">
     <div class="page-main">
       <div id="wrapper" :class="{ toggled: isSidebarToggled }">
         <SideBar :dashboardData="dashboardData"></SideBar>
@@ -204,7 +475,6 @@ const categoryOptions = computed(() =>
           <form
             @submit.prevent="updateWebsiteSettings"
             enctype="multipart/form-data"
-            slot="body"
             class="settings-form"
           >
             <div
@@ -250,7 +520,7 @@ const categoryOptions = computed(() =>
               <img
                 v-if="siteSettingsDeatil?.agency_website_detail?.logo"
                 :src="
-                  'https://devcrmapi.code4each.com' +
+                  config.CRM_API_URL +
                   siteSettingsDeatil?.agency_website_detail?.logo
                 "
                 alt="Dynamic"
@@ -285,7 +555,7 @@ const categoryOptions = computed(() =>
         </section>
       </div>
     </div>
-  </div>
+  </div> -->
 </template>
 <style>
 .image-container {
@@ -356,5 +626,14 @@ p {
 
 .settings-form {
   margin: 40px;
+}
+.success-message {
+  background-color: #090a09; /* Green background color */
+  color: white; /* White text color */
+  padding: 5px; /* Smaller padding */
+  border-radius: 5px; /* Rounded corners */
+  margin-top: 10px; /* Margin at the top */
+  font-size: 12px; /* Smaller font size */
+  height: 28px;
 }
 </style>

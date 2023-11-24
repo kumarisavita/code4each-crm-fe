@@ -84,24 +84,21 @@ provide("dashBoardMethods", {
 </script>
 
 <template>
-  <div class="page" id="dasboardPage">
-    <div class="page-main">
-      <div id="wrapper" :class="{ toggled: isSidebarToggled }">
-        <SideBar :dashboardData="dashboardData"></SideBar>
-        <NavBar
-          @logout="logout"
-          @nav-bar-toggle="navBarToggle"
-          :dashboardData="dashboardData?.user"
-        ></NavBar>
-        <Content
-          :dashboardData="dashboardData"
-          :loading="loading"
-          :resendLink="resendLink"
-        ></Content>
-      </div>
-    </div>
+  <div class="page">
+    <NavBar
+      @logout="logout"
+      @nav-bar-toggle="navBarToggle"
+      :dashboardData="dashboardData?.user"
+    ></NavBar>
+    <SideBar
+      :dashboardData="dashboardData"
+      :toggled="isSidebarToggled"
+    ></SideBar>
+
+    <Content
+      :dashboardData="dashboardData"
+      :loading="loading"
+      :resendLink="resendLink"
+    ></Content>
   </div>
 </template>
-<style>
-@import "../../assets/dashboard.css";
-</style>

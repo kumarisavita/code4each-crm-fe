@@ -1,32 +1,6 @@
 <template>
   <form @submit.prevent="submitForm">
-    <div v-for="(field, index) in siteSettingsFormFieldsCopy" :key="index">
-      <div class="img-wrapper">
-        <label
-          for="form-control"
-          class="form-field"
-          v-if="field.field_type === 'textarea' || field.field_type === 'text'"
-          >{{ capitalizeAndReplaceChar(field.field_name, "-") }}</label
-        >
-        <textarea
-          class="form-control input"
-          v-if="field.field_type === 'textarea'"
-          placeholder=""
-          rows="2"
-          :name="field.field_name"
-          v-model="formData[field.field_name]"
-        ></textarea>
-        <input
-          type="text"
-          v-else-if="field.field_type === 'text'"
-          class="form-control"
-          :name="field.field_name"
-          v-model="formData[field.field_name]"
-        />
-      </div>
-    </div>
-    <!-- </div> -->
-    <!-- <div class="form-group">
+    <div class="form-group">
       <div v-for="(field, index) in siteSettingsFormFieldsCopy" :key="index">
         <div v-if="field.field_type != 'image'">
           <div v-if="field.field_type === 'button'">
@@ -99,22 +73,19 @@
           {{ resetToggle ? "Set Default Values" : "Undo Values" }}
         </button>
       </div>
-    </div> -->
+    </div>
   </form>
 </template>
 
 <script setup>
-import { ref, defineProps, defineEmits, watch, computed, onMounted } from "vue";
+import { ref, defineProps, defineEmits, watch, computed } from "vue";
 import VeeInput from "@/components/common/VeeInput.vue";
 import * as yup from "yup";
 import { useForm } from "vee-validate";
 import { capitalizeAndReplaceChar } from "@/util/helper";
 import SelectBox from "@/components/common/SelectBox.vue";
-import { EventBus } from "@/EventBus";
-
 const isButtonDisabled = ref(false);
 const resetToggle = ref(true);
-const formData = ref({});
 
 const emits = defineEmits();
 const props = defineProps({
@@ -136,20 +107,13 @@ const buttonClickOptions = computed(() => [
   },
 ]);
 
-// const submitForm = handleSubmit(async (values) => {
-//   isButtonDisabled.value = true;
-//   try {
-//     // emits("submit-custom-fields", values);
-//     isButtonDisabled.value = false;
-//   } catch (error) {}
-// });
-
-const submitForm = () => {
+const submitForm = handleSubmit(async (values) => {
+  isButtonDisabled.value = true;
   try {
-    emits("submit-custom-fields", formData.value);
+    emits("submit-custom-fields", values);
     isButtonDisabled.value = false;
   } catch (error) {}
-};
+});
 
 const siteSettingsFormFieldsCopy = ref(props.siteSettingsFormFields);
 
@@ -179,19 +143,8 @@ watch(
   () => props.siteSettingsFormFields,
   (newProp, oldProp) => {
     siteSettingsFormFieldsCopy.value = props.siteSettingsFormFields;
-    siteSettingsFormFieldsCopy.value.forEach((field) => {
-      if (field.field_type === "textarea" || field.field_type === "text") {
-        formData.value[field.field_name] = field.value
-          ? field.value
-          : field.default_value;
-      }
-    });
   }
 );
-
-onMounted(() => {
-  EventBus.on("submitFormChildMethod", submitForm);
-});
 </script>
 <style scoped>
 .inline-buttons button {
