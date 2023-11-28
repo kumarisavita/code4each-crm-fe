@@ -79,13 +79,17 @@ const formattedDate = (stringDate) => {
   <section id="content-wrapper main-content side-content">
     <div class="side-app">
       <div class="main-container container">
-        <div class="" style="margin-left: 18%">
+        <div
+          class=""
+          style="margin-left: 18%"
+          v-if="dashboardData.notification"
+        >
           <Alert
             :notification="dashboardData.notification"
             :resendLink="resendLink"
           />
         </div>
-        <div id="wrapper">
+        <div id="wrapper" v-else>
           <div class="page-header">
             <ol class="breadcrumb">
               <!-- breadcrumb -->
