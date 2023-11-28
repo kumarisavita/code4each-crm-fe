@@ -64,11 +64,6 @@ const formattedDate = (stringDate) => {
 };
 </script>
 <template>
-  <Alert
-    v-if="dashboardData.notification"
-    :notification="dashboardData.notification"
-    :resendLink="resendLink"
-  />
   <div>
     <div v-if="loading">
       <div class="spinner-container">
@@ -84,6 +79,12 @@ const formattedDate = (stringDate) => {
   <section id="content-wrapper main-content side-content">
     <div class="side-app">
       <div class="main-container container">
+        <div class="" style="margin-left: 18%">
+          <Alert
+            :notification="dashboardData.notification"
+            :resendLink="resendLink"
+          />
+        </div>
         <div id="wrapper">
           <div class="page-header">
             <ol class="breadcrumb">
