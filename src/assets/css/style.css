@@ -77,14 +77,14 @@ header.header {
     padding-right: 1.5rem !important;
     padding-left: 1.5rem !important;
 }
-.navbar {
+.header .navbar {
     position: relative;
     display: flex;
     flex-wrap: wrap;
     align-items: center;
     justify-content: space-between;
-    padding-top: 0.5rem;
-    padding-bottom: 0.5rem;
+    padding-top:15px;
+    padding-bottom: 15px;
 }
 
 
@@ -927,7 +927,7 @@ button.btnclickable-element.Button {
 }
 .modal-body .box-2 {
     max-width: 500px;
-    padding: 25px 10px;
+    padding: 10px 10px;
 }
 section.Settings-form textarea.form-control.input {
     padding: 10px;
@@ -935,16 +935,29 @@ section.Settings-form textarea.form-control.input {
 section.Settings-form select.form-select {
     height: 42px;
     border: 1px solid lightgray;
-    font-size: 13px;
+    font-size: 14px;
     color: #a3a0a0;
-    font-weight: 300;
+    font-weight: 600;
 }
 
 .modal-footer button.btn.btn-success.mt-4 {
-    padding: 15px 70px;
+    padding: 15px 40px;
+}
+#exampleModalRight .modal-footer {
+    display: flex;
+    width: 100%;
+}
+div#exampleModalRight .modal-footer .form-group {
+    width: auto !important;
+}
+button.btn.btn-success-1.mt-4 {
+    color: #fff;
+    background-color: #198754;
+    border-color: #198754;
+    padding: 15px 40px;
 }
 .modal-body {
-    padding: 30px 10px;
+    padding:10px 10px;
 }
 section.Settings-form {
     overflow: hidden;
@@ -977,7 +990,7 @@ section.Settings-form {
     border-top: 1px solid #ced4da;
 }
 .form-wrapper {
-    padding-top: 50px;
+    padding-top: 20px;
 }
 .modal-body .form-field.mb-4 {
     display: flex;
@@ -993,14 +1006,14 @@ button#button-addon2 {
     height: 40px;
     display: flex;
     align-items: center;
-    margin: 5px 0px;
+    margin: 0px 0px;
 }
 button#button-addon3{
     padding: 8px 12px 10px;
     height: 40px;
     display: flex;
     align-items: center;
-    margin: 5px 0px;
+    margin: 0px 0px;
 }
 
 .create-add {
@@ -1030,9 +1043,9 @@ h3.create-text {
 input.form-control.input {
     padding: 6px 10px;
     color: white;
-    font-size: 13px;
+    font-size: 14px;
     color: #a3a0a0;
-    font-weight: 300;
+    font-weight: 600;
 }
 /* .card-design span:hover {
     background-color: transparent;
@@ -1132,7 +1145,17 @@ a.btn.btn-white.button-icon.me-3.mt-1.mb-1 span {
     border-color: #e9edf4;
 }
 /*----model  css end  ---------------*/
-
+.logoimg {
+    display: flex;
+    align-items: center;
+    margin: 0px auto;
+}
+.speedylogo img {
+    width: 65%;
+    display: flex;
+    justify-content: center;
+    margin: 0px auto;
+}
 @media (max-width: 1760px) {
     .card-wrappers .card {
         background-color: #fff;
@@ -1156,6 +1179,13 @@ a.btn.btn-white.button-icon.me-3.mt-1.mb-1 span {
         color: #000;
         font-weight: 600;
         word-break: break-all;
+    }
+    .sidebar {
+        width: 10rem;
+        transition: all 0.2s;
+        background: #fff;
+        box-shadow: 0 0.5rem 1rem rgba(0,0,0,0.15);
+        z-index: 2;
     }
 }
 #wrapper {

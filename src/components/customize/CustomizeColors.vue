@@ -114,7 +114,7 @@ const changeDefaultColors = async () => {
   try {
     btnDisable.value = true;
     const response = await WordpressService.CustomizeColors.changeDefaulColors({
-      website_url: dashboardData?.value?.agency_website_info[0].website_domain,
+      website_url: siteSettingsDeatil.value?.website_domain,
       color_id: newActiveColorId.value,
     });
 
@@ -176,7 +176,7 @@ const regenerateWebsite = async () => {
 const getDefaultColors = async () => {
   try {
     const response = await WordpressService.CustomizeColors.getDefaulColors({
-      website_url: dashboardData?.value?.agency_website_info[0].website_domain,
+      website_url: siteSettingsDeatil.value?.website_domain,
     });
     if (response.status === 200 && response.data) {
       defaultColors.value = response.data;
@@ -184,6 +184,14 @@ const getDefaultColors = async () => {
   } catch (error) {
     console.error("An error occurred:", error);
   }
+};
+
+const activateColorSet = (id, setIndex) => {
+  newActiveColorId.value = id;
+  defaultColors.value.forEach((colorSet) => {
+    colorSet.active = false;
+  });
+  defaultColors.value[setIndex].active = true;
 };
 </script>
 
@@ -267,7 +275,7 @@ const getDefaultColors = async () => {
               <ul
                 class="J4bYN"
                 data-gi-selector="palettes-list"
-                @click="newActiveColorId = colorSet.id"
+                @click="activateColorSet(colorSet.id, setIndex)"
               >
                 <li class="TihVb GLbmx" :class="{ active: colorSet.active }">
                   <i

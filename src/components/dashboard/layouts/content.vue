@@ -169,17 +169,17 @@ const formattedDate = (stringDate) => {
               </div>
             </div>
 
-            <div class="card">
+            <div
+              class="card"
+              aria-hidden="true"
+              data-bs-toggle="modal"
+              data-bs-target="#basicModal"
+              @click="openModalWithCategories"
+            >
               <h3 class="create-text">Create your website</h3>
               <div class="card-design">
                 <span class="create-icons">
-                  <i
-                    class="fa fa-plus-square"
-                    aria-hidden="true"
-                    data-bs-toggle="modal"
-                    data-bs-target="#basicModal"
-                    @click="openModalWithCategories"
-                  ></i>
+                  <i class="fa fa-plus-square"></i>
                 </span>
               </div>
             </div>

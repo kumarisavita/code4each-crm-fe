@@ -108,14 +108,13 @@ const getActiveComponentsData = async () => {
 };
 
 const changeDefaultFonts = async () => {
-  console.log("pppppppppppppp", newActiveFontId.value);
   if (!newActiveFontId.value) {
     return;
   }
   try {
     btnDisable.value = true;
     const response = await WordpressService.CustomizeFonts.changeDefaulFonts({
-      website_url: dashboardData?.value?.agency_website_info[0].website_domain,
+      website_url: siteSettingsDeatil.value?.website_domain,
       font_id: newActiveFontId.value,
     });
 
@@ -182,13 +181,21 @@ const regenerateWebsite = async () => {
 const getDefaultFonts = async () => {
   try {
     const response = await WordpressService.CustomizeFonts.getDefaulFonts({
-      website_url: dashboardData?.value?.agency_website_info[0].website_domain,
+      website_url: siteSettingsDeatil.value?.website_domain,
     });
     if (response.status === 200 && response.data.success) {
       defaultUrls.value = response.data.fonts;
-      console.log(defaultUrls.value, "oooooooooooooooo");
     }
   } catch (error) {}
+};
+
+const activateFontSet = (id, setIndex) => {
+  newActiveFontId.value = id;
+  defaultUrls.value.forEach((colorSet) => {
+    colorSet.active = false;
+  });
+
+  defaultUrls.value[setIndex].active = true;
 };
 </script>
 
@@ -271,7 +278,7 @@ const getDefaultFonts = async () => {
               <ul
                 class="J4bYN"
                 data-gi-selector="palettes-list"
-                @click="newActiveFontId = val.id"
+                @click="activateFontSet(val.id, index)"
               >
                 <li class="TihVb GLbmx" :class="{ active: val.active }">
                   <i
@@ -308,7 +315,7 @@ const getDefaultFonts = async () => {
     </div>
   </div>
 
-  <DeleteModal @confirm="deleteComponentImage" />
+  <!-- <DeleteModal @confirm="deleteComponentImage" /> -->
   <ConfirmModal
     modalTitle="Confirm!"
     modalText="Do you really want to regenrate This will regenrate your site redomdally"

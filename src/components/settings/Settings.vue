@@ -23,6 +23,7 @@ import * as yup from "yup";
 import { useStore } from "@/stores/store";
 import config from "/config";
 import { copyTextToClipboard, openLinkInNewTab } from "@/util/helper";
+import AnimationLoader from "@/components/common/AnimationLoader.vue";
 
 const router = useRouter();
 const { logout } = useAuth();
@@ -196,6 +197,8 @@ const categoryOptions = computed(() =>
 );
 
 const setFormValues = () => {
+  formData.value = {};
+  formData.value.logo = "";
   const agencyWebsiteDetail = siteSettingsDeatil?.value?.agency_website_detail;
   formData.value.category_id = agencyWebsiteDetail?.website_category_id || "";
   formData.value.business_name = agencyWebsiteDetail?.business_name || "";
@@ -233,6 +236,10 @@ watch(
 const onFileChange = (event) => {
   formData.value.logo = event.target.files[0];
 };
+
+const goToCutomize = () => {
+  router.push("/customize");
+};
 </script>
 
 <template>
@@ -249,7 +256,7 @@ const onFileChange = (event) => {
       <div class="modal-content">
         <div class="modal-header">
           <!-- <div v-if="siteSettingsDeatil"> -->
-          <img
+          <!-- <img
             v-if="siteSettingsDeatil?.agency_website_detail?.logo"
             :src="
               config.CRM_API_URL + siteSettingsDeatil.agency_website_detail.logo
@@ -257,7 +264,7 @@ const onFileChange = (event) => {
           />
           <span v-else>{{
             siteSettingsDeatil?.agency_website_detail?.business_name
-          }}</span>
+          }}</span> -->
           <!-- </div> -->
           <button
             type="button"
@@ -271,11 +278,33 @@ const onFileChange = (event) => {
         <div class="modal-body">
           <div class="box-2">
             <div class="box-inner-2">
-              <div>
+              <!-- <div>
                 <p class="fw-bold">Instance Access</p>
                 <p class="text-wrapper">
                   Complete your purchase by providing your payment details
                 </p>
+              </div> -->
+
+              <div class="logoimg">
+                <div>
+                  <p class="fw-bold">Instance Access</p>
+                  <p class="text-wrapper">
+                    Complete your purchase by providing your payment details
+                  </p>
+                </div>
+                <div class="speedylogo">
+                  <!-- <img src="images/speedy-logo1.png" /> -->
+                  <img
+                    v-if="siteSettingsDeatil?.agency_website_detail?.logo"
+                    :src="
+                      config.CRM_API_URL +
+                      siteSettingsDeatil.agency_website_detail.logo
+                    "
+                  />
+                  <span v-else>{{
+                    siteSettingsDeatil?.agency_website_detail?.business_name
+                  }}</span>
+                </div>
               </div>
               <form class="text-start mb-2 mt-3">
                 <label for="basic-url" class="form-label">Website URL</label>
@@ -441,14 +470,25 @@ const onFileChange = (event) => {
         </div>
 
         <div class="modal-footer">
-          <div class="col-sm-12 form-group">
+          <div class="col-sm-6 form-group">
             <button
-              type="button"
+              type="submit"
               class="btn btn-success mt-4"
               @click="updateWebsiteSettings"
               :disabled="isDisabled"
             >
               Submit
+              <AnimationLoader v-if="isDisabled" />
+            </button>
+          </div>
+          <div class="col-sm-6 form-group">
+            <button
+              type="submit"
+              class="btn btn-success-1 mt-4"
+              @click="goToCutomize"
+              data-dismiss="modal"
+            >
+              Customize
             </button>
           </div>
         </div>

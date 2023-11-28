@@ -8,6 +8,7 @@ import { useForm } from "vee-validate";
 import { EventBus } from "@/EventBus";
 import * as yup from "yup";
 import "@/assets/js/dashboard.js";
+import AnimationLoader from "@/components/common/AnimationLoader.vue";
 
 const dashBoardMethods = inject("dashBoardMethods");
 const loading = ref("");
@@ -364,7 +365,7 @@ const animationLoader = () => {
                   Previous
                 </button>
                 <button type="submit" class="btn btn-primary next-step">
-                  Next
+                  Next <AnimationLoader />
                 </button>
               </div>
               <div

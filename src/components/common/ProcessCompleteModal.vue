@@ -24,6 +24,14 @@ const confirmSubmit = () => {
   >
     <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content py-md-5 px-md-4 p-sm-3 p-4">
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-hidden="true"
+        >
+          &times;
+        </button>
         <h3 class="text-center">{{ props.modalTitle }}!</h3>
         <img :src="previewImg" />
         <p class="r3 px-md-5 px-sm-1">

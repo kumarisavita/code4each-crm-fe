@@ -62,6 +62,8 @@ const selectedComponentPreviewImgSrc = ref();
 const btnDisable = ref(false);
 const currentTab = ref("image");
 const selectedDeletedImageUrl = ref(null);
+const deleteLoading = ref(false);
+const deleteComponentImageModal = ref(false);
 
 const fetchDashboardData = async () => {
   try {
@@ -419,7 +421,7 @@ const removeFile = (index) => {
 
 const deleteComponentImage = async () => {
   try {
-    loading.value = true;
+    deleteLoading.value = true;
     let deleteImages = [];
     deleteImages.push(selectedDeletedImageUrl.value);
     const response =
@@ -433,20 +435,13 @@ const deleteComponentImage = async () => {
   } catch (error) {
     console.error("An error occurred:", error);
   }
-  loading.value = false;
+  deleteLoading.value = false;
+  deleteComponentImageModal.value = false;
 };
 const deleteComponentImageConfirmShow = (imageUrl) => {
-  // selectedDeletedImageUrl.value = allComponentImage.value;
-  // Swal.fire({
-  //   title: "Do you want to delete image?",
-  //   showCancelButton: true,
-  //   confirmButtonText: "Delete",
-  //   denyButtonText: `Cancel`,
-  // }).then((result) => {
-  //   if (result.isConfirmed) {
-  //     deleteComponentImage(imageUrl);
-  //   }
-  // });
+  console.log("ahjsafshj", imageUrl);
+  selectedDeletedImageUrl.value = imageUrl;
+  deleteComponentImageModal.value = true;
 };
 
 const handleTabClick = () => {
@@ -538,7 +533,7 @@ const regenerateWebsite = async () => {
         <div class="ifYqM">
           <div class="control-horizontal-tabs arrowed tabs-block">
             <div class="tabs">
-              <input type="radio" name="tabs" id="tab1" checked="checked" />
+              <input type="radio" name="tabs" id="tab1" />
               <label for="tab1"> <i class="fa fa-pencil"></i>Content</label>
               <div class="tab">
                 <div class="oQFZy T5IOE">
@@ -605,8 +600,9 @@ const regenerateWebsite = async () => {
                                     data-toggle="modal"
                                     data-target="#MyModal"
                                     @click="
-                                      selectedDeletedImageUrl =
+                                      deleteComponentImageConfirmShow(
                                         allComponentImage.value
+                                      )
                                     "
                                   ></i>
                                   <img :src="allComponentImage.value" />
@@ -688,7 +684,7 @@ const regenerateWebsite = async () => {
                 </div>
               </div>
 
-              <input type="radio" name="tabs" id="tab2" />
+              <input type="radio" name="tabs" id="tab2" checked="checked" />
               <label for="tab2"> <i class="fa fa-th-large"></i>Layout </label>
               <div class="tab">
                 <div class="oQFZy T5IOE">
@@ -837,7 +833,7 @@ const regenerateWebsite = async () => {
     </div>
   </div>
 
-  <DeleteModal @confirm="deleteComponentImage" />
+  <DeleteModal @confirm="deleteComponentImage" :loading="deleteLoading" />
   <ConfirmModal
     modalTitle="Confirm!"
     modalText="Do you really want to regenrate This will regenrate your site redomdally"

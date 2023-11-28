@@ -16,7 +16,7 @@
               <div
                 class="card"
                 :class="activeSite == site.website_id ? 'active' : ''"
-                @click="changeSite(site.website_id)"
+                @click="changeSite(site.website_id, index)"
               >
                 <i
                   class="fa fa-check"
@@ -50,6 +50,7 @@
                     </form>
                   </div>
                 </div>
+                <AnimationLoader v-if="isLoading[index]" />
               </div>
             </div>
           </div>
@@ -67,6 +68,7 @@ import ChangeWebsiteModal from "@/components/dashboard/elements/ChangeWebsiteMod
 import { useStore } from "@/stores/store";
 import { boolean } from "yup";
 import WordpressService from "@/service/WordpressService";
+import AnimationLoader from "@/components/common/AnimationLoader.vue";
 
 const props = defineProps({
   allSitesData: Object,
@@ -79,6 +81,7 @@ const allSitesData = ref([]);
 const isActive = (routePath) => route.path === routePath;
 const store = useStore();
 const activeSite = ref();
+const isLoading = ref(Array(allSitesData.length).fill(false));
 
 const handleSelectChange = (selectedValue) => {
   store.updateWebsiteId(selectedValue);
@@ -89,15 +92,18 @@ watch(
   (newFullPath, oldcurrentRouteFullPath) => {
     allSitesData.value = props.allSitesData;
     activeSite.value = store.websiteId;
-    console.log(allSitesData.value, "ooooooooooooo");
   }
 );
 
 onMounted(async () => {
-  console.log(props.allSitesData, "ooooooooooooo");
   allSitesData.value = props.allSitesData;
 });
-const changeSite = (selectedValue) => {
+
+const changeSite = (selectedValue, index) => {
+  isLoading.value[index] = true;
   store.updateWebsiteId(selectedValue);
+  setTimeout(function () {
+    isLoading.value[index] = false;
+  }, 2000);
 };
 </script>
