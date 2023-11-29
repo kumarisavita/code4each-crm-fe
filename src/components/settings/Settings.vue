@@ -278,13 +278,6 @@ const goToCutomize = () => {
         <div class="modal-body">
           <div class="box-2">
             <div class="box-inner-2">
-              <!-- <div>
-                <p class="fw-bold">Instance Access</p>
-                <p class="text-wrapper">
-                  Complete your purchase by providing your payment details
-                </p>
-              </div> -->
-
               <div class="logoimg">
                 <div>
                   <p class="fw-bold">Instance Access</p>
@@ -293,7 +286,6 @@ const goToCutomize = () => {
                   </p>
                 </div>
                 <div class="speedylogo">
-                  <!-- <img src="images/speedy-logo1.png" /> -->
                   <img
                     v-if="siteSettingsDeatil?.agency_website_detail?.logo"
                     :src="
@@ -316,6 +308,7 @@ const goToCutomize = () => {
                       :placeholder="siteSettingsDeatil.website_domain"
                       :aria-label="siteSettingsDeatil.website_domain"
                       aria-describedby="button-addon2"
+                      :disabled="true"
                     />
                   </div>
                   <button

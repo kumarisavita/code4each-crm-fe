@@ -181,9 +181,8 @@ watch(
     siteSettingsFormFieldsCopy.value = props.siteSettingsFormFields;
     siteSettingsFormFieldsCopy.value.forEach((field) => {
       if (field.field_type === "textarea" || field.field_type === "text") {
-        formData.value[field.field_name] = field.value
-          ? field.value
-          : field.default_value;
+        formData.value[field.field_name] =
+          field.value != null ? field.value : field.default_value;
       }
     });
   }

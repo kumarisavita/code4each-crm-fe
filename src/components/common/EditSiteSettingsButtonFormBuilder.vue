@@ -183,9 +183,8 @@ watch(
     siteSettingsFormFieldsCopy.value = props.siteSettingsFormFields;
     siteSettingsFormFieldsCopy.value.forEach((field) => {
       if (field.field_type === "button") {
-        formData.value[field.field_name] = field.value
-          ? field.value
-          : field.default_value;
+        formData.value[field.field_name] =
+          field.value != null ? field.value : field.default_value;
         formData.value[field.field_name + "-meta1"] =
           field.meta1 != null ? field.meta1 : field.default_meta1;
         formData.value[field.field_name + "-meta2"] =
