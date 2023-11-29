@@ -9,6 +9,7 @@ import { EventBus } from "@/EventBus";
 import * as yup from "yup";
 import "@/assets/js/dashboard.js";
 import AnimationLoader from "@/components/common/AnimationLoader.vue";
+import { openLinkInNewTab } from "@/util/helper";
 
 const dashBoardMethods = inject("dashBoardMethods");
 const loading = ref("");
@@ -20,6 +21,7 @@ const currentStep = ref(1);
 const allDashboardData = ref();
 const animatedSvg = ref(null);
 const values = ref({});
+const domainUrl = ref(null);
 const { errors, resetForm, handleSubmit } = useForm();
 
 const props = defineProps({
@@ -64,8 +66,7 @@ const submitAgencyDetailC = handleSubmit(async () => {
     );
     if (response.status === 200 && response.data.success) {
       message.value = response?.data?.message;
-      startCountdown();
-      clearFormValues(values);
+      domainUrl.value = response?.data?.website_domain;
       EventBus.emit("fetchDashboardData");
       currentStep.value = 5;
     }
@@ -80,18 +81,6 @@ const clearFormValues = (values) => {
   values.category_id = "";
   values.description = "";
   values.address = "";
-};
-
-const startCountdown = () => {
-  const timer = setInterval(() => {
-    if (countdown.value > 0) {
-      countdown.value--;
-    } else {
-      clearInterval(timer);
-      closeModal();
-      message.value = "";
-    }
-  }, 1000);
 };
 
 const setFormValues = () => {
@@ -365,15 +354,13 @@ const animationLoader = () => {
                   Previous
                 </button>
                 <button type="submit" class="btn btn-primary next-step">
-                  Next <AnimationLoader />
+                  Next
                 </button>
               </div>
               <div
                 class="step step-4"
                 :class="currentStep != 4 ? 'd-none' : ''"
               >
-                <!-- Step 2 form fields here -->
-
                 <div class="mb-3 next-step">
                   <svg
                     class="shape shape1"
@@ -406,12 +393,21 @@ const animationLoader = () => {
                 <!-- Step 2 form fields here -->
                 <div class="mb-3">
                   <div class="Successfully">
-                    <h2>Thankyou</h2>
-                    <p>Successfully create your Site</p>
-                    <div class="done-icon">
-                      <i class="fa fa-check-circle" aria-hidden="true"></i>
-                    </div>
-                    <a href="#" class="btn btn-success">Done</a>
+                    <h1>Thank you !</h1>
+
+                    <div class="success alert"></div>
+                    <p>
+                      Successfully created your Site
+                      <a href="url" class="wesbite-url">{{ domainUrl }}</a>
+                    </p>
+
+                    <button
+                      class="go-home"
+                      type="sumit"
+                      @click="openLinkInNewTab(domainUrl)"
+                    >
+                      Preview
+                    </button>
                   </div>
                 </div>
               </div>
