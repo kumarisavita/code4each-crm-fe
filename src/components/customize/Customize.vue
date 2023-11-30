@@ -391,7 +391,13 @@ const submitForm = async () => {
     for (let i = 0; i < files.length; i++) {
       formData.append("uploaded_images[]", files[i]);
     }
-    formData.append("type", componentsFieldsUnderEdit.value.type);
+    let fieldType = componentsFieldsUnderEdit.value.type;
+    if (fieldType.includes("_")) {
+      const aboutArray = fieldType.split("_");
+      fieldType = aboutArray[0].trim();
+    }
+
+    formData.append("type", fieldType);
     formData.append("website_url", siteSettingsDeatil.value?.website_domain);
 
     const customHeaders = {
@@ -439,7 +445,6 @@ const deleteComponentImage = async () => {
   deleteComponentImageModal.value = false;
 };
 const deleteComponentImageConfirmShow = (imageUrl) => {
-  console.log("ahjsafshj", imageUrl);
   selectedDeletedImageUrl.value = imageUrl;
   deleteComponentImageModal.value = true;
 };
