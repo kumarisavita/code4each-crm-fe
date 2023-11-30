@@ -52,7 +52,10 @@
             </a>
           </router-link>
         </li>
-        <li class="sidebar-list-item">
+        <li
+          class="sidebar-list-item"
+          v-if="dashboardData?.agency_website_info?.length >= 1"
+        >
           <a
             class="sidebar-link text-muted"
             :class="{ active: currentRoute.includes('/customize') }"
