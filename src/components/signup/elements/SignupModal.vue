@@ -64,9 +64,9 @@ const callback = (response) => {
           class="form-control input"
         />
         <button type="submit" class="btn btn-success">Submit</button>
-        <!-- <button type="button" class="btn btn-success" @click="emits('google')">
+        <button type="button" class="btn btn-success" @click="emits('google')">
           SignUp With Google
-        </button> -->
+        </button>
 
         <GoogleLogin :callback="callback" />
       </div>
