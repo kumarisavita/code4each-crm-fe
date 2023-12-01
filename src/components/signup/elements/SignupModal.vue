@@ -68,7 +68,7 @@ const callback = (response) => {
           SignUp With Google
         </button>
 
-        <GoogleLogin :callback="callback" />
+        <GoogleLogin :callback="callback" :scope="['email', 'profile']" />
       </div>
     </form>
     <template #footer>
