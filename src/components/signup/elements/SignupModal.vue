@@ -16,7 +16,7 @@ const closeModal = () => {
 const callback = (response) => {
   // This callback will be triggered when the user selects or login to
   // his Google account from the popup
-  console.log("Handle the response", response);
+  console.log("Handle the response  here", response);
   const email = response.getBasicProfile().getEmail();
 
   // Now you can use 'email' as needed
