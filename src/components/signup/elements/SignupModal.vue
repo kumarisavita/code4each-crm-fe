@@ -2,6 +2,7 @@
 import { defineEmits } from "vue";
 import Modal from "@/components/common/Modal.vue";
 import VeeInput from "@/components/common/VeeInput.vue";
+import { GoogleSigninButton } from "vue-google-signin-button";
 
 const props = defineProps({
   showModal: Boolean,
@@ -16,7 +17,20 @@ const callback = (response) => {
   // This callback will be triggered when the user selects or login to
   // his Google account from the popup
   console.log("Handle the response", response);
+  const email = response.getBasicProfile().getEmail();
+
+  // Now you can use 'email' as needed
+  console.log("Email:", email);
 };
+const onErrorcallback = (eeee) => {
+  // This callback will be triggered when the user selects or login to
+  // his Google account from the popup
+  console.log("Handle the eeee", eeee);
+};
+// const { googleConfig, onSuccess, onError } = useGoogleSigninButton({
+//   clientId:
+//     "467874272347-f241lioo004ksju0qudsroorkb5lf6au.apps.googleusercontent.com",
+// });
 </script>
 <template>
   <Modal
@@ -68,7 +82,13 @@ const callback = (response) => {
           SignUp With Google
         </button>
 
-        <GoogleLogin :callback="callback" :scope="['email', 'profile']" />
+        <GoogleLogin :callback="callback" />
+
+        <google-signin-button
+          :config="googleConfig"
+          @success="callback"
+          @error="onErrorcallback"
+        ></google-signin-button>
       </div>
     </form>
     <template #footer>
