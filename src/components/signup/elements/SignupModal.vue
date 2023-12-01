@@ -2,7 +2,6 @@
 import { defineEmits } from "vue";
 import Modal from "@/components/common/Modal.vue";
 import VeeInput from "@/components/common/VeeInput.vue";
-import { GoogleSigninButton } from "vue-google-signin-button";
 
 const props = defineProps({
   showModal: Boolean,
@@ -79,16 +78,10 @@ const onErrorcallback = (eeee) => {
         />
         <button type="submit" class="btn btn-success">Submit</button>
         <button type="button" class="btn btn-success" @click="emits('google')">
-          SignUp With Google
+          SignUp With Google here
         </button>
 
         <GoogleLogin :callback="callback" />
-
-        <google-signin-button
-          :config="googleConfig"
-          @success="callback"
-          @error="onErrorcallback"
-        ></google-signin-button>
       </div>
     </form>
     <template #footer>
