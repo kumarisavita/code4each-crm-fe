@@ -120,8 +120,13 @@ const WordpressService = {
       })
     },
 
-  }
+  },
 
+  GoogleLogin: {
+    googleLogin: (data) => {
+      return requests(baseUrl).get(`/auth/google`)
+    },
+  }
 
 }
 export default WordpressService
