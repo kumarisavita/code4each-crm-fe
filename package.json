@@ -20,6 +20,7 @@
     "vue": "^3.3.4",
     "vue-draggable-next": "^2.2.1",
     "vue-router": "^4.2.4",
+    "vue3-google-login": "^2.0.25",
     "yup": "^1.2.0"
   },
   "devDependencies": {
