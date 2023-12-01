@@ -68,8 +68,9 @@ const localState = reactive({
 
 const googleSignUp = async () => {
   try {
-    const response = await WordpressService.GoogleLogin.googleLogin();
-    console.log(response, "ccccccccccc");
+    // const response = await WordpressService.GoogleLogin.googleLogin();
+    // console.log(response, "ccccccccccc");
+    window.location.href = "https://devcrmapi.code4each.com/api/auth/google";
   } catch (error) {
     console.error("An error occurred:", error);
   }
