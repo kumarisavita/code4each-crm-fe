@@ -11,6 +11,12 @@ const emits = defineEmits();
 const closeModal = () => {
   emits("hide-modal");
 };
+
+const callback = (response) => {
+  // This callback will be triggered when the user selects or login to
+  // his Google account from the popup
+  console.log("Handle the response", response);
+};
 </script>
 <template>
   <Modal
@@ -58,6 +64,11 @@ const closeModal = () => {
           class="form-control input"
         />
         <button type="submit" class="btn btn-success">Submit</button>
+        <!-- <button type="button" class="btn btn-success" @click="emits('google')">
+          SignUp With Google
+        </button> -->
+
+        <GoogleLogin :callback="callback" />
       </div>
     </form>
     <template #footer>
