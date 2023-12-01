@@ -2,7 +2,7 @@
 import { defineEmits } from "vue";
 import Modal from "@/components/common/Modal.vue";
 import VeeInput from "@/components/common/VeeInput.vue";
-
+import { decodeCredential } from "vue3-google-login";
 const props = defineProps({
   showModal: Boolean,
 });
@@ -13,13 +13,8 @@ const closeModal = () => {
 };
 
 const callback = (response) => {
-  // This callback will be triggered when the user selects or login to
-  // his Google account from the popup
-  console.log("Handle the response  here", response);
-  const email = response.getBasicProfile().getEmail();
-
-  // Now you can use 'email' as needed
-  console.log("Email:", email);
+  const userData = decodeCredential(response.credential);
+  console.log("Handle the userData", userData);
 };
 const onErrorcallback = (eeee) => {
   // This callback will be triggered when the user selects or login to
