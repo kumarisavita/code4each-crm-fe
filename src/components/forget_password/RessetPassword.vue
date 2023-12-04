@@ -1,7 +1,7 @@
 <template>
   <section class="login-section" id="loginPage">
     <div class="d-flex align-items-center justify-content-end">
-      <router-link to="/" class="backBtn">Back</router-link>
+      <router-link to="/" class="backBtn">Register</router-link>
     </div>
     <img
       class="wave"
