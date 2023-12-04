@@ -48,13 +48,10 @@ const localState = reactive({
 
 const googleSignUp = async (credential: string) => {
   loading.value = true;
-  console.log(credential, "ccccccccccc");
-
   try {
     const response = await WordpressService.GoogleLogin.googleSignUp({
       id_token: credential,
     });
-    console.log(response, "ccccccccccc");
     if (response.status === 200 && response.data.success) {
       const token = response.data.access_token;
       localStorage.setItem("access_token", token);

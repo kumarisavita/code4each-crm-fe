@@ -59,10 +59,12 @@
                 fieldName="password"
                 type="password"
               />
+
               <a href="#" class="forgetLink" @click="handleForgotPasswordClick"
                 >Forgot Password?</a
               >
               <button type="submit" class="btn-link">Login</button>
+              <GoogleLogin :callback="googleSignUp" prompt auto-login />
             </form>
           </div>
         </div>
@@ -129,6 +131,21 @@ const login = handleSubmit(async (values) => {
 
 const handleForgotPasswordClick = async () => {
   showForgetForm.value = true;
+};
+
+const googleSignUp = async (response: any) => {
+  try {
+    const apiResponse = await WordpressService.GoogleLogin.googleSignUp({
+      id_token: response.credential,
+    });
+    if (apiResponse.status === 200 && apiResponse.data.success) {
+      const token = apiResponse.data.access_token;
+      localStorage.setItem("access_token", token);
+      router.push("/dashboard");
+    }
+  } catch (error) {
+    console.error(error);
+  }
 };
 </script>
 <style >
