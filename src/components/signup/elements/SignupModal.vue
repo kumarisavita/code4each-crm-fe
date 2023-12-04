@@ -11,20 +11,15 @@ const emits = defineEmits();
 const closeModal = () => {
   emits("hide-modal");
 };
-
 const callback = (response) => {
   const userData = decodeCredential(response.credential);
-  console.log("Handle the userData", userData);
+  console.log("Handle the response", response);
 };
 const onErrorcallback = (eeee) => {
   // This callback will be triggered when the user selects or login to
   // his Google account from the popup
   console.log("Handle the eeee", eeee);
 };
-// const { googleConfig, onSuccess, onError } = useGoogleSigninButton({
-//   clientId:
-//     "467874272347-f241lioo004ksju0qudsroorkb5lf6au.apps.googleusercontent.com",
-// });
 </script>
 <template>
   <Modal
@@ -72,9 +67,9 @@ const onErrorcallback = (eeee) => {
           class="form-control input"
         />
         <button type="submit" class="btn btn-success">Submit</button>
-        <button type="button" class="btn btn-success" @click="emits('google')">
+        <!-- <button type="button" class="btn btn-success" @click="emits('google')">
           SignUp With Google here
-        </button>
+        </button> -->
 
         <GoogleLogin :callback="callback" />
       </div>
