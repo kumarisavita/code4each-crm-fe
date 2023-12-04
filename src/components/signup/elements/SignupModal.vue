@@ -2,7 +2,7 @@
 import { defineEmits } from "vue";
 import Modal from "@/components/common/Modal.vue";
 import VeeInput from "@/components/common/VeeInput.vue";
-import { googleTokenLogin } from "vue3-google-login";
+import { decodeCredential } from "vue3-google-login";
 const props = defineProps({
   showModal: Boolean,
 });
@@ -11,13 +11,11 @@ const emits = defineEmits();
 const closeModal = () => {
   emits("hide-modal");
 };
-const callback = () => {
+const callback = (response) => {
   // const userData = decodeCredential(response.credential);
+  console.log("Handle the response", response);
 
-  googleTokenLogin().then((response) => {
-    console.log("Handle the response", response);
-    emits("google", response.credential);
-  });
+  emits("google", response.credential);
 };
 </script>
 <template>
@@ -66,11 +64,13 @@ const callback = () => {
           class="form-control input"
         />
         <button type="submit" class="btn btn-success">Submit</button>
-        <button type="button" class="btn btn-success" @click="callback">
+        <!-- <button type="button" class="btn btn-success" @click="callback">
           SignUp With Google here
-        </button>
+        </button> -->
 
-        <!-- <GoogleLogin :callback="callback" button-text="customButtonText" /> -->
+        <GoogleLogin :callback="callback">
+          <button>Login Using Google</button>
+        </GoogleLogin>
       </div>
     </form>
     <template #footer>
