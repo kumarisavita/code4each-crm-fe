@@ -46,35 +46,25 @@ const localState = reactive({
   showModal: false,
 });
 
-// const googleSignUp = async () => {
-//   loading.value = true;
-//   try {
-//     const response = await WordpressService.GoogleLogin.googleLogin;
-//     console.log(response, "ccccccccccc");
-//     //   const response = await WordpressService.GoogleLogin.googleLogin;
-//     //   if (response.status === 200 && response.data.success) {
-//     //     console.log(response, "ccccccccccc");
-//     //     const token = response.data.token;
-//     //     // localStorage.setItem("access_token", token);
-//     //     // hideModal();
-//     //     // loading.value = false;
-//     //     // router.push("/dashboard");
-//     //   }
-//   } catch (error) {
-//     loading.value = false;
-//     console.error(error);
-//   }
-// };
-
-const googleSignUp = async () => {
+const googleSignUp = async (credential: string) => {
+  loading.value = true;
   try {
-    // const response = await WordpressService.GoogleLogin.googleLogin();
-    // console.log(response, "ccccccccccc");
-    window.location.href = "https://devcrmapi.code4each.com/api/auth/google";
+    const response = await WordpressService.GoogleLogin.googleSignUp({
+      id_token: credential,
+    });
+    console.log(response, "ccccccccccc");
+    if (response.status === 200 && response.data.success) {
+      const token = response.data.access_token;
+      localStorage.setItem("access_token", token);
+      loading.value = false;
+      router.push("/dashboard");
+    }
   } catch (error) {
-    console.error("An error occurred:", error);
+    loading.value = false;
+    console.error(error);
   }
 };
+
 onBeforeMount(() => {
   localState.showModal = true;
 });

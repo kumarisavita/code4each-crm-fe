@@ -12,13 +12,10 @@ const closeModal = () => {
   emits("hide-modal");
 };
 const callback = (response) => {
-  const userData = decodeCredential(response.credential);
+  // const userData = decodeCredential(response.credential);
   console.log("Handle the response", response);
-};
-const onErrorcallback = (eeee) => {
-  // This callback will be triggered when the user selects or login to
-  // his Google account from the popup
-  console.log("Handle the eeee", eeee);
+
+  emits("google", response.credential);
 };
 </script>
 <template>
@@ -67,11 +64,11 @@ const onErrorcallback = (eeee) => {
           class="form-control input"
         />
         <button type="submit" class="btn btn-success">Submit</button>
-        <!-- <button type="button" class="btn btn-success" @click="emits('google')">
+        <!-- <button type="button" class="btn btn-success" @click="callback">
           SignUp With Google here
         </button> -->
 
-        <GoogleLogin :callback="callback" />
+        <GoogleLogin :callback="callback" button-text="customButtonText" />
       </div>
     </form>
     <template #footer>
