@@ -2,7 +2,6 @@
 import { defineEmits } from "vue";
 import Modal from "@/components/common/Modal.vue";
 import VeeInput from "@/components/common/VeeInput.vue";
-import { decodeCredential } from "vue3-google-login";
 const props = defineProps({
   showModal: Boolean,
 });
@@ -12,9 +11,6 @@ const closeModal = () => {
   emits("hide-modal");
 };
 const callback = (response) => {
-  // const userData = decodeCredential(response.credential);
-  console.log("Handle the response", response);
-
   emits("google", response.credential);
 };
 </script>
@@ -68,10 +64,7 @@ const callback = (response) => {
           SignUp With Google here
         </button> -->
 
-        <GoogleLogin :callback="callback" prompt>
-          <!-- <button>Login Using Google</button> -->
-          <button>Add</button>
-        </GoogleLogin>
+        <GoogleLogin :callback="callback" />
       </div>
     </form>
     <template #footer>
