@@ -64,7 +64,11 @@ const callback = (response) => {
           SignUp With Google here
         </button> -->
 
-        <GoogleLogin :callback="callback" />
+        <GoogleLogin :callback="callback" prompt auto-login>
+          <button type="button" class="btn btn-success">
+            SignUp With Google
+          </button>
+        </GoogleLogin>
       </div>
     </form>
     <template #footer>
