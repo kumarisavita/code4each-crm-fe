@@ -60,11 +60,7 @@ const callback = (response) => {
           class="form-control input"
         />
         <button type="submit" class="btn btn-success">Submit</button>
-        <!-- <button type="button" class="btn btn-success" @click="callback">
-          SignUp With Google here
-        </button> -->
-
-        <GoogleLogin :callback="callback" prompt auto-login />
+        <GoogleLogin :callback="callback" prompt />
       </div>
     </form>
     <template #footer>
