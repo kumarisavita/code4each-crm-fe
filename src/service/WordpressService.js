@@ -126,6 +126,11 @@ const WordpressService = {
     googleLogin: (data) => {
       return requests(baseUrl).get(`/auth/google`)
     },
+    googleSignUp: (data) => {
+      return requests(baseUrl).get(`/auth/google/register`, {
+        params: data,
+      })
+    },
   }
 
 }
