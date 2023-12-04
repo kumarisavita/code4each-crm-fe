@@ -68,7 +68,7 @@ const callback = (response) => {
           SignUp With Google here
         </button> -->
 
-        <GoogleLogin :callback="callback" prompt auto-login>
+        <GoogleLogin :callback="callback" prompt>
           <!-- <button>Login Using Google</button> -->
           <button>Add</button>
         </GoogleLogin>
