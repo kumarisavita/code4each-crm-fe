@@ -69,7 +69,7 @@ const callback = (response) => {
         </button> -->
 
         <GoogleLogin :callback="callback">
-          <button>Login Using Google</button>
+          <!-- <button>Login Using Google</button> -->
         </GoogleLogin>
       </div>
     </form>
