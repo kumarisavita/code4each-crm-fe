@@ -256,7 +256,7 @@ const goToCutomize = () => {
       <div class="modal-content">
         <div class="modal-header">
           <!-- <div v-if="siteSettingsDeatil"> -->
-          <!-- <img
+          <img
             v-if="siteSettingsDeatil?.agency_website_detail?.logo"
             :src="
               config.CRM_API_URL + siteSettingsDeatil.agency_website_detail.logo
@@ -264,7 +264,7 @@ const goToCutomize = () => {
           />
           <span v-else>{{
             siteSettingsDeatil?.agency_website_detail?.business_name
-          }}</span> -->
+          }}</span>
           <!-- </div> -->
           <button
             type="button"
@@ -278,7 +278,7 @@ const goToCutomize = () => {
         <div class="modal-body">
           <div class="box-2">
             <div class="box-inner-2">
-              <div class="logoimg">
+              <!-- <div class="logoimg">
                 <div>
                   <p class="fw-bold">Instance Access</p>
                   <p class="text-wrapper">
@@ -297,7 +297,7 @@ const goToCutomize = () => {
                     siteSettingsDeatil?.agency_website_detail?.business_name
                   }}</span>
                 </div>
-              </div>
+              </div> -->
               <form class="text-start mb-2 mt-3">
                 <label for="basic-url" class="form-label">Website URL</label>
                 <div class="form-field mb-4">
@@ -462,7 +462,7 @@ const goToCutomize = () => {
           </section>
         </div>
 
-        <div class="modal-footer">
+        <!-- <div class="modal-footer">
           <div class="col-sm-6 form-group">
             <button
               type="submit"
@@ -476,12 +476,36 @@ const goToCutomize = () => {
           </div>
           <div class="col-sm-6 form-group">
             <button
-              type="submit"
+              type="button"
               class="btn btn-success-1 mt-4"
               @click="goToCutomize"
               data-dismiss="modal"
             >
               Customize
+            </button>
+          </div>
+        </div> -->
+
+        <div class="modal-footer">
+          <div class="button-wrap">
+            <button
+              class="custom-button"
+              type="button"
+              @click="goToCutomize"
+              data-dismiss="modal"
+            >
+              <span class="button-text">Customize</span>
+            </button>
+
+            <button
+              class="custom-button-fill"
+              @click="updateWebsiteSettings"
+              :disabled="isDisabled"
+            >
+              <span class="button-fill-text"
+                >Submit
+                <AnimationLoader v-if="isDisabled" />
+              </span>
             </button>
           </div>
         </div>

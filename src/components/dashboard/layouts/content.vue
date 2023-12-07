@@ -92,8 +92,8 @@ const formattedDate = (stringDate) => {
               <li class="breadcrumb-item">
                 <a href="#">
                   <h3>
-                    <i class="fa fa-cubes" aria-hidden="true"></i> Welcome To
-                    Agency Dashboard
+                    <i class="fa fa-cubes" aria-hidden="true"></i> Welcome TO
+                    Dashboard
                   </h3>
                 </a>
               </li>
@@ -119,8 +119,11 @@ const formattedDate = (stringDate) => {
               v-if="dashboardData?.agency_website_info?.length >= 1"
             >
               {{ dashboardData?.agency_website_info?.length }}
-
-              website...
+              {{
+                dashboardData?.agency_website_info?.length > 1
+                  ? "websites..."
+                  : "website..."
+              }}
             </h3>
           </div>
           <div class="card-wrappers">
@@ -170,7 +173,7 @@ const formattedDate = (stringDate) => {
               </div>
             </div>
 
-            <div
+            <!-- <div
               class="card"
               aria-hidden="true"
               data-bs-toggle="modal"
@@ -183,6 +186,26 @@ const formattedDate = (stringDate) => {
                   <i class="fa fa-plus-square"></i>
                 </span>
               </div>
+            </div> -->
+
+            <div
+              class="ag-courses_item"
+              aria-hidden="true"
+              data-bs-toggle="modal"
+              data-bs-target="#basicModal"
+              @click="openModalWithCategories"
+            >
+              <a href="#" class="ag-courses-item_link">
+                <div class="ag-courses-item_bg"></div>
+
+                <div class="ag-courses-item_title">Create a your site</div>
+
+                <div class="ag-courses-item_date-box">
+                  <span class="ag-courses-item_date">
+                    <i class="fa fa-plus-circle"></i>
+                  </span>
+                </div>
+              </a>
             </div>
           </div>
         </div>

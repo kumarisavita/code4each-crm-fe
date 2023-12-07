@@ -1190,7 +1190,7 @@ form.button-from.mt-2  select.form-select{
         align-items: center;
         margin: 0px auto;
         word-break: break-all;
-        font-weight: 100;
+        font-weight: 600;
     }
     .sidebar-link[data-bs-toggle="collapse"]::before {
         display: block;
