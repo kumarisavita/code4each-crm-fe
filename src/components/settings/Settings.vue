@@ -51,6 +51,7 @@ const isDisabled = ref(false);
 const formData = ref({});
 const allErrors = ref({});
 const { Errors, resetForm, handleSubmit } = useForm();
+const showOthersCategoryName = ref(false);
 
 watch(
   () => store.websiteId,
@@ -212,6 +213,11 @@ const setFormValues = () => {
   formData.value.zip = agencyWebsiteDetail?.zip || "";
   formData.value.state = agencyWebsiteDetail?.state || "";
   formData.value.website_id = agencyWebsiteDetail?.website_id;
+  formData.value.others_category_name =
+    agencyWebsiteDetail?.others_category_name;
+  if (agencyWebsiteDetail?.others_category_name) {
+    showOthersCategoryName.value = true;
+  }
 };
 
 const handleCopyClick = (text) => {
@@ -225,7 +231,6 @@ const handleCopyClick = (text) => {
 watch(
   () => siteSettingsDeatil,
   (newsiteSettingsDeatil, OldsiteSettingsDeatil) => {
-    // allDashboardData.value = props.dashboardData;
     setFormValues();
   },
   {
@@ -239,6 +244,16 @@ const onFileChange = (event) => {
 
 const goToCutomize = () => {
   router.push("/customize");
+};
+
+const oncategoryChange = (event) => {
+  const selectedOption = event.target.selectedOptions[0];
+  if (selectedOption && selectedOption.label === "Others") {
+    showOthersCategoryName.value = true;
+  } else {
+    showOthersCategoryName.value = false;
+    formData.value.others_category_name = "";
+  }
 };
 </script>
 
@@ -349,6 +364,7 @@ const goToCutomize = () => {
                     aria-label="Select an option"
                     v-model="formData.category_id"
                     id="category_id"
+                    @change="oncategoryChange"
                   >
                     <option value="" selected>Open this select menu</option>
                     {{
@@ -362,6 +378,15 @@ const goToCutomize = () => {
                       {{ option.label }}
                     </option>
                   </select>
+                  <div id="other-div" v-if="showOthersCategoryName">
+                    <label for="" class="form-label">About Category</label>
+                    <textarea
+                      class="form-control input"
+                      placeholder="Wright About Category You Want.."
+                      rows="2"
+                      v-model="formData.others_category_name"
+                    ></textarea>
+                  </div>
                   <div class="text-danger">{{ allErrors.category_id }}</div>
                 </div>
                 <div class="col-sm-6 form-group">

@@ -23,6 +23,7 @@ const animatedSvg = ref(null);
 const values = ref({});
 const domainUrl = ref(null);
 const { errors, resetForm, handleSubmit } = useForm();
+const showOthersCategoryName = ref(false);
 
 const props = defineProps({
   showModal: true,
@@ -57,6 +58,9 @@ const submitAgencyDetailC = handleSubmit(async () => {
     formData.append("country", formValues.country);
     formData.append("zip", formValues.zip);
     formData.append("description", formValues.description);
+    if (showOthersCategoryName) {
+      formData.append("others_category_name", formValues.othersCategoryName);
+    }
     const customHeaders = {
       "Content-Type": "multipart/form-data",
     };
@@ -116,6 +120,15 @@ const onFileChange = (event) => {
   values.value.logo = event.target.files[0];
 };
 
+const oncategoryChange = (event) => {
+  const selectedOption = event.target.selectedOptions[0];
+  if (selectedOption && selectedOption.label === "Others") {
+    showOthersCategoryName.value = true;
+  } else {
+    showOthersCategoryName.value = false;
+    values.value.othersCategoryName = "";
+  }
+};
 const animationLoader = () => {
   const timeline = anime.timeline({
     autoplay: true,
@@ -225,6 +238,7 @@ const animationLoader = () => {
                     id="businessCategory"
                     aria-label="Select an option"
                     v-model="values.businessCategory"
+                    @change="oncategoryChange"
                   >
                     <option value="" selected>Open this select menu</option>
                     {{
@@ -238,7 +252,17 @@ const animationLoader = () => {
                       {{ option.label }}
                     </option>
                   </select>
-
+                  <div v-if="showOthersCategoryName">
+                    <label for="othersCategoryName" class="form-label"
+                      >About Category</label
+                    >
+                    <textarea
+                      class="form-control input"
+                      placeholder="Wright About Category You Want.."
+                      rows="3"
+                      v-model="values.othersCategoryName"
+                    ></textarea>
+                  </div>
                   <label for="logo" class="form-label">Logo</label>
                   <input
                     type="file"
@@ -354,7 +378,7 @@ const animationLoader = () => {
                   Previous
                 </button>
                 <button type="submit" class="btn btn-primary next-step">
-                  Next
+                  Create Site
                 </button>
               </div>
               <div
