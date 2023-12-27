@@ -8,8 +8,9 @@ import WordpressService from "@/service/WordpressService";
 import AgencyDetailModal from "../elements/AgencyDetailModal.vue";
 import SiteSettings from "@/views/SiteSettings.vue";
 import { useStore } from "@/stores/store";
-
-const store = useStore();
+import { useForm } from "vee-validate";
+import * as yup from "yup";
+const allErrors = ref({});
 
 const props = defineProps({
   dashboardData: Object,
@@ -22,7 +23,13 @@ const categories = ref([]);
 const allDashboardData = ref();
 const showModal = ref(false);
 const deatilModalShow = ref(false);
-
+const { errors, resetForm, handleSubmit } = useForm();
+const store = useStore();
+const values = ref({
+  type: "", // Default value
+});
+const errorMessage = ref("");
+allErrors;
 watch(
   () => props.dashboardData,
   (newDashboardData, OldDashboardData) => {
@@ -35,8 +42,7 @@ watch(
 
 onMounted(() => {
   allDashboardData.value = props.dashboardData;
-  console.log(allDashboardData.value);
-  // openModalWithCategories();
+  allErrors.value = {};
 });
 
 const openModalWithCategories = async () => {
@@ -61,6 +67,49 @@ const formattedDate = (stringDate) => {
   const date = new Date(stringDate);
   const options = { year: "numeric", month: "long", day: "numeric" };
   return date.toLocaleDateString("en-US", options);
+};
+
+const validationSchema = yup.object({
+  type: yup.string().required(),
+  title: yup.string().required(),
+  message: yup.string().required(),
+});
+
+const submitFeedback = handleSubmit(async () => {
+  try {
+    let formValues = values.value;
+    await validationSchema.validate(values.value, { abortEarly: false });
+    const formData = new FormData();
+    formData.append("type", formValues.type);
+    formData.append("title", formValues.title);
+    formData.append("agency_id", allDashboardData.value?.user?.agency_id);
+    formData.append("email", allDashboardData.value?.user?.email);
+    formData.append(
+      "phone",
+      allDashboardData.value.user.phone ? allDashboardData.value.user.phone : ""
+    );
+    formData.append("message", formValues.message);
+    const response = await WordpressService.FeedBack.submitFeedback(formData);
+    if (response.status === 200 && response.data.success) {
+      emptyForm();
+    }
+  } catch (validationErrors) {
+    const errors = validationErrors.inner.reduce((acc, error) => {
+      acc[error.path] = error.message;
+      return acc;
+    }, {});
+
+    allErrors.value = errors;
+    // errorMessage.value = error.response?.data?.message;
+    // console.error(allErrors.value);
+  }
+  emptyForm();
+});
+
+const emptyForm = () => {
+  values.value.type = "";
+  values.value.message = "";
+  values.value.title = "";
 };
 </script>
 <template>
@@ -172,22 +221,6 @@ const formattedDate = (stringDate) => {
                 </div>
               </div>
             </div>
-
-            <!-- <div
-              class="card"
-              aria-hidden="true"
-              data-bs-toggle="modal"
-              data-bs-target="#basicModal"
-              @click="openModalWithCategories"
-            >
-              <h3 class="create-text">Create your website</h3>
-              <div class="card-design">
-                <span class="create-icons">
-                  <i class="fa fa-plus-square"></i>
-                </span>
-              </div>
-            </div> -->
-
             <div
               class="ag-courses_item"
               aria-hidden="true"
@@ -213,135 +246,95 @@ const formattedDate = (stringDate) => {
     </div>
   </section>
   <SiteSettings />
-  <!-- <div
-    class="modal fade drawer right-align"
-    id="exampleModalRight"
-    tabindex="-1"
-    role="dialog"
-    aria-labelledby="exampleModalLabel"
-    aria-hidden="true"
-  >
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <img src="images/black-logo.png" />
-          <button
-            type="button"
-            class="close"
-            data-dismiss="modal"
-            aria-label="Close"
-          >
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          <div class="box-2">
-            <div class="box-inner-2">
-              <div>
-                <p class="fw-bold">Instance Access</p>
-                <p class="text-wrapper">
-                  Complete your purchase by providing your payment details
-                </p>
-              </div>
-              <form class="text-start mb-2 mt-3">
-                <label for="basic-url" class="form-label">Website URL</label>
-                <div class="form-field mb-4">
-                  <div class="input-group mb-3">
-                    <input
-                      type="url"
-                      class="form-control"
-                      placeholder="https://www.google.com/"
-                      aria-label="https://www.google.com/"
-                      aria-describedby="button-addon2"
-                    />
-                  </div>
-                  <button
-                    class="btn btn-outline-success btn-success linkBtn"
-                    type="button"
-                    id="button-addon2"
-                  >
-                    <i class="fa fa-share-square"></i>
-                  </button>
-                  <button
-                    class="btn btn-outline-danger btn-danger text-light linkBtn"
-                    type="button"
-                    id="button-addon3"
-                  >
-                    <i
-                      class="fa fa-copy"
-                      data-toggle="tooltip"
-                      data-placement="top"
-                      title="copy"
-                    ></i>
-                  </button>
-                </div>
-              </form>
-            </div>
-          </div>
-          <section class="Settings-form">
-            <div class="form-wrapper">
-              <div class="row">
-                <div class="col-sm-6 form-group">
-                  <label for="" class="form-label">Website Category</label>
-                  <select class="form-select" aria-label="Select an option">
-                    <option value="">Open this select menu</option>
-                    <option value="1">Education</option>
-                    <option value="2">Health</option>
-                    <option value="3">Digital Marketing</option>
-                    <option value="4">Information</option>
-                  </select>
-                </div>
-                <div class="col-sm-6 form-group">
-                  <label for="" class="form-label">Business Name</label>
-                  <input
-                    type="text"
-                    placeholder="Business Name"
-                    class="form-control input"
-                  />
-                  <div class="text-danger"></div>
-                </div>
-                <div class="col-sm-6 form-group">
-                  <label for="" class="form-label">Address</label>
-                  <input
-                    type="text"
-                    placeholder="Address"
-                    class="form-control input"
-                  />
-                  <div class="text-danger"></div>
-                </div>
-
-                <div class="col-sm-6 form-group">
-                  <label for="" class="form-label">Website Logo</label>
-                  <input type="file" name="logo" class="form-control input" />
-                  <div class="text-danger"></div>
-                </div>
-                <div class="col-sm-12 form-group">
-                  <label for="" class="form-label">Description</label>
-                  <textarea
-                    class="form-control input"
-                    placeholder="Description..(optional)"
-                    rows="3"
-                  ></textarea>
-                </div>
-              </div>
-            </div>
-          </section>
-        </div>
-
-        <div class="modal-footer">
-          <div class="col-sm-12 form-group">
-            <button type="submit" class="btn btn-success mt-4">Submit</button>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div> -->
   <AgencyDetailModal
     :showModal="showModal"
     :categories="categories"
     @hide-modal="showModal = false"
     :dashboardData="dashboardData"
   />
+  <div
+    class="modal fade"
+    id="modalContactForm"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="myModalLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-body mx-3">
+          <div class="card-layout layout-medium">
+            <div class="content">
+              <!-- <form id="multi-step-form" @submit.prevent="submitFeedback"> -->
+              <div class="close-button"></div>
+
+              <h1 class="title">Give feedback/Inquiry</h1>
+              <!-- <p>What do you think of the editing tool?</p>
+
+              <div class="emojis">
+                <span class="eachEmoji">😥</span>
+                <span class="eachEmoji">😔</span>
+                <span class="eachEmoji">😐</span>
+                <span class="eachEmoji">😀</span>
+                <span class="eachEmoji">😇</span>
+              </div> -->
+
+              <label data-error="wrong" data-success="right" for="form34"
+                >Title</label
+              >
+              <input
+                type="text"
+                id="form34"
+                class="form-control validate"
+                placeholder="title"
+                v-model="values.title"
+              />
+              <div class="text-danger">{{ allErrors.title }}</div>
+              <label data-error="wrong" data-success="right" for="form34"
+                >Type</label
+              >
+              <select
+                class="form-select1"
+                aria-label="Select an option"
+                v-model="values.type"
+              >
+                <option value="">Open this select menu</option>
+                <option value="review">Review</option>
+                <option value="complaint">Complaint</option>
+                <option value="feedback">Feedback</option>
+                <option value="suggestion">Suggestion</option>
+                <option value="inquiry">Inquiry</option>
+              </select>
+              <div class="text-danger">{{ allErrors.type }}</div>
+              <label data-error="wrong" data-success="right" for="form34"
+                >Message</label
+              >
+              <textarea
+                name="users-feedback"
+                id="users-feedback"
+                placeholder="Write your message here..."
+                v-model="values.message"
+              ></textarea>
+              <div class="text-danger">{{ allErrors.message }}</div>
+              <div class="user-actions">
+                <button class="feedback-btn-primary" @click="submitFeedback">
+                  Send
+                </button>
+                <button
+                  class="feedback-btn-outline"
+                  data-dismiss="modal"
+                  aria-hidden="true"
+                >
+                  Cancel
+                </button>
+              </div>
+              <!-- </form> -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
 <style>
 .spinner-container {

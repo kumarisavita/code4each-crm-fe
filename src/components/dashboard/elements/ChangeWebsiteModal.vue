@@ -50,7 +50,7 @@
                     </form>
                   </div>
                 </div>
-                <AnimationLoader v-if="isLoading[index]" />
+                <AnimationLoader v-if="isLoading[index]" svgClass="shapea" />
               </div>
             </div>
           </div>

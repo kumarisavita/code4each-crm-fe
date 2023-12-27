@@ -70,6 +70,7 @@
           </a>
           <ul
             class="sidebar-menu list-unstyled collapse"
+            :class="{ show: currentRoute.includes('/customize') }"
             v-if="dashboardData?.agency_website_info?.length >= 1"
             id="cmsDropdown"
           >
@@ -78,62 +79,64 @@
               :class="{ active: currentRoute === '/customize/components' }"
             >
               <router-link :to="{ name: 'customize_components' }">
-                <a class="sidebar-link text-muted">Components</a>
+                <a
+                  class="sidebar-link text-muted"
+                  :class="{
+                    active: currentRoute.includes('/customize/components'),
+                  }"
+                  >Components</a
+                >
               </router-link>
             </li>
             <li class="sidebar-list-item">
               <router-link :to="{ name: 'customize_colors' }">
-                <a class="sidebar-link text-muted">Colors</a>
+                <a
+                  class="sidebar-link text-muted"
+                  :class="{
+                    active: currentRoute.includes('/customize/colors'),
+                  }"
+                  >Colors</a
+                >
               </router-link>
             </li>
             <li class="sidebar-list-item">
               <router-link :to="{ name: 'customize_fonts' }">
-                <a class="sidebar-link text-muted">Fonts</a>
+                <a
+                  class="sidebar-link text-muted"
+                  :class="{
+                    active: currentRoute.includes('/customize/fonts'),
+                  }"
+                  >Fonts</a
+                >
+              </router-link>
+            </li>
+            <li class="sidebar-list-item">
+              <router-link :to="{ name: 'customize_social_links' }">
+                <a
+                  class="sidebar-link text-muted"
+                  :class="{
+                    active: currentRoute.includes('/customize/social-links'),
+                  }"
+                  >Social Links</a
+                >
               </router-link>
             </li>
           </ul>
         </li>
-        <!-- <li class="sidebar-list-item">
-          <a
-            class="sidebar-link text-muted"
-            href="#"
-            data-bs-target="#widgetsDropdown"
-            role="button"
-            aria-expanded="false"
-            data-bs-toggle="collapse"
-          >
-            <i class="fa fa-line-chart me-3"></i>
-            <span class="sidebar-link-title"> Widgets </span>
-          </a>
-          <ul class="sidebar-menu list-unstyled collapse" id="widgetsDropdown">
-            <li class="sidebar-list-item">
-              <a class="sidebar-link text-muted" href="#">Stats</a>
-            </li>
-            <li class="sidebar-list-item">
-              <a class="sidebar-link text-muted" href="#">Data</a>
-            </li>
-          </ul>
-        </li> -->
       </ul>
-      <!-- <h6 class="sidebar-heading">Docs</h6> -->
-      <!-- <ul class="list-unstyled">
-        <li
-          class="sidebar-list-item"
-          v-if="dashboardData?.agency_website_info?.length >= 1"
-        >
-          <router-link :to="{ name: 'site_settings' }">
-            <a
-              class="sidebar-link text-muted"
-              :class="{ active: currentRoute === '/settings' }"
-              href="#"
-            >
-              <i class="fa fa-cog me-3"></i>
-              <span class="sidebar-link-title">Settings</span>
-            </a>
-          </router-link>
-        </li>
-      </ul> -->
-      <div class="Regenerate" v-if="currentRoute != '/dashboard'">
+      <div class="dashboard-design" v-if="currentRoute === '/dashboard'">
+        <div class="feedback-btn">
+          <button
+            type="submit"
+            class="feedback-button"
+            data-toggle="modal"
+            data-target="#modalContactForm"
+          >
+            Feedback
+          </button>
+        </div>
+      </div>
+      <div class="Regenerate" v-else>
         <form class="text-start mb-2 mt-3">
           <div class="form-field mb-4">
             <button

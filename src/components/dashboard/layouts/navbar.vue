@@ -121,11 +121,14 @@ const props = defineProps({
             aria-expanded="false"
             @click="showUserMenu = !showUserMenu"
           >
-            <img
+            <!-- <img
               class="avatar p-1"
               src="https://d19m59y37dris4.cloudfront.net/bubbly/1-2/img/avatar-6.jpg"
               alt="Jason Doe"
-            />
+            /> -->
+            <span class="avatar p-1">
+              {{ dashboardData?.name.charAt(0).toUpperCase() }}</span
+            >
           </a>
           <div
             class="dropdown-menu dropdown-menu-end dropdown-menu-animated"

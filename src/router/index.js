@@ -7,6 +7,7 @@ import CustomizeView from '../views/CustomizeView.vue'
 import CustomizeColors from '../views/CustomizeWebsiteColors.vue'
 import SiteSettings from '../views/SiteSettings.vue'
 import CustomizeWebsiteFonts from '../views/CustomizeWebsiteFonts.vue'
+import CustomizeSocialLinks from '../views/CustomizeSocialLinks.vue'
 import RessetPassword from "@/components/forget_password/RessetPassword.vue";
 
 const router = createRouter({
@@ -60,6 +61,11 @@ const router = createRouter({
       component: CustomizeWebsiteFonts
     },
     {
+      path: '/customize/social-links',
+      name: 'customize_social_links',
+      component: CustomizeSocialLinks
+    },
+    {
       path: '/settings',
       name: 'site_settings',
       component: SiteSettings
@@ -74,7 +80,7 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from, next) => {
-  const pageTitle = to.meta.title || 'Code4Each CRM';
+  const pageTitle = to.meta.title || 'SpeedySites';
   document.title = pageTitle;
   if (to.path === "/login" && isLoggedIn()) {
     next("/dashboard");
