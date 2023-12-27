@@ -203,7 +203,7 @@
  .modal-body .form-group input.form-control {
      padding: 15px 10px;
      display: flex;
-     margin: 20px auto;
+     /* margin: 20px auto; */
  }
 
  button.btn.btn-success {
