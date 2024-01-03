@@ -131,6 +131,23 @@ const WordpressService = {
         params: data,
       })
     },
+  },
+
+  FeedBack: {
+    submitFeedback: (data) => {
+      return requests(baseUrl).post(`/feedback`, data)
+    }
+  },
+
+  SocialLinks: {
+    postSocialLinks: (data) => {
+      return requests(baseUrl).post(`/update-social-links`, data)
+    },
+    getSocialLinks: (data) => {
+      return requests(baseUrl).get(`/get-social-links`, {
+        params: data
+      },)
+    },
   }
 
 }
