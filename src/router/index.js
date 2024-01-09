@@ -94,6 +94,7 @@ router.beforeEach((to, from, next) => {
     next();
   }
 });
+
 function isLoggedIn() {
   return localStorage.getItem('access_token') !== null && !undefined;
 }
