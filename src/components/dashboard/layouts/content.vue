@@ -140,7 +140,13 @@ const emptyForm = () => {
               </li>
             </ol>
             <!-- End breadcrumb -->
-            <div class="ms-auto">
+            <div
+              class="ms-auto"
+              v-if="
+                dashboardData?.agency_website_info?.length < 1 ||
+                !dashboardData?.agency_website_info
+              "
+            >
               <div>
                 <button
                   class="btnclickable-element Button"
@@ -219,6 +225,10 @@ const emptyForm = () => {
               data-bs-toggle="modal"
               data-bs-target="#basicModal"
               @click="openModalWithCategories"
+              v-if="
+                dashboardData?.agency_website_info?.length < 1 ||
+                !dashboardData?.agency_website_info
+              "
             >
               <a href="#" class="ag-courses-item_link">
                 <div class="ag-courses-item_bg"></div>

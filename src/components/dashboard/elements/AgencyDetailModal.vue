@@ -9,7 +9,6 @@ import { EventBus } from "@/EventBus";
 import * as yup from "yup";
 import "@/assets/js/dashboard.js";
 import { openLinkInNewTab } from "@/util/helper";
-import Loader from "@/components/common/Loader.vue";
 
 const dashBoardMethods = inject("dashBoardMethods");
 const loading = ref("");
@@ -89,7 +88,9 @@ const clearFormValues = (values) => {
 };
 
 const setFormValues = () => {
+  console.log(allDashboardData, "pppppppppp");
   values.value.businessName = allDashboardData.value?.user?.agency?.name;
+  values.value.phone = allDashboardData.value?.user?.phone;
   values.value.businessCategory = "";
   values.value.country = "india";
 };
@@ -169,11 +170,6 @@ const oncategoryChange = (event) => {
                   <label for="businessCategory" class="form-label"
                     >Business Category*</label
                   >
-                  <div class="three-body2">
-                    <div class="three-body__dot"></div>
-                    <div class="three-body__dot"></div>
-                    <div class="three-body__dot"></div>
-                  </div>
                   <select
                     class="form-select select-category"
                     id="businessCategory"
@@ -204,15 +200,6 @@ const oncategoryChange = (event) => {
                       v-model="values.othersCategoryName"
                     ></textarea>
                   </div>
-                  <!-- <label for="logo" class="form-label">Logo</label>
-                  <input
-                    type="file"
-                    name="logo"
-                    id="logo"
-                    class="form-control input"
-                    accept=".jpg, .jpeg, .png"
-                    @change="onFileChange"
-                  /> -->
                   <label for="phone" class="form-label">Phone*</label>
                   <input
                     type="text"
@@ -348,7 +335,6 @@ const oncategoryChange = (event) => {
                 :class="currentStep != 4 ? 'd-none' : ''"
               >
                 <div class="mb-3 next-step">
-                  <!-- <Loader /> -->
                   <div class="three-body2">
                     <div class="three-body__dot"></div>
                     <div class="three-body__dot"></div>

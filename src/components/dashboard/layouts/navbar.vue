@@ -28,31 +28,14 @@ const props = defineProps({
       >
         <i class="fa fa-align-left"></i>
       </a>
-      <a
-        class="navbar-brand fw-bold text-uppercase text-base"
-        href="index.html"
-      >
+      <a class="navbar-brand fw-bold text-uppercase text-base" href="#">
         <span class="d-none d-brand-partial">Bubbly </span>
         <span class="d-none d-sm-inline">
           <img src="/images/speedylogo.png" />
-          <!-- {{ dashboardData?.agency?.name }} -->
         </span>
       </a>
       <ul class="ms-auto d-flex align-items-center list-unstyled mb-0">
         <li class="nav-item dropdown">
-          <!-- <form class="ms-auto me-4 d-none d-lg-block" id="searchForm">
-            <div class="input-group input-group-sm input-group-navbar">
-              <input
-                class="form-control"
-                id="searchInput"
-                type="search"
-                placeholder="Search"
-              />
-              <button class="btn" type="button">
-                <i class="fa fa-search"></i>
-              </button>
-            </div>
-          </form> -->
           <div
             class="dropdown-menu dropdown-menu-animated text-sm"
             id="searchDropdownMenu"
