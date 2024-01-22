@@ -1,24 +1,32 @@
 <template>
-  <div class="animation-loader">
-    <svg
-      class="shape shape1"
-      xmlns="http://www.w3.org/2000/svg"
-      width="60"
-      height="60"
-      viewBox="0 0 40 40"
-      ref="animatedSvg"
-    >
-      <path
-        style="opacity: 1; fill-opacity: 1; stroke: none"
-        d="M 7.7423617,6.5524041 C 0.14213171,13.241204 -0.28352929,25.218399 6.5488487,32.446038 13.237649,40.04627 24.578354,40.568996 32.442483,33.639553 39.813699,26.434583 40.216105,14.96193 33.635997,7.7459191 26.935569,0.39795815 15.101951,-0.40029585 7.7423617,6.5524041 Z"
-      />
-    </svg>
-  </div>
+  <!-- <div class="animation-loader"> -->
+  <svg
+    class="shape"
+    xmlns="http://www.w3.org/2000/svg"
+    width="60"
+    height="60"
+    viewBox="0 0 40 40"
+    ref="animatedSvg"
+    :class="props.svgClass"
+  >
+    <path
+      style="opacity: 1; fill-opacity: 1; stroke: none"
+      d="M 7.7423617,6.5524041 C 0.14213171,13.241204 -0.28352929,25.218399 6.5488487,32.446038 13.237649,40.04627 24.578354,40.568996 32.442483,33.639553 39.813699,26.434583 40.216105,14.96193 33.635997,7.7459191 26.935569,0.39795815 15.101951,-0.40029585 7.7423617,6.5524041 Z"
+    />
+  </svg>
+  <!-- </div> -->
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref, onMounted, defineProps } from "vue";
 const animatedSvg = ref(null);
+
+const props = defineProps({
+  svgClass: {
+    type: String,
+    default: "shape1",
+  },
+});
 
 const animationLoader = () => {
   const timeline = anime.timeline({

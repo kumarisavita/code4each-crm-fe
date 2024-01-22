@@ -34,7 +34,7 @@ const props = defineProps({
       >
         <span class="d-none d-brand-partial">Bubbly </span>
         <span class="d-none d-sm-inline">
-          <img src="/images/black-logo.png" />
+          <img src="/images/speedylogo.png" />
           <!-- {{ dashboardData?.agency?.name }} -->
         </span>
       </a>

@@ -42,14 +42,13 @@
       <h6 class="sidebar-heading">Main</h6>
       <ul class="list-unstyled">
         <li class="sidebar-list-item">
-          <router-link :to="{ name: 'dashboard' }">
-            <a
-              class="sidebar-link text-muted"
-              :class="{ active: currentRoute === '/dashboard' }"
-            >
-              <i class="fa fa-home me-3"></i>
-              <span class="sidebar-link-title"> Dashboard</span>
-            </a>
+          <router-link
+            :to="{ name: 'dashboard' }"
+            class="sidebar-link text-muted"
+            :class="{ active: currentRoute === '/dashboard' }"
+          >
+            <i class="fa fa-home me-3"></i>
+            <span class="sidebar-link-title"> Dashboard</span>
           </router-link>
         </li>
         <li
@@ -78,47 +77,46 @@
               class="sidebar-list-item"
               :class="{ active: currentRoute === '/customize/components' }"
             >
-              <router-link :to="{ name: 'customize_components' }">
-                <a
-                  class="sidebar-link text-muted"
-                  :class="{
-                    active: currentRoute.includes('/customize/components'),
-                  }"
-                  >Components</a
-                >
+              <router-link
+                :to="{ name: 'customize_components' }"
+                class="sidebar-link text-muted"
+                :class="{
+                  active: currentRoute.includes('/customize/components'),
+                }"
+              >
+                Components
               </router-link>
             </li>
             <li class="sidebar-list-item">
-              <router-link :to="{ name: 'customize_colors' }">
-                <a
-                  class="sidebar-link text-muted"
-                  :class="{
-                    active: currentRoute.includes('/customize/colors'),
-                  }"
-                  >Colors</a
-                >
+              <router-link
+                :to="{ name: 'customize_colors' }"
+                class="sidebar-link text-muted"
+                :class="{
+                  active: currentRoute.includes('/customize/colors'),
+                }"
+                >Colors
               </router-link>
             </li>
             <li class="sidebar-list-item">
-              <router-link :to="{ name: 'customize_fonts' }">
-                <a
-                  class="sidebar-link text-muted"
-                  :class="{
-                    active: currentRoute.includes('/customize/fonts'),
-                  }"
-                  >Fonts</a
-                >
+              <router-link
+                :to="{ name: 'customize_fonts' }"
+                class="sidebar-link text-muted"
+                :class="{
+                  active: currentRoute.includes('/customize/fonts'),
+                }"
+              >
+                Fonts
               </router-link>
             </li>
             <li class="sidebar-list-item">
-              <router-link :to="{ name: 'customize_social_links' }">
-                <a
-                  class="sidebar-link text-muted"
-                  :class="{
-                    active: currentRoute.includes('/customize/social-links'),
-                  }"
-                  >Social Links</a
-                >
+              <router-link
+                :to="{ name: 'customize_social_links' }"
+                class="sidebar-link text-muted"
+                :class="{
+                  active: currentRoute.includes('/customize/social-links'),
+                }"
+              >
+                Social Links
               </router-link>
             </li>
           </ul>
@@ -132,7 +130,7 @@
             data-toggle="modal"
             data-target="#modalContactForm"
           >
-            Feedback
+            Help?
           </button>
         </div>
       </div>
@@ -140,7 +138,7 @@
         <form class="text-start mb-2 mt-3">
           <div class="form-field mb-4">
             <button
-              class="btn btn-outline-danger btn-danger text-light"
+              class="btn btn-outline-danger btn-danger"
               type="button"
               id="button-addon3"
               data-toggle="modal"

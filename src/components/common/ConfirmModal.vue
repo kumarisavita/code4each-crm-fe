@@ -23,7 +23,7 @@ const confirmSubmit = () => {
     aria-hidden="true"
   >
     <div class="modal-dialog modal-dialog-centered" role="document">
-      <div class="modal-content py-md-5 px-md-4 p-sm-3 p-4">
+      <div class="modal-content px-md-4 p-sm-3 p-4">
         <button
           type="button"
           class="close"
@@ -33,22 +33,23 @@ const confirmSubmit = () => {
           &times;
         </button>
         <h3 class="text-center">{{ props.modalTitle }}</h3>
-        <img :src="processImg" />
-        <p class="r3 px-md-5 px-sm-1">
-          {{ props.modalText }}
-        </p>
+
+        <img src="/images/question.png" />
+        <p class="r3 px-md-5 px-sm-1">{{ props.modalText }}</p>
 
         <div class="text-center mb-3">
           <button
             class="btn btn-primary w-50 rounded-pill b1"
             data-toggle="modal"
-            data-target="#Myform"
             data-dismiss="modal"
+            data-target="#Myform-overlay"
             @click="confirmSubmit"
           >
             {{ props.confirmText }}
           </button>
         </div>
+        <!--                 
+                <a href="#">Not now</a> -->
       </div>
     </div>
   </div>

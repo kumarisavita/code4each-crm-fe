@@ -136,17 +136,22 @@ onMounted(async () => {
 });
 
 const validationSchema = yup.object({
-  address: yup.string().required("Address field is required"),
-  category_id: yup.string().required("Category field is required"),
+  address: yup.string().required("Address is a required field"),
+  category_id: yup.string().required("Category is a required field"),
   website_id: yup.string().required(),
-  business_name: yup.string().required("Business Name field is required"),
-  state: yup.string().required("State field is required"),
-  country: yup.string().required("Country field is required"),
-  city: yup.string().required("City field is required"),
-  zip: yup.string().required("Zip Code  field is required"),
+  business_name: yup.string().required("Business name is a required field"),
+  state: yup.string().required("State is a required field"),
+  country: yup.string().required("Country is a required field"),
+  city: yup.string().required("City is a required field"),
+  zip: yup.string().required("Zip Code is a required field"),
+  phone: yup
+    .string()
+    .required("Phone Number is a required field")
+    .matches(/^\d{10}$/, "Enter a valid 10-digit phone number"),
+
   logo: yup.mixed().test("fileType", "Unsupported file format", (value) => {
     if (!value) {
-      return true; // Allow empty values (no file selected)
+      return true;
     }
 
     const supportedFormats = ["image/jpeg", "image/png", "image/gif"];
@@ -167,6 +172,7 @@ const updateWebsiteSettings = handleSubmit(async () => {
       formData.value,
       customHeaders
     );
+    console.log(response, "pppppppppppp");
     if (response.status === 200 && response.data.success) {
       await fetchDashboardData();
       await getSiteDeatils();
@@ -211,6 +217,7 @@ const setFormValues = () => {
   formData.value.country = agencyWebsiteDetail?.country || "";
   formData.value.city = agencyWebsiteDetail?.city || "";
   formData.value.zip = agencyWebsiteDetail?.zip || "";
+  formData.value.phone = agencyWebsiteDetail?.phone || "";
   formData.value.state = agencyWebsiteDetail?.state || "";
   formData.value.website_id = agencyWebsiteDetail?.website_id;
   formData.value.others_category_name =
@@ -317,14 +324,25 @@ const oncategoryChange = (event) => {
                 <label for="basic-url" class="form-label">Website URL</label>
                 <div class="form-field mb-4">
                   <div class="input-group mb-3">
-                    <input
+                    <!-- <input
                       type="url"
                       class="form-control"
                       :placeholder="siteSettingsDeatil.website_domain"
                       :aria-label="siteSettingsDeatil.website_domain"
                       aria-describedby="button-addon2"
                       :disabled="true"
-                    />
+                    /> -->
+                    <div class="input-group mb-3">
+                      <a
+                        href="#"
+                        @click="
+                          openLinkInNewTab(siteSettingsDeatil.website_domain)
+                        "
+                        class="website-links"
+                      >
+                        {{ siteSettingsDeatil.website_domain }}
+                      </a>
+                    </div>
                   </div>
                   <button
                     class="btn btn-outline-success btn-success linkBtn"
@@ -380,12 +398,12 @@ const oncategoryChange = (event) => {
                   </select>
                   <div id="other-div" v-if="showOthersCategoryName">
                     <label for="" class="form-label">About Category</label>
-                    <textarea
+                    <input
                       class="form-control input"
                       placeholder="Wright About Category You Want.."
                       rows="2"
                       v-model="formData.others_category_name"
-                    ></textarea>
+                    />
                   </div>
                   <div class="text-danger">{{ allErrors.category_id }}</div>
                 </div>
@@ -471,7 +489,26 @@ const oncategoryChange = (event) => {
                     @change="onFileChange"
                     id="logo"
                   />
+                  <!-- <i class="fa fa-upload"></i> -->
                   <div class="text-danger">{{ allErrors.logo }}</div>
+                </div>
+
+                <!-- <div class="col-sm-6 form-group">
+                  <label for="logo" class="form-label filupp">
+                    <span class="filupp-file-name js-value">Website Logo</span>
+                  </label>
+                  <div class="text-danger">{{ allErrors.logo }}</div>
+                </div> -->
+                <div class="col-sm-6 form-group">
+                  <label for="zip" class="form-label">Phone*</label>
+                  <input
+                    type="text"
+                    placeholder="Phone"
+                    class="form-control input"
+                    v-model="formData.phone"
+                    id="phone"
+                  />
+                  <div class="text-danger">{{ allErrors.phone }}</div>
                 </div>
                 <div class="col-sm-12 form-group">
                   <label for="" class="form-label">Description</label>
@@ -514,6 +551,23 @@ const oncategoryChange = (event) => {
         <div class="modal-footer">
           <div class="button-wrap">
             <button
+              class="custom-button-fill"
+              @click="goToCutomize"
+              data-dismiss="modal"
+            >
+              <span class="button-text">Customize</span>
+            </button>
+
+            <button
+              class="custom-button"
+              @click="updateWebsiteSettings"
+              :disabled="isDisabled"
+            >
+              <span class="button-fill-text">Submit</span>
+            </button>
+          </div>
+          <!-- <div class="button-wrap">
+            <button
               class="custom-button"
               type="button"
               @click="goToCutomize"
@@ -532,7 +586,7 @@ const oncategoryChange = (event) => {
                 <AnimationLoader v-if="isDisabled" />
               </span>
             </button>
-          </div>
+          </div> -->
         </div>
       </div>
     </div>
@@ -652,24 +706,20 @@ const oncategoryChange = (event) => {
   right: 488px;
 }
 
-.custom-button {
+/* .custom-button {
   background-color: rgba(163, 48, 19, 0.2);
   color: #000;
   border: none;
   padding: 10px 20px;
-  cursor: pointer;
-  transition: background-color 0.3s, opacity 0.3s;
+  cursor: pointer; */
 
-  /* Additional styles */
-  border-radius: 5px;
-  font-weight: bold;
-  opacity: 0.5;
-}
+/* Additional styles */
 
+/* 
 .custom-button:hover {
   background-color: rgba(21, 62, 105, 0.2);
   opacity: 1;
-}
+} */
 
 .testimonial-container {
   display: grid;

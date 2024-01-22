@@ -10,6 +10,8 @@ import SiteSettings from "@/views/SiteSettings.vue";
 import { useStore } from "@/stores/store";
 import { useForm } from "vee-validate";
 import * as yup from "yup";
+import Loader from "@/components/common/Loader.vue";
+
 const allErrors = ref({});
 
 const props = defineProps({
@@ -34,6 +36,7 @@ watch(
   () => props.dashboardData,
   (newDashboardData, OldDashboardData) => {
     allDashboardData.value = props.dashboardData;
+    // loading.value = false;
   },
   {
     deep: true,
@@ -43,6 +46,7 @@ watch(
 onMounted(() => {
   allDashboardData.value = props.dashboardData;
   allErrors.value = {};
+  // loading.value = false;
 });
 
 const openModalWithCategories = async () => {
@@ -70,9 +74,9 @@ const formattedDate = (stringDate) => {
 };
 
 const validationSchema = yup.object({
-  type: yup.string().required(),
-  title: yup.string().required(),
-  message: yup.string().required(),
+  title: yup.string().required("Title is a required field"),
+  type: yup.string().required("Type is a required field"),
+  message: yup.string().required("Message is a required field"),
 });
 
 const submitFeedback = handleSubmit(async () => {
@@ -113,18 +117,6 @@ const emptyForm = () => {
 };
 </script>
 <template>
-  <div>
-    <div v-if="loading">
-      <div class="spinner-container">
-        <div class="spinner-border text-warning" role="status">
-          <span class="visually-hidden">Loading...</span>
-        </div>
-      </div>
-    </div>
-    <div v-else>
-      <p v-if="error">Error fetching dashboard data.</p>
-    </div>
-  </div>
   <section id="content-wrapper main-content side-content">
     <div class="side-app">
       <div class="" style="margin-left: 18%" v-if="dashboardData.notification">
@@ -134,14 +126,14 @@ const emptyForm = () => {
         />
       </div>
       <div v-else class="main-container container">
-        <div id="wrapper">
+        <div id="wrapper" :class="loading ? 'fade' : ''">
           <div class="page-header">
             <ol class="breadcrumb">
               <!-- breadcrumb -->
               <li class="breadcrumb-item">
                 <a href="#">
                   <h3>
-                    <i class="fa fa-cubes" aria-hidden="true"></i> Welcome TO
+                    <i class="fa fa-cubes" aria-hidden="true"></i> Welcome To
                     Dashboard
                   </h3>
                 </a>
@@ -163,7 +155,7 @@ const emptyForm = () => {
           </div>
 
           <div class="section-wrapper">
-            <h3
+            <!-- <h3
               class="text-muted mb-4"
               v-if="dashboardData?.agency_website_info?.length >= 1"
             >
@@ -173,7 +165,7 @@ const emptyForm = () => {
                   ? "websites..."
                   : "website..."
               }}
-            </h3>
+            </h3> -->
           </div>
           <div class="card-wrappers">
             <!-- <div> -->
@@ -231,7 +223,7 @@ const emptyForm = () => {
               <a href="#" class="ag-courses-item_link">
                 <div class="ag-courses-item_bg"></div>
 
-                <div class="ag-courses-item_title">Create a your site</div>
+                <div class="ag-courses-item_title">Create a Website</div>
 
                 <div class="ag-courses-item_date-box">
                   <span class="ag-courses-item_date">
@@ -245,6 +237,7 @@ const emptyForm = () => {
       </div>
     </div>
   </section>
+  <Loader v-if="loading" />
   <SiteSettings />
   <AgencyDetailModal
     :showModal="showModal"
@@ -253,7 +246,7 @@ const emptyForm = () => {
     :dashboardData="dashboardData"
   />
   <div
-    class="modal fade"
+    class="modal feedback-model fade"
     id="modalContactForm"
     tabindex="-1"
     role="dialog"
@@ -262,39 +255,40 @@ const emptyForm = () => {
   >
     <div class="modal-dialog" role="document">
       <div class="modal-content">
+        <div class="modal-header" style="border: 0">
+          <button
+            type="button"
+            class="btn-close"
+            data-dismiss="modal"
+            aria-hidden="true"
+          ></button>
+        </div>
         <div class="modal-body mx-3">
           <div class="card-layout layout-medium">
             <div class="content">
-              <!-- <form id="multi-step-form" @submit.prevent="submitFeedback"> -->
               <div class="close-button"></div>
 
-              <h1 class="title">Give feedback/Inquiry</h1>
-              <!-- <p>What do you think of the editing tool?</p>
-
-              <div class="emojis">
-                <span class="eachEmoji">😥</span>
-                <span class="eachEmoji">😔</span>
-                <span class="eachEmoji">😐</span>
-                <span class="eachEmoji">😀</span>
-                <span class="eachEmoji">😇</span>
-              </div> -->
+              <h1 class="title">Give feedback / Inquiry</h1>
+              <p>What do you think of the editing tool?</p>
 
               <label data-error="wrong" data-success="right" for="form34"
                 >Title</label
               >
               <input
                 type="text"
-                id="form34"
-                class="form-control validate"
+                class="form-control"
+                id="field1"
                 placeholder="title"
                 v-model="values.title"
               />
               <div class="text-danger">{{ allErrors.title }}</div>
+
               <label data-error="wrong" data-success="right" for="form34"
                 >Type</label
               >
               <select
                 class="form-select1"
+                id="field1"
                 aria-label="Select an option"
                 v-model="values.type"
               >
@@ -307,19 +301,21 @@ const emptyForm = () => {
               </select>
               <div class="text-danger">{{ allErrors.type }}</div>
               <label data-error="wrong" data-success="right" for="form34"
-                >Message</label
+                >Care to share more about it?</label
               >
               <textarea
-                name="users-feedback"
-                id="users-feedback"
-                placeholder="Write your message here..."
+                class="form-control input"
+                placeholder="Description..(optional)"
+                rows="5"
                 v-model="values.message"
               ></textarea>
               <div class="text-danger">{{ allErrors.message }}</div>
+
               <div class="user-actions">
                 <button class="feedback-btn-primary" @click="submitFeedback">
                   Send
                 </button>
+
                 <button
                   class="feedback-btn-outline"
                   data-dismiss="modal"
@@ -328,7 +324,6 @@ const emptyForm = () => {
                   Cancel
                 </button>
               </div>
-              <!-- </form> -->
             </div>
           </div>
         </div>

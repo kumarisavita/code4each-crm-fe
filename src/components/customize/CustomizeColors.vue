@@ -19,6 +19,7 @@ import DeleteModal from "@/components/common/DeleteModal.vue";
 import ConfirmModal from "@/components/common/ConfirmModal.vue";
 import ProcessCompleteModal from "@/components/common/ProcessCompleteModal.vue";
 import AnimationLoader from "@/components/common/AnimationLoader.vue";
+import Loader from "@/components/common/Loader.vue";
 
 const router = useRouter();
 const { logout } = useAuth();
@@ -70,14 +71,14 @@ const fetchDashboardData = async () => {
   try {
     const response = await WordpressService.fetchDashboardData();
     if (response.status === 200 && response.data.success) {
-      loading.value = false;
+      // loading.value = false;
       dashboardData.value = response.data;
     }
   } catch (error) {
     if (error.response && error.response.status === 401) {
       console.error("Authentication failed. Please log in.", error);
       error.value = true;
-      loading.value = false;
+      // loading.value = false;
       localStorage.removeItem("access_token");
       router.push("/login");
     } else {
@@ -132,6 +133,7 @@ onMounted(async () => {
   await fetchDashboardData();
   await getActiveComponentsData();
   await getDefaultColors();
+  loading.value = false;
 });
 
 watch(
@@ -141,6 +143,7 @@ watch(
     await fetchDashboardData();
     await getActiveComponentsData();
     await getDefaultColors();
+    loading.value = false;
   }
 );
 
@@ -241,18 +244,15 @@ const activateColorSet = (id, setIndex) => {
           class="panel-header panel-header-flex theme-standard without-stripe"
         >
           <div class="panel-header-title">
-            <span class="panel-header-title-span">
-              <span class="has-tooltip" data-hook="panel-header-title">
-                <div
-                  class="tooltip-on-ellipsis-content singleLine"
-                  data-hook="tooltip-on-ellipsis-content--container"
-                >
-                  Quick Edit
-                </div>
-              </span>
-            </span>
+            <span class="panel-header-title-span"> </span>
+            <img
+              src="/images/export.png"
+              @click="openLinkInNewTab(siteSettingsDeatil.website_domain)"
+              style="cursor: pointer"
+            />
           </div>
         </header>
+        <hr />
         <div class="ifYqM">
           <div
             class="eidtor-sitecolor"
@@ -299,35 +299,27 @@ const activateColorSet = (id, setIndex) => {
             <button
               type="submit"
               class="preview-btn"
-              @click="openLinkInNewTab(siteSettingsDeatil.website_domain)"
-            >
-              Preview
-            </button>
-            <button
-              type="submit"
-              class="publish-btn"
               @click="changeDefaultColors()"
               :disabled="btnDisable"
             >
-              Publish
-              <AnimationLoader v-if="btnDisable" />
+              <i class="fa fa-upload" aria-hidden="true"></i> Publish
             </button>
           </div>
         </div>
       </div>
     </div>
   </div>
-
+  <Loader v-if="loading" />
   <DeleteModal @confirm="deleteComponentImage" />
   <ConfirmModal
     modalTitle="Confirm!"
-    modalText="Do you really want to regenrate This will regenrate your site redomdally"
+    modalText="Do you really want to regenrate This will regenrate your site"
     @confirm="regenerateWebsite"
     confirmText="Submit"
   />
   <ProcessCompleteModal
     modalTitle="Awesome!"
-    modalText="Your website are Regenerate has been confirmed"
+    modalText="Your website Regenerated successfully"
     confirmText="Preview"
     @confirm="openLinkInNewTab(siteSettingsDeatil.website_domain)"
   />

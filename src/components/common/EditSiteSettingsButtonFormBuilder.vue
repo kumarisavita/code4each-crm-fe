@@ -45,10 +45,9 @@
               </select>
             </div>
           </div>
+          <hr v-if="field.field_type === 'button'" />
         </div>
       </form>
-
-      <hr />
       <!-- <div class="color2">
         <button class="button btn-primary">Button 2</button>
         <form class="button-from mt-2">

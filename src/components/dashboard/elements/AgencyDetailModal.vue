@@ -8,8 +8,8 @@ import { useForm } from "vee-validate";
 import { EventBus } from "@/EventBus";
 import * as yup from "yup";
 import "@/assets/js/dashboard.js";
-import AnimationLoader from "@/components/common/AnimationLoader.vue";
 import { openLinkInNewTab } from "@/util/helper";
+import Loader from "@/components/common/Loader.vue";
 
 const dashBoardMethods = inject("dashBoardMethods");
 const loading = ref("");
@@ -58,6 +58,7 @@ const submitAgencyDetailC = handleSubmit(async () => {
     formData.append("country", formValues.country);
     formData.append("zip", formValues.zip);
     formData.append("description", formValues.description);
+    formData.append("phone", formValues.phone);
     if (showOthersCategoryName) {
       formData.append("others_category_name", formValues.othersCategoryName);
     }
@@ -95,7 +96,6 @@ const setFormValues = () => {
 onMounted(() => {
   allDashboardData.value = props.dashboardData;
   setFormValues();
-  animationLoader();
 });
 
 watch(
@@ -129,83 +129,19 @@ const oncategoryChange = (event) => {
     values.value.othersCategoryName = "";
   }
 };
-const animationLoader = () => {
-  const timeline = anime.timeline({
-    autoplay: true,
-    direction: "alternate",
-    loop: true,
-  });
-
-  timeline
-    .add({
-      targets: animatedSvg.value.querySelectorAll("path"),
-      d: {
-        value: [
-          "M 7.7423617,6.5524041 C 0.14213171,13.241204 -0.28352929,25.218399 6.5488487,32.446038 13.237649,40.04627 24.578354,40.568996 32.442483,33.639553 39.813699,26.434583 40.216105,14.96193 33.635997,7.7459191 26.935569,0.39795815 15.101951,-0.40029585 7.7423617,6.5524041 Z",
-          "M 1.4639006,1.6816009 C 1.4129866,11.374999 1.1386316,31.038516 1.2037966,39.132841 10.361482,39.005187 29.91693,39.467197 38.833611,39.035804 39.621131,30.764045 38.910573,9.4542879 39.093715,1.2274189 30.247144,1.2462399 8.8125376,1.8724369 1.4639006,1.6816009 Z",
-        ],
-        duration: 1500,
-        easing: "easeInOutQuad",
-      },
-      offset: 0,
-    })
-    .add({
-      targets: animatedSvg.value.querySelector(".shape1"),
-      fill: {
-        value: ["#2095F2", "#4BAF4F"],
-        duration: 1500,
-        easing: "easeInOutQuad",
-      },
-      offset: 0,
-    })
-    .add({
-      targets: "path",
-      d: {
-        value: [
-          "M 1.4639006,1.6816009 C 1.4129866,11.374999 1.1386316,31.038516 1.2037966,39.132841 10.361482,39.005187 29.91693,39.467197 38.833611,39.035804 39.621131,30.764045 38.910573,9.4542879 39.093715,1.2274189 30.247144,1.2462399 8.8125376,1.8724369 1.4639006,1.6816009 Z",
-          "M 19.499615,1.5030295 C 15.341558,11.017856 5.4243459,31.217087 1.2037966,39.132841 10.361482,39.005187 29.91693,39.467197 38.833611,39.035804 34.978274,30.942616 24.624859,11.418574 20.165144,1.5845618 18.73688,1.6665173 20.913606,1.4728946 19.499615,1.5030295 Z",
-        ],
-        duration: 1500,
-        easing: "easeInOutQuad",
-      },
-      offset: 1500,
-    })
-    .add({
-      targets: ".shape1",
-      fill: {
-        value: ["#4BAF4F", "#F44236"],
-        duration: 1500,
-        easing: "easeInOutQuad",
-      },
-      offset: 1500,
-    })
-    .add({
-      targets: "path",
-      d: {
-        value: [
-          "M 19.499615,1.5030295 C 15.341558,11.017856 5.4243459,31.217087 1.2037966,39.132841 10.361482,39.005187 29.91693,39.467197 38.833611,39.035804 34.978274,30.942616 24.624859,11.418574 20.165144,1.5845618 18.73688,1.6665173 20.913606,1.4728946 19.499615,1.5030295 Z",
-          "M 7.7423617,6.5524041 C 0.14213171,13.241204 -0.28352929,25.218399 6.5488487,32.446038 13.237649,40.04627 24.578354,40.568996 32.442483,33.639553 39.813699,26.434583 40.216105,14.96193 33.635997,7.7459191 26.935569,0.39795815 15.101951,-0.40029585 7.7423617,6.5524041 Z",
-        ],
-        duration: 1500,
-        easing: "easeInOutQuad",
-      },
-      offset: 3000,
-    })
-    .add({
-      targets: ".shape1",
-      fill: {
-        value: ["#F44236", "#2095F2"],
-        duration: 1500,
-        easing: "easeInOutQuad",
-      },
-      offset: 3000,
-    });
-};
 </script>
 <template>
   <div class="modal fade" id="basicModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog" id="create-popup" role="document">
       <div class="modal-content1">
+        <div class="modal-header">
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
         <div class="modal-body">
           <div id="container" class="container">
             <form
@@ -233,6 +169,11 @@ const animationLoader = () => {
                   <label for="businessCategory" class="form-label"
                     >Business Category*</label
                   >
+                  <div class="three-body2">
+                    <div class="three-body__dot"></div>
+                    <div class="three-body__dot"></div>
+                    <div class="three-body__dot"></div>
+                  </div>
                   <select
                     class="form-select select-category"
                     id="businessCategory"
@@ -263,7 +204,7 @@ const animationLoader = () => {
                       v-model="values.othersCategoryName"
                     ></textarea>
                   </div>
-                  <label for="logo" class="form-label">Logo</label>
+                  <!-- <label for="logo" class="form-label">Logo</label>
                   <input
                     type="file"
                     name="logo"
@@ -271,7 +212,28 @@ const animationLoader = () => {
                     class="form-control input"
                     accept=".jpg, .jpeg, .png"
                     @change="onFileChange"
+                  /> -->
+                  <label for="phone" class="form-label">Phone*</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="phone"
+                    name="phone"
+                    v-model="values.phone"
                   />
+                  <span>{{ errors.phone ? errors.phone[0] : "" }}</span>
+                  <label for="formFileLg" class="form-label"
+                    >Website Logo</label
+                  >
+                  <input
+                    type="file"
+                    name="logo"
+                    id="custom-file-upload"
+                    class="form-control input form-control-lg"
+                    accept=".jpg, .jpeg, .png"
+                    @change="onFileChange"
+                  />
+                  <i class="fa fa-upload"></i>
                 </div>
 
                 <button
@@ -386,31 +348,12 @@ const animationLoader = () => {
                 :class="currentStep != 4 ? 'd-none' : ''"
               >
                 <div class="mb-3 next-step">
-                  <svg
-                    class="shape shape1"
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="60"
-                    height="60"
-                    viewBox="0 0 40 40"
-                    ref="animatedSvg"
-                  >
-                    <path
-                      style="opacity: 1; fill-opacity: 1; stroke: none"
-                      d="M 7.7423617,6.5524041 C 0.14213171,13.241204 -0.28352929,25.218399 6.5488487,32.446038 13.237649,40.04627 24.578354,40.568996 32.442483,33.639553 39.813699,26.434583 40.216105,14.96193 33.635997,7.7459191 26.935569,0.39795815 15.101951,-0.40029585 7.7423617,6.5524041 Z"
-                    />
-                  </svg>
-                  <svg
-                    class="shape shape2"
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="60"
-                    height="60"
-                    viewBox="0 0 40 40"
-                  >
-                    <path
-                      style="opacity: 1; fill-opacity: 1; stroke: none"
-                      d="M 7.7423617,6.5524041 C 0.14213171,13.241204 -0.28352929,25.218399 6.5488487,32.446038 13.237649,40.04627 24.578354,40.568996 32.442483,33.639553 39.813699,26.434583 40.216105,14.96193 33.635997,7.7459191 26.935569,0.39795815 15.101951,-0.40029585 7.7423617,6.5524041 Z"
-                    />
-                  </svg>
+                  <!-- <Loader /> -->
+                  <div class="three-body2">
+                    <div class="three-body__dot"></div>
+                    <div class="three-body__dot"></div>
+                    <div class="three-body__dot"></div>
+                  </div>
                 </div>
               </div>
               <div class="step step-5" v-if="currentStep === 5">

@@ -11,6 +11,10 @@
      /* background: #fafdff; */
  }
 
+ body {
+     font-family: ui-sans-serif;
+ }
+
  #header-wrap {
      padding: 15px 0;
      position: relative;
@@ -172,6 +176,9 @@
 
  /* ---------------Features section css End------------- */
 
+ .right-align .modal-dialog {
+     min-width: 650px;
+ }
 
 
  /* popup css start */
@@ -200,8 +207,16 @@
      line-height: 35px;
  }
 
+ .btn.disabled,
+ .btn:disabled,
+ fieldset:disabled .btn {
+     pointer-events: none;
+     opacity: unset !important;
+
+ }
+
  .modal-body .form-group input.form-control {
-     padding: 15px 10px;
+     padding: 6px 10px;
      display: flex;
      /* margin: 20px auto; */
  }

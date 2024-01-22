@@ -6,6 +6,7 @@ import { useRouter } from "vue-router";
 import { ref, defineProps, onMounted, provide, inject, watch } from "vue";
 import WordpressService from "@/service/WordpressService";
 import Modal from "@/components/common/Modal.vue";
+import Loader from "@/components/common/Loader.vue";
 import Swal from "sweetalert2";
 import EditSiteSettingsFormBuilder from "@/components/common/EditSiteSettingsFormBuilder.vue";
 import EditSiteSettingsButtonFormBuilder from "@/components/common/EditSiteSettingsButtonFormBuilder.vue";
@@ -180,6 +181,7 @@ const showSelectedComponent = (component_unique_id) => {
 
 const changeComponent = async () => {
   try {
+    loading.value = true;
     btnDisable.value = true;
     loadingForComonents.value = true;
 
@@ -197,6 +199,7 @@ const changeComponent = async () => {
   }
   loadingForComonents.value = false;
   btnDisable.value = false;
+  loading.value = false;
 };
 
 const handleEditComponentBtnClick = async (componentUniqueId, type) => {
@@ -219,10 +222,8 @@ const handleEditComponentBtnClick = async (componentUniqueId, type) => {
 
 const submitCustomFields = async (data) => {
   try {
+    loading.value = true;
     btnDisable.value = true;
-
-    // console.log(data, "ppppppppppp");
-
     const formFields = Object.keys(data).reduce((acc, key) => {
       let meta1 = null;
       let meta2 = null;
@@ -276,6 +277,7 @@ const submitCustomFields = async (data) => {
     console.error("An error occurred:", error);
   }
   btnDisable.value = false;
+  loading.value = false;
 };
 
 const getSiteDeatils = async () => {
@@ -305,6 +307,7 @@ const onStartComponentPosition = (evt) => {
 
 const saveComponentPosition = async () => {
   try {
+    loading.value = true;
     loadingForComonents.value = true;
     saveComponentPositionBtn.value = false;
     const response = await WordpressService.Components.changeComponentPosition({
@@ -330,6 +333,7 @@ const saveComponentPosition = async () => {
     console.error("An error occurred:", error);
   }
   loadingForComonents.value = false;
+  loading.value = false;
 };
 
 const updateItemPositions = () => {
@@ -382,6 +386,7 @@ const getComponentsImages = async () => {
 
 const submitForm = async () => {
   try {
+    loading.value = true;
     if (uploadedFiles.value.length < 1) {
       return;
     }
@@ -419,6 +424,7 @@ const submitForm = async () => {
   uploadedFiles.value = [];
   loading.value = false;
   fileInput.value = null;
+  loading.value = false;
 };
 
 const removeFile = (index) => {
@@ -427,6 +433,7 @@ const removeFile = (index) => {
 
 const deleteComponentImage = async () => {
   try {
+    loading.value = true;
     deleteLoading.value = true;
     let deleteImages = [];
     deleteImages.push(selectedDeletedImageUrl.value);
@@ -443,6 +450,7 @@ const deleteComponentImage = async () => {
   }
   deleteLoading.value = false;
   deleteComponentImageModal.value = false;
+  loading.value = false;
 };
 const deleteComponentImageConfirmShow = (imageUrl) => {
   selectedDeletedImageUrl.value = imageUrl;
@@ -450,6 +458,7 @@ const deleteComponentImageConfirmShow = (imageUrl) => {
 };
 
 const handleTabClick = () => {
+  loading.value = true;
   if (currentTab.value === "field") {
     EventBus.emit("submitFormChildMethod");
   } else if (currentTab.value === "button") {
@@ -457,6 +466,7 @@ const handleTabClick = () => {
   } else if (currentTab.value === "image") {
     submitForm();
   }
+  loading.value = false;
 };
 
 const regenerateWebsite = async () => {
@@ -491,7 +501,7 @@ const regenerateWebsite = async () => {
     <section id="content-wrapper main-content side-content">
       <div class="side-app">
         <div class="main-container-components container">
-          <div id="wrapper">
+          <div id="wrapper" :class="loading ? 'fade' : ''">
             <div
               class="eidtor-site"
               aria-hidden="true"
@@ -504,6 +514,7 @@ const regenerateWebsite = async () => {
               >
                 <div
                   class="eidtor-img"
+                  :class="oldComponent === compValue.id ? 'active' : ''"
                   @click="
                     openModal(compValue.type, compValue.id, compValue.preview)
                   "
@@ -523,18 +534,16 @@ const regenerateWebsite = async () => {
           class="panel-header panel-header-flex theme-standard without-stripe"
         >
           <div class="panel-header-title">
-            <span class="panel-header-title-span">
-              <span class="has-tooltip" data-hook="panel-header-title">
-                <div
-                  class="tooltip-on-ellipsis-content singleLine"
-                  data-hook="tooltip-on-ellipsis-content--container"
-                >
-                  Quick Edit
-                </div>
-              </span>
-            </span>
+            <span class="panel-header-title-span"> </span>
+            <img
+              src="/images/export.png"
+              @click="openLinkInNewTab(siteSettingsDeatil.website_domain)"
+              style="cursor: pointer"
+            />
           </div>
         </header>
+        <!-- <hr /> -->
+
         <div class="ifYqM">
           <div class="control-horizontal-tabs arrowed tabs-block">
             <div class="tabs">
@@ -665,7 +674,7 @@ const regenerateWebsite = async () => {
                         </div>
                       </div>
                       <div class="button-wrapper">
-                        <button
+                        <!-- <button
                           type="submit"
                           class="preview-btn"
                           @click="
@@ -673,8 +682,8 @@ const regenerateWebsite = async () => {
                           "
                         >
                           Preview
-                        </button>
-                        <button
+                        </button> -->
+                        <!-- <button
                           type="submit"
                           class="publish-btn"
                           @click="handleTabClick"
@@ -682,6 +691,15 @@ const regenerateWebsite = async () => {
                         >
                           Publish
                           <AnimationLoader v-if="btnDisable" />
+                        </button> -->
+                        <button
+                          type="submit"
+                          class="preview-btn"
+                          @click="handleTabClick"
+                          :disabled="btnDisable"
+                        >
+                          <i class="fa fa-upload" aria-hidden="true"></i>
+                          Publishs
                         </button>
                       </div>
                     </div>
@@ -810,7 +828,7 @@ const regenerateWebsite = async () => {
                     </div>
 
                     <div class="button-wrapper">
-                      <button
+                      <!-- <button
                         type="submit"
                         class="preview-btn"
                         @click="
@@ -818,14 +836,22 @@ const regenerateWebsite = async () => {
                         "
                       >
                         Preview
-                      </button>
-                      <button
+                      </button> -->
+                      <!-- <button
                         type="submit"
                         class="publish-btn"
                         @click="changeComponent"
                       >
                         Publish
                         <AnimationLoader v-if="btnDisable" />
+                      </button> -->
+                      <button
+                        type="submit"
+                        class="preview-btn"
+                        @click="changeComponent"
+                      >
+                        <i class="fa fa-upload" aria-hidden="true"></i>
+                        Publish
                       </button>
                     </div>
                   </div>
@@ -836,18 +862,18 @@ const regenerateWebsite = async () => {
         </div>
       </div>
     </div>
+    <Loader v-if="loading" />
   </div>
-
   <DeleteModal @confirm="deleteComponentImage" :loading="deleteLoading" />
   <ConfirmModal
     modalTitle="Confirm!"
-    modalText="Do you really want to regenrate This will regenrate your site redomdally"
+    modalText="Do you really want to regenrate .This will regenrate your site"
     @confirm="regenerateWebsite"
     confirmText="Submit"
   />
   <ProcessCompleteModal
     modalTitle="Awesome!"
-    modalText="Your website are Regenerate has been confirmed"
+    modalText="Your website Regenerated successfully"
     confirmText="Preview"
     @confirm="openLinkInNewTab(siteSettingsDeatil.website_domain)"
   />
@@ -1146,24 +1172,11 @@ const regenerateWebsite = async () => {
   right: 488px;
 }
 
-.custom-button {
-  background-color: rgba(163, 48, 19, 0.2);
-  color: #000;
-  border: none;
-  padding: 10px 20px;
-  cursor: pointer;
-  transition: background-color 0.3s, opacity 0.3s;
-
-  /* Additional styles */
-  border-radius: 5px;
-  font-weight: bold;
-  opacity: 0.5;
-}
-
+/* 
 .custom-button:hover {
   background-color: rgba(21, 62, 105, 0.2);
   opacity: 1;
-}
+} */
 
 .testimonial-container {
   display: grid;

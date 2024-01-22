@@ -19,6 +19,7 @@ import DeleteModal from "@/components/common/DeleteModal.vue";
 import ConfirmModal from "@/components/common/ConfirmModal.vue";
 import ProcessCompleteModal from "@/components/common/ProcessCompleteModal.vue";
 import AnimationLoader from "@/components/common/AnimationLoader.vue";
+import Loader from "@/components/common/Loader.vue";
 
 const router = useRouter();
 const { logout } = useAuth();
@@ -77,18 +78,30 @@ const socialLinksData = ref({
   shareChat: "",
 });
 
+const socialLinkIconPath = ref({
+  whatsApp: "/images/social.png",
+  facebook: "/images/facebook.png",
+  youTube: "/images/youtube.png",
+  instagram: "/images/instagram.png",
+  twitter: "/images/twitter.png",
+  linkedIn: "/images/linkedin.png",
+  pinterest: "/images/pinterest.png",
+  telegram: "/images/telegram.png",
+  shareChat: "/images/icons8-sharechat-480.png",
+});
+
 const fetchDashboardData = async () => {
   try {
     const response = await WordpressService.fetchDashboardData();
     if (response.status === 200 && response.data.success) {
-      loading.value = false;
+      // loading.value = false;
       dashboardData.value = response.data;
     }
   } catch (error) {
     if (error.response && error.response.status === 401) {
       console.error("Authentication failed. Please log in.", error);
       error.value = true;
-      loading.value = false;
+      // loading.value = false;
       localStorage.removeItem("access_token");
       router.push("/login");
     } else {
@@ -138,6 +151,7 @@ onMounted(async () => {
   await fetchDashboardData();
   await getActiveComponentsData();
   await getsocialLinks();
+  loading.value = false;
 });
 
 watch(
@@ -147,6 +161,7 @@ watch(
     await fetchDashboardData();
     await getActiveComponentsData();
     await getsocialLinks();
+    loading.value = false;
   }
 );
 
@@ -250,7 +265,7 @@ const saveLinkValue = async (key) => {
         </div>
       </div>
     </section>
-    <div class="right-side">
+    <!-- <div class="right-side">
       <div class="sidebar-right py-3" id="sidebar-right">
         <header
           data-hook="panel-header"
@@ -301,18 +316,67 @@ const saveLinkValue = async (key) => {
           </div>
         </div>
       </div>
+    </div> -->
+
+    <div class="right-side">
+      <div class="sidebar-right py-3" id="sidebar-right">
+        <header
+          data-hook="panel-header"
+          class="panel-header panel-header-flex theme-standard without-stripe"
+        >
+          <div class="panel-header-title">
+            <span class="panel-header-title-span"> </span>
+            <img
+              src="/images/export.png"
+              @click="openLinkInNewTab(siteSettingsDeatil.website_domain)"
+            />
+          </div>
+        </header>
+        <hr />
+
+        <div class="ifYqM">
+          <div
+            class="eidtor-sitefonts-1"
+            aria-hidden="true"
+            data-toggle="modal"
+            data-target="#exampleModalRight-components"
+          >
+            <h2>Which social-link do you want to show o your site?</h2>
+            <p class="text-center">
+              Choose the social-link you want show on your site. You can choose
+              it by adding link for social or you can remove it by empty the
+              link.
+            </p>
+            <div class="social-linksinputs">
+              <div v-for="(link, index) in socialLinksData" :key="index">
+                <label :for="index" class="form-field social-links mb-2"
+                  ><img :src="socialLinkIconPath[index]" />
+                  {{ index.charAt(0).toUpperCase() + index.slice(1) }}</label
+                >
+                <input
+                  type="text"
+                  class="form-control input"
+                  :placeholder="index.charAt(0).toUpperCase() + index.slice(1)"
+                  @blur="saveLinkValue(index)"
+                  v-model="socialLinksData[index]"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
-
+  <Loader v-if="loading" />
   <ConfirmModal
     modalTitle="Confirm!"
-    modalText="Do you really want to regenrate This will regenrate your site redomdally"
+    modalText="Do you really want to regenrate This will regenrate your site"
     @confirm="regenerateWebsite"
     confirmText="Submit"
   />
   <ProcessCompleteModal
     modalTitle="Awesome!"
-    modalText="Your website are Regenerate has been confirmed"
+    modalText="Your website Regenerated successfully"
     confirmText="Preview"
     @confirm="openLinkInNewTab(siteSettingsDeatil.website_domain)"
   />
@@ -328,20 +392,6 @@ const saveLinkValue = async (key) => {
   position: absolute;
   bottom: 49px;
   right: 488px;
-}
-
-.custom-button {
-  background-color: rgba(163, 48, 19, 0.2);
-  color: #000;
-  border: none;
-  padding: 10px 20px;
-  cursor: pointer;
-  transition: background-color 0.3s, opacity 0.3s;
-
-  /* Additional styles */
-  border-radius: 5px;
-  font-weight: bold;
-  opacity: 0.5;
 }
 
 .custom-button:hover {

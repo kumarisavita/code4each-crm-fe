@@ -16,14 +16,14 @@ const confirmSubmit = () => {
 <template>
   <div
     class="modal model-regin fade"
-    id="Myform"
+    id="Myform-overlay"
     tabindex="-1"
     role="dialog"
     aria-labelledby="exampleModalLabel"
     aria-hidden="true"
   >
     <div class="modal-dialog modal-dialog-centered" role="document">
-      <div class="modal-content py-md-5 px-md-4 p-sm-3 p-4">
+      <div class="modal-content px-md-4 p-sm-3 p-4">
         <button
           type="button"
           class="close"
@@ -33,7 +33,7 @@ const confirmSubmit = () => {
           &times;
         </button>
         <h3 class="text-center">{{ props.modalTitle }}!</h3>
-        <img :src="previewImg" />
+        <img src="/images/check.png" />
         <p class="r3 px-md-5 px-sm-1">
           {{ props.modalText }}
         </p>
