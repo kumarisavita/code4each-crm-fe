@@ -850,7 +850,7 @@ const hideModal = () => {
               2104 Charmaine Lane Amarillo, New York
             </div>
           </div>
-          <div class="footer-social-network-block">
+          <!-- <div class="footer-social-network-block">
             <a
               href="#"
               target="_blank"
@@ -893,7 +893,7 @@ const hideModal = () => {
                 class="instagram-icom"
               />
             </a>
-          </div>
+          </div> -->
           <div class="footer-copyright-text small-device-block">
             © <a href="#" class="company-link">Code4Each.</a> All Rights
             Reserved - Privacy Policy
