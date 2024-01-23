@@ -301,7 +301,7 @@ const hideModal = () => {
                 style="opacity: 1"
               >
                 <!--<source src="https://content.simvoly.com/s/24444282803329/uploads/A-Home/drag-video2-2864231.webm" type='video/webm;codecs="vp8, vorbis"'>-->
-                <source src="/images/1a-6401489.mp4" type="video/mp4" />
+                <!-- <source src="/images/1a-6401489.mp4" type="video/mp4" /> -->
               </video>
             </div>
           </div>
