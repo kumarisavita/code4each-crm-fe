@@ -198,7 +198,7 @@ const hideModal = () => {
           <i class="fa fa-align-left"></i>
         </button>
         <a class="navbar-brand-logo" href="index.html">
-          <img class="img-fluid" src="images/speedylogo.png" alt="logo" />
+          <img class="img-fluid" src="/images/speedylogo.png" alt="logo" />
         </a>
         <div class="add-listing d-none d-sm-block">
           <a class="btn btn-primary btn-md" @click="loginModalShow = true"
@@ -220,14 +220,14 @@ const hideModal = () => {
       <div class="container position-relative">
         <div class="row align-items-center py-8">
           <div class="col-md-6 col-lg-6 order-md-1 text-center text-md-end">
-            <img class="img-fluid" src="images/hero-img.png" />
+            <img class="img-fluid" src="/images/hero-img.png" />
           </div>
           <div class="col-md-6 col-lg-6 text-center text-md-start">
             <span
               class="badge bg-light rounded-pill text-dark align-items-center d-flex flex-row-reverse justify-content-end mx-auto mx-md-0 ps-0 w-75 w-sm-50 w-md-75 w-xl-50 mb-3"
               >#1 Editiors Choice App of 2020<img
                 class="img-fluid float-start me-3"
-                src="images/arrow-right.png"
+                src="/images/arrow-right.png"
                 alt=""
             /></span>
             <h1 class="mb-4 display-3 fw-bold lh-sm">
@@ -301,7 +301,7 @@ const hideModal = () => {
                 style="opacity: 1"
               >
                 <!--<source src="https://content.simvoly.com/s/24444282803329/uploads/A-Home/drag-video2-2864231.webm" type='video/webm;codecs="vp8, vorbis"'>-->
-                <source src="images/1a-6401489.mp4" type="video/mp4" />
+                <source src="/images/1a-6401489.mp4" type="video/mp4" />
               </video>
             </div>
           </div>
@@ -770,7 +770,7 @@ const hideModal = () => {
         <div class="footer-single-block footer-logo-blojg">
           <div class="footer-logo-block">
             <img
-              src="images/speedylogo.png"
+              src="/images/speedylogo.png"
               loading="lazy"
               alt="Footer Logo Image"
               class="footer-logo-image"
@@ -857,7 +857,7 @@ const hideModal = () => {
               class="social-single-link w-inline-block"
             >
               <img
-                src="images/facebook-white.png"
+                src="/images/facebook-white.png"
                 loading="lazy"
                 alt="Social Icon"
                 height="12"
@@ -871,7 +871,7 @@ const hideModal = () => {
               class="social-single-link w-inline-block"
             >
               <img
-                src="images/twitter-white.png"
+                src="/images/twitter-white.png"
                 loading="lazy"
                 alt="Social Icon"
                 height="12"
@@ -885,7 +885,7 @@ const hideModal = () => {
               class="social-single-link w-inline-block"
             >
               <img
-                src="images/instagram-white.png"
+                src="/images/instagram-white.png"
                 loading="lazy"
                 width="12"
                 height="12"
