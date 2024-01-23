@@ -82,11 +82,11 @@ const router = createRouter({
 router.beforeEach((to, from, next) => {
   const pageTitle = to.meta.title || 'SpeedySites';
   document.title = pageTitle;
-  if (to.path === "/login" && isLoggedIn()) {
-    next("/dashboard");
+  if (to.path === "/" && isLoggedIn()) {
+    // next("/dashboard");
   } else if (to.matched.some((record) => record.meta.requiresAuth)) {
     if (!isLoggedIn()) {
-      next("/login");
+      next("/");
     } else {
       next();
     }
