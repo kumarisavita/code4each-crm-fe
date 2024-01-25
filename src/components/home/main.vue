@@ -756,10 +756,6 @@ const hideModal = () => {
               Properties are most budget friendly so you have are find
               opportunity is main responsibility to clients
             </p>
-            <!-- <div class="footer-copyright-text small-device-none">
-              © <a href="#" class="company-link">Brandbes.</a> All Rights
-              Reserved - Privacy Policy
-            </div> -->
           </div>
         </div>
         <div class="footer-single-block">
