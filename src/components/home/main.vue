@@ -141,50 +141,6 @@ const hideModal = () => {
 </script>
 <template>
   <header class="header-section">
-    <div class="topbar">
-      <div class="container">
-        <div class="row">
-          <div class="col-12">
-            <div class="d-block d-md-flex align-items-center text-center">
-              <div class="me-3 d-inline-block">
-                <a href="tel:1-800-555-1234"
-                  ><i class="fa fa-phone me-2 fa fa-flip-horizontal"></i
-                  >1-800-555-1234
-                </a>
-              </div>
-              <div class="me-auto d-inline-block">
-                <span class="me-2 text-white">Get App:</span>
-                <a class="pe-1" href="#"><i class="fa fa-android"></i></a>
-                <a href="#"><i class="fa fa-apple"></i></a>
-              </div>
-
-              <div class="social d-inline-block">
-                <ul class="list-unstyled">
-                  <li>
-                    <a href="#"> <i class="fa fa-facebook-f"></i> </a>
-                  </li>
-                  <li>
-                    <a href="#"> <i class="fa fa-twitter"></i> </a>
-                  </li>
-                  <li>
-                    <a href="#"> <i class="fa fa-linkedin"></i> </a>
-                  </li>
-                  <li>
-                    <a href="#"> <i class="fa fa-pinterest"></i> </a>
-                  </li>
-                  <li>
-                    <a href="#"> <i class="fa fa-instagram"></i> </a>
-                  </li>
-                </ul>
-              </div>
-              <div class="login d-inline-block">
-                <a href="#">Hello sign in<i class="fa fa-user ps-2"></i></a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
     <nav
       class="navbar navbar-light bg-white navbar-static-top navbar-expand-lg header-sticky"
     >
@@ -202,7 +158,7 @@ const hideModal = () => {
         </a>
         <div class="add-listing d-none d-sm-block">
           <a class="btn btn-primary btn-md" @click="loginModalShow = true"
-            ><i class="fa fa-plus-circle"></i> Login to desktop
+            ><i class="fa fa-plus-circle"></i> Login to dashboard
           </a>
         </div>
       </div>
@@ -242,18 +198,23 @@ const hideModal = () => {
               <br class="d-none d-lg-block" />and grow your business online from
               one place.
             </p>
-            <a
-              class="btn btn-lg rounded-pill hover-top"
-              @click="showSignUpModal = true"
-              >Try for free
-            </a>
-            <a
-              class="btn-2 btn-link ps-md-4 hover-slide-right"
-              href="#"
-              role="button"
-            >
-              Watch demo video</a
-            >
+            <div class="buttons-design">
+              <a
+                class="btn btn-lg button-trial rounded-pill hover-top"
+                @click="showSignUpModal = true"
+                >Try for free <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+              </a>
+              <a
+                class="btn-2 btn-link ps-md-4 hover-slide-right"
+                href="#"
+                role="button"
+              >
+                Watch demo video</a
+              >
+            </div>
           </div>
         </div>
       </div>
@@ -282,10 +243,15 @@ const hideModal = () => {
                 we were finally able to create the exact website we had in
                 mind!"
               </p>
-              <div class="custom-button">
-                <a class="button-trial btn-md" @click="showSignUpModal = true">
-                  Try for free</a
-                >
+              <div class="custom-button" id="button-hover">
+                <a
+                  class="btn btn-lg button-trial rounded-pill hover-top"
+                  @click="showSignUpModal = true"
+                  >Try for free <span></span>
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                </a>
               </div>
             </div>
           </div>
@@ -309,12 +275,12 @@ const hideModal = () => {
       </div>
       <div class="row">
         <div class="about-area1">
-          <div class="col-lg-7 col-md-6">
+          <div class="col-lg-6 col-md-6">
             <div class="about-img">
               <img src="/images/aboutimg.png" />
             </div>
           </div>
-          <div class="col-lg-5 col-md-6">
+          <div class="col-lg-6 col-md-6">
             <div class="textarea1">
               <h3>Achieve Much More With Funnels</h3>
               <p class="abouttext2">
@@ -328,7 +294,7 @@ const hideModal = () => {
                 <div class="icon-header-wrapper">
                   <div class="icon border-color-secondary1">
                     <i
-                      class="icon-section-icon fa fa-check color-secondary1"
+                      class="icon-section-icon fa fa-hand-o-right color-secondary1"
                     ></i>
                   </div>
                   <div class="icon-title text-widget-content">
@@ -355,7 +321,7 @@ const hideModal = () => {
                 <div class="icon-header-wrapper">
                   <div class="icon border-color-secondary1">
                     <i
-                      class="icon-section-icon fa fa-check color-secondary1"
+                      class="icon-section-icon fa fa-hand-o-right color-secondary1"
                     ></i>
                   </div>
                   <div class="icon-title text-widget-content">
@@ -375,10 +341,15 @@ const hideModal = () => {
                   </div>
                 </div>
               </div>
-              <div class="custom-button1">
-                <a class="button-trial btn-md" @click="showSignUpModal = true">
-                  Try for free</a
-                >
+              <div class="custom-button1" id="button-hover">
+                <a
+                  class="btn btn-lg button-trial rounded-pill hover-top"
+                  @click="showSignUpModal = true"
+                  >Try for free <span></span>
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                </a>
               </div>
             </div>
           </div>
@@ -425,7 +396,7 @@ const hideModal = () => {
                       <div class="feature-btn">
                         <a href="#">
                           <span class="button-text">Discover now</span>
-                          <i class="fa fa-arrow-right"></i>
+                          <i class="fa fa-long-arrow-right"></i>
                         </a>
                       </div>
                     </div>
@@ -450,7 +421,7 @@ const hideModal = () => {
                       <div class="feature-btn">
                         <a href="#">
                           <span class="button-text">Discover now</span>
-                          <i class="fa fa-arrow-right"></i>
+                          <i class="fa fa-long-arrow-right"></i>
                         </a>
                       </div>
                     </div>
@@ -476,7 +447,7 @@ const hideModal = () => {
                       <div class="feature-btn">
                         <a href="#">
                           <span class="button-text">Discover now</span>
-                          <i class="fa fa-arrow-right"></i>
+                          <i class="fa fa-long-arrow-right"></i>
                         </a>
                       </div>
                     </div>
@@ -503,7 +474,7 @@ const hideModal = () => {
                       <div class="feature-btn">
                         <a href="#">
                           <span class="button-text">Discover now</span>
-                          <i class="fa fa-arrow-right"></i>
+                          <i class="fa fa-long-arrow-right"></i>
                         </a>
                       </div>
                     </div>
@@ -530,7 +501,7 @@ const hideModal = () => {
                       <div class="feature-btn">
                         <a href="#">
                           <span class="button-text">Discover now</span>
-                          <i class="fa fa-arrow-right"></i>
+                          <i class="fa fa-long-arrow-right"></i>
                         </a>
                       </div>
                     </div>
@@ -557,7 +528,7 @@ const hideModal = () => {
                       <div class="feature-btn">
                         <a href="#">
                           <span class="button-text">Discover now</span>
-                          <i class="fa fa-arrow-right"></i>
+                          <i class="fa fa-long-arrow-right"></i>
                         </a>
                       </div>
                     </div>
@@ -569,15 +540,22 @@ const hideModal = () => {
           </div>
         </div>
         <div class="col-lg-12">
-          <div class="feature-list-button-box mt-30 text-center">
+          <div
+            class="feature-list-button-box mt-30 text-center"
+            id="button-hover"
+          >
             <a
+              class="btn btn-lg button-trial rounded-pill hover-top"
               href="#"
-              class="ht-btn ht-btn-md"
               data-bs-toggle="modal"
               data-bs-target="#exampleModal"
-              >Talk to a consultant</a
-            >
-            <a href="#" class="ht-btn ht-btn-md1 ht-btn--outline"
+              >Talk to a consultant<span></span>
+              <span></span>
+              <span></span>
+              <span></span>
+            </a>
+
+            <a href="#" class="ht-btn ht-btn-md btn-try hover-top"
               >Contact us now
             </a>
           </div>
@@ -585,25 +563,6 @@ const hideModal = () => {
       </div>
     </div>
   </div>
-
-  <div class="processing-computing-area bg-gray-3">
-    <div class="container">
-      <div class="row">
-        <div class="col-lg-12">
-          <div class="computing-info-box text-center">
-            <h2>IT Security &amp; Computing</h2>
-            <div class="section-under-heading text-center mt-30">
-              Challenges are just opportunities in disguise.
-              <a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal"
-                >Take the challenge!</a
-              >
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
   <section class="sectione-Commerce1">
     <div class="container">
       <div class="row d-flex justify-content-center">
@@ -618,22 +577,28 @@ const hideModal = () => {
       </div>
       <div class="row">
         <div class="ecommerce-row">
-          <div class="col-lg-7 col-md-12">
+          <div class="col-lg-6 col-md-6">
             <div class="E-Commerce">
               <img src="/images/datailedimg.png" />
             </div>
           </div>
-          <div class="col-lg-5 col-md-12">
+          <div class="col-lg-6 col-md-12">
             <div class="E-Commerce-text">
               <h3>Detailed Analytics</h3>
               <p class="e-commercetext">
                 Know more about your sales, customers, and where your revenue is
                 coming from with detailed e-commerce analytics.
               </p>
-              <div class="custom-1">
-                <a class="button-trial btn-md" @click="showSignUpModal = true">
-                  Try for free</a
-                >
+              <div class="custom-1" id="button-hover">
+                <a
+                  class="btn btn-lg button-trial rounded-pill hover-top"
+                  @click="showSignUpModal = true"
+                  >Try for free <span></span>
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                </a>
+
                 <h5>Free Trial . No Credit Card Required</h5>
               </div>
             </div>
@@ -642,22 +607,28 @@ const hideModal = () => {
       </div>
       <div class="row">
         <div class="custom-checkouts-row">
-          <div class="col-lg-5 col-md-12">
+          <div class="col-lg-6 col-md-12">
             <div class="custom-checkouts-text">
               <h3>Custom Checkouts</h3>
               <p class="customtext">
                 Have the freedom to shape and design the looks of your checkouts
                 to build trust and convert more of your visitors.
               </p>
-              <div class="custom-2">
-                <a class="button-trial1 btn-md" @click="showSignUpModal = true">
-                  Try for free</a
-                >
+              <div class="custom-2" id="button-hover">
+                <a
+                  class="btn btn-lg button-trial rounded-pill hover-top"
+                  @click="showSignUpModal = true"
+                  >Try for free <span></span>
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                </a>
+
                 <h5>Free Trial . No Credit Card Required</h5>
               </div>
             </div>
           </div>
-          <div class="col-lg-7 col-md-12">
+          <div class="col-lg-6 col-md-6">
             <div class="E-Commerce1">
               <img src="/images/datailedimg1.png" />
             </div>
@@ -666,7 +637,6 @@ const hideModal = () => {
       </div>
     </div>
   </section>
-
   <section class="email-custom">
     <div class="container-fluid grid-row">
       <div class="grid-customsection">
@@ -685,21 +655,27 @@ const hideModal = () => {
             </div>
             <div class="email-textdiv3">
               <div class="custom-list">
-                <i class="fa fa-check"></i>
+                <i class="fa fa-hand-o-right"></i>
                 <h3>Drag and drop email builder</h3>
               </div>
               <div class="custom-list">
-                <i class="fa fa-check"></i>
+                <i class="fa fa-hand-o-right"></i>
                 <h3>Automation flow builder</h3>
               </div>
               <div class="custom-list">
-                <i class="fa fa-check"></i>
+                <i class="fa fa-hand-o-right"></i>
                 <h3>Build your email lists and segments</h3>
               </div>
-              <div class="custom-3">
-                <a class="button-trial2 btn-md" @click="showSignUpModal = true">
-                  Try for free</a
-                >
+              <div class="custom-3" id="button-hover">
+                <a
+                  class="btn btn-lg button-trial rounded-pill hover-top"
+                  @click="showSignUpModal = true"
+                  >Try for free <span></span>
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                </a>
+
                 <h5>Free Trial . No Credit Card Required</h5>
               </div>
             </div>
@@ -708,7 +684,6 @@ const hideModal = () => {
       </div>
     </div>
   </section>
-
   <div class="footer-section">
     <div class="container w-container">
       <div class="subscription-wrapper">
@@ -781,129 +756,98 @@ const hideModal = () => {
               Properties are most budget friendly so you have are find
               opportunity is main responsibility to clients
             </p>
-            <div class="footer-copyright-text small-device-none">
+            <!-- <div class="footer-copyright-text small-device-none">
               © <a href="#" class="company-link">Brandbes.</a> All Rights
               Reserved - Privacy Policy
+            </div> -->
+          </div>
+        </div>
+        <div class="footer-single-block">
+          <div class="footer-title-block">
+            <h3 class="footer-heading">
+              Addrees <span class="color-shape"></span>
+            </h3>
+          </div>
+          <div class="footer-link-block">
+            <div class="footer-center col-md-4 col-sm-6">
+              <div>
+                <i class="fa fa-map-marker"></i>
+                <p>
+                  <span>
+                    Plot No.1273, 3rd Floor, Sector 82, JLPL Industrial Area,
+                  </span>
+                  Sahibzada Ajit Singh, Punjab 160055
+                </p>
+              </div>
+              <div>
+                <i class="fa fa-phone"></i>
+                <p>+91 (797)363-0617</p>
+              </div>
+              <div>
+                <i class="fa fa-envelope"></i>
+                <p><a href="#">hr@code4each.com</a></p>
+              </div>
             </div>
-          </div>
-        </div>
-        <div class="footer-single-block">
-          <div class="footer-title-block">
-            <h3 class="footer-heading">
-              Information <span class="color-shape">.</span>
-            </h3>
-          </div>
-          <div class="footer-link-block">
-            <ul role="list" class="footer-link-inner w-list-unstyled">
-              <li class="single-footer">
-                <a href="#" class="single-footer-link">About us</a>
-              </li>
-              <li class="single-footer">
-                <a href="#" class="single-footer-link">Properties</a>
-              </li>
-              <li class="single-footer">
-                <a href="#" class="single-footer-link">Contact Us</a>
-              </li>
-              <li class="single-footer">
-                <a href="#" class="single-footer-link">Cities</a>
-              </li>
-              <li class="single-footer">
-                <a href="#" class="single-footer-link">Blog Post</a>
-              </li>
-            </ul>
-          </div>
-        </div>
-        <div class="footer-single-block">
-          <div class="footer-title-block">
-            <h3 class="footer-heading">
-              Support <span class="color-shape">.</span>
-            </h3>
-          </div>
-          <div class="footer-link-block">
-            <ul role="list" class="footer-link-inner w-list-unstyled">
-              <li class="single-footer">
-                <a href="#" class="single-footer-link">Services</a>
-              </li>
-              <li class="single-footer">
-                <a href="#" class="single-footer-link">Create Agency</a>
-              </li>
-              <li class="single-footer">
-                <a href="#" class="single-footer-link">Style Guide</a>
-              </li>
-              <li class="single-footer">
-                <a href="#" class="single-footer-link">License</a>
-              </li>
-              <li class="single-footer">
-                <a href="#" class="single-footer-link">Changelog</a>
-              </li>
-            </ul>
           </div>
         </div>
         <div class="footer-single-block address-block">
           <div class="footer-title-block">
             <h3 class="footer-heading">
-              Address <span class="color-shape">.</span>
+              Soical links <span class="color-shape"></span>
             </h3>
           </div>
-          <div class="footer-address-block">
-            <div class="address-details">
-              2104 Charmaine Lane Amarillo, New York
-            </div>
+
+          <div class="footer-social-network-block">
+            <a
+              href="#"
+              target="_blank"
+              class="social-single-link w-inline-block"
+            >
+              <i class="fa fa-facebook-f"></i>
+            </a>
+            <a
+              href="#"
+              target="_blank"
+              class="social-single-link w-inline-block"
+            >
+              <i class="fa fa-whatsapp"></i>
+            </a>
+            <a
+              href="#"
+              target="_blank"
+              class="social-single-link w-inline-block"
+            >
+              <i class="fa fa-linkedin"></i>
+            </a>
           </div>
-          <!-- <div class="footer-social-network-block">
+          <div class="footer-social-network-block">
             <a
               href="#"
               target="_blank"
               class="social-single-link w-inline-block"
             >
-              <img
-                src="/images/facebook-white.png"
-                loading="lazy"
-                alt="Social Icon"
-                height="12"
-                width="12"
-                class="facebook-icon"
-              />
+              <i class="fa fa-instagram"></i>
             </a>
             <a
               href="#"
               target="_blank"
               class="social-single-link w-inline-block"
             >
-              <img
-                src="/images/twitter-white.png"
-                loading="lazy"
-                alt="Social Icon"
-                height="12"
-                width="12"
-                class="twitter-icon"
-              />
+              <i class="fa fa-twitter"></i>
             </a>
             <a
               href="#"
               target="_blank"
               class="social-single-link w-inline-block"
             >
-              <img
-                src="/images/instagram-white.png"
-                loading="lazy"
-                width="12"
-                height="12"
-                alt="Social Icon"
-                class="instagram-icom"
-              />
+              <i class="fa fa-envelope"></i>
             </a>
-          </div> -->
-          <div class="footer-copyright-text small-device-block">
-            © <a href="#" class="company-link">Code4Each.</a> All Rights
-            Reserved - Privacy Policy
           </div>
         </div>
       </div>
       <div class="footer-bottom">
         <div class="footer-bottom-text">
-          Powered by
-          <a href="#" target="_blank" class="bottom-link">Code4Each</a>
+          Code4Each.<a> All Rights Reserved - Privacy Policy </a>
         </div>
       </div>
     </div>
