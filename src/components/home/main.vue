@@ -843,7 +843,7 @@ const hideModal = () => {
       </div>
       <div class="footer-bottom">
         <div class="footer-bottom-text">
-          Code4Each.<a> All Rights Reserved - Privacy Policy </a>
+          SpeedySites.<a> All Rights Reserved - Privacy Policy </a>
         </div>
       </div>
     </div>
