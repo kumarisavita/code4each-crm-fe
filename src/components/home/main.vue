@@ -138,6 +138,22 @@ const hideModal = () => {
   formData.value = {};
   formDataLogin.value = {};
 };
+
+const googleSignUp = async (response) => {
+  try {
+    console.log(response);
+    const apiResponse = await WordpressService.GoogleLogin.googleSignUp({
+      id_token: response.credential,
+    });
+    if (apiResponse.status === 200 && apiResponse.data.success) {
+      const token = apiResponse.data.access_token;
+      localStorage.setItem("access_token", token);
+      router.push("/dashboard");
+    }
+  } catch (error) {
+    console.error(error);
+  }
+};
 </script>
 <template>
   <header class="header-section">
@@ -1103,6 +1119,7 @@ const hideModal = () => {
               >
                 Sign Up
               </button>
+              <GoogleLogin :callback="googleSignUp" prompt auto-login />
             </div>
           </div>
         </div>
