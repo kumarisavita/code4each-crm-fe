@@ -11,11 +11,13 @@ import {
 import WordpressService from "@/service/WordpressService";
 import { useForm } from "vee-validate";
 import { useAuth } from "@/service/useAuth";
-import { useRouter } from "vue-router";
+import { useRouter, useRoute } from "vue-router";
 import * as yup from "yup";
 import Loader from "@/components/common/Loader.vue";
 
+const route = useRoute();
 const allErrors = ref({});
+const allErrorsLogin = ref({});
 const router = useRouter();
 const { Errors, resetForm, handleSubmit } = useForm();
 const formData = ref({});
@@ -28,6 +30,7 @@ const formDataLogin = ref({});
 const backendError = ref("");
 
 const toggleSignLogin = (sign = false) => {
+  backendError.value = "";
   if (sign) {
     loginModalShow.value = false;
     showSignUpModal.value = true;
@@ -86,6 +89,7 @@ const registerUser = handleSubmit(async () => {
     allErrors.value = errors;
   }
   isDisabledSignUp.value = false;
+  loading.value = false;
 });
 
 const login = handleSubmit(async () => {
@@ -95,7 +99,7 @@ const login = handleSubmit(async () => {
     await validationSchemaLogin.validate(formDataLogin.value, {
       abortEarly: false,
     });
-    allErrors.value = {};
+    allErrorsLogin.value = {};
     const response = await WordpressService.loginUser(formDataLogin.value);
     if (response.status === 200 && response.data.success) {
       const token = response.data.token;
@@ -111,8 +115,6 @@ const login = handleSubmit(async () => {
       }
     }
   } catch (error) {
-    console.error(error, "ppppp");
-
     const errors =
       error.inner && Array.isArray(error.inner)
         ? error.inner.reduce((acc, err) => {
@@ -121,15 +123,15 @@ const login = handleSubmit(async () => {
           }, {})
         : {};
 
-    allErrors.value = errors;
+    allErrorsLogin.value = errors;
     if (error.response && error.response.data && error.response.data.errors) {
       backendError.value = Object.values(error.response.data.errors).flat();
     } else {
       backendError.value = error?.response?.data?.message; // Set an error message
     }
-    loading.value = false;
-    isDisabledLoginUp.value = false;
   }
+  loading.value = false;
+  isDisabledLoginUp.value = false;
 });
 
 const hideModal = () => {
@@ -154,6 +156,12 @@ const googleSignUp = async (response) => {
     console.error(error);
   }
 };
+
+onMounted(async () => {
+  if (route.query.login) {
+    loginModalShow.value = true;
+  }
+});
 </script>
 <template>
   <header class="header-section">
@@ -1049,7 +1057,7 @@ const googleSignUp = async (response) => {
                     aria-describedby="emailHelp"
                     v-model="formDataLogin.email"
                   />
-                  <div class="text-danger">{{ allErrors.email }}</div>
+                  <div class="text-danger">{{ allErrorsLogin.email }}</div>
                 </div>
                 <div class="form-group">
                   <label for="exampleInputPassword1">Password</label>
@@ -1060,7 +1068,7 @@ const googleSignUp = async (response) => {
                     placeholder="Password"
                     v-model="formDataLogin.password"
                   />
-                  <div class="text-danger">{{ allErrors.password }}</div>
+                  <div class="text-danger">{{ allErrorsLogin.password }}</div>
                 </div>
                 <div class="text-danger">{{ backendError }}</div>
               </div>

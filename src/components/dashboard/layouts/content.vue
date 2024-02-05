@@ -131,12 +131,10 @@ const emptyForm = () => {
             <ol class="breadcrumb">
               <!-- breadcrumb -->
               <li class="breadcrumb-item">
-                <a href="#">
-                  <h3>
-                    <i class="fa fa-cubes" aria-hidden="true"></i> Welcome To
-                    Dashboard
-                  </h3>
-                </a>
+                <h3>
+                  <i class="fa fa-cubes" aria-hidden="true"></i> Welcome To
+                  Dashboard
+                </h3>
               </li>
             </ol>
             <!-- End breadcrumb -->
@@ -154,7 +152,7 @@ const emptyForm = () => {
                   data-bs-target="#basicModal"
                   @click="openModalWithCategories"
                 >
-                  Create a Website <i class="fa fa-plus-circle"></i>
+                  Create a website <i class="fa fa-plus-circle"></i>
                 </button>
               </div>
             </div>
@@ -233,7 +231,7 @@ const emptyForm = () => {
               <a href="#" class="ag-courses-item_link">
                 <div class="ag-courses-item_bg"></div>
 
-                <div class="ag-courses-item_title">Create a Website</div>
+                <div class="ag-courses-item_title">Create a website</div>
 
                 <div class="ag-courses-item_date-box">
                   <span class="ag-courses-item_date">
@@ -302,7 +300,7 @@ const emptyForm = () => {
                 aria-label="Select an option"
                 v-model="values.type"
               >
-                <option value="">Open this select menu</option>
+                <option value="">Select Type</option>
                 <option value="review">Review</option>
                 <option value="complaint">Complaint</option>
                 <option value="feedback">Feedback</option>

@@ -384,7 +384,7 @@ const oncategoryChange = (event) => {
                     id="category_id"
                     @change="oncategoryChange"
                   >
-                    <option value="" selected>Open this select menu</option>
+                    <option value="" selected>Select Category</option>
                     {{
                       categories
                     }}
@@ -472,7 +472,7 @@ const oncategoryChange = (event) => {
                     aria-label="Select an option"
                     v-model="formData.country"
                   >
-                    <option value="">Open this select menu</option>
+                    <option value="">Select Country</option>
                     <option value="india">India</option>
                     <option value="europe">Europe</option>
                     <option value="england">England</option>

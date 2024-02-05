@@ -8,7 +8,8 @@ const props = defineProps({
 });
 
 const navigateToLogin = () => {
-  router.push("/login");
+  const queryParams = { login: true };
+  router.push({ path: "/home", query: queryParams });
 };
 </script>
 

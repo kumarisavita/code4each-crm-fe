@@ -76,14 +76,19 @@ const router = createRouter({
       component: EmailVerify,
       meta: { title: 'Email verify' }
     },
+    {
+      path: '/home',
+      name: 'home',
+      component: MyHomeView
+    },
   ]
 });
 
 router.beforeEach((to, from, next) => {
   const pageTitle = to.meta.title || 'SpeedySites';
   document.title = pageTitle;
-  if (to.path === "/" && isLoggedIn()) {
-    // next("/dashboard");
+  if (to.path === "/home" && isLoggedIn()) {
+    next("/dashboard");
   } else if (to.matched.some((record) => record.meta.requiresAuth)) {
     if (!isLoggedIn()) {
       next("/");

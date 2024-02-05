@@ -39,7 +39,7 @@
           </div>
         </div>
       </div>
-      <h6 class="sidebar-heading">Main</h6>
+      <!-- <h6 class="sidebar-heading">Main</h6> -->
       <ul class="list-unstyled">
         <li class="sidebar-list-item">
           <router-link

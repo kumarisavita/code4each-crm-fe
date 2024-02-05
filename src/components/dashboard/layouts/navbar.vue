@@ -127,7 +127,7 @@ const props = defineProps({
             <div class="dropdown-divider"></div>
             <!-- <a class="dropdown-item" href="#">Settings</a>
             <a class="dropdown-item" href="#">Activity log </a> -->
-            <div class="dropdown-divider"></div>
+            <!-- <div class="dropdown-divider"></div> -->
             <a class="dropdown-item" @click="logout">Logout</a>
           </div>
         </li>

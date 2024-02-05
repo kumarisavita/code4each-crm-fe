@@ -20,6 +20,8 @@ const currentStep = ref(1);
 const allDashboardData = ref();
 const animatedSvg = ref(null);
 const values = ref({});
+const allErrors = ref({});
+
 const domainUrl = ref(null);
 const { errors, resetForm, handleSubmit } = useForm();
 const showOthersCategoryName = ref(false);
@@ -41,6 +43,36 @@ const categoryOptions = computed(() =>
     value: category.id,
   }))
 );
+
+const validationSchemaFirst = yup.object({
+  businessName: yup.string().required("Address is a required field"),
+  businessCategory: yup.string().required("Category is a required field"),
+
+  phone: yup
+    .string()
+    .required("Phone Number is a required field")
+    .matches(/^\d{10}$/, "Enter a valid 10-digit phone number"),
+
+  logo: yup.mixed().test("fileType", "File should be jpeg/png", (value) => {
+    if (!value) {
+      return true;
+    }
+
+    const supportedFormats = ["image/jpeg", "image/png", "image/gif"];
+    return value && supportedFormats.includes(value.type);
+  }),
+});
+
+const validationSchemaSeconds = yup.object({
+  address: yup.string().required("Address is a required field"),
+  city: yup.string().required("City is a required field"),
+  state: yup.string().required("State is a required field"),
+  country: yup.string().required("Country is a required field"),
+  zip: yup
+    .number()
+    .typeError("Zip field must be a valid number")
+    .required("Zip is a required field"),
+});
 
 const submitAgencyDetailC = handleSubmit(async () => {
   try {
@@ -112,8 +144,30 @@ watch(
 const prevStep = () => {
   currentStep.value--;
 };
-const nextStep = () => {
-  currentStep.value++;
+const nextStep = async (step = false) => {
+  try {
+    if (step === "first") {
+      await validationSchemaFirst.validate(values.value, {
+        abortEarly: false,
+      });
+    } else if (step === "second") {
+      await validationSchemaSeconds.validate(values.value, {
+        abortEarly: false,
+      });
+    }
+    currentStep.value++;
+    allErrors.value = {};
+  } catch (error) {
+    const errors =
+      error.inner && Array.isArray(error.inner)
+        ? error.inner.reduce((acc, err) => {
+            acc[err.path] = err.message;
+            return acc;
+          }, {})
+        : {};
+
+    allErrors.value = errors;
+  }
 };
 
 const onFileChange = (event) => {
@@ -162,10 +216,9 @@ const oncategoryChange = (event) => {
                     id="businessName"
                     name="businessName"
                     v-model="values.businessName"
+                    required
                   />
-                  <span>{{
-                    errors.businessName ? errors.businessName[0] : ""
-                  }}</span>
+                  <div class="text-danger">{{ allErrors.businessName }}</div>
                   <label for="businessCategory" class="form-label"
                     >Business Category*</label
                   >
@@ -176,7 +229,7 @@ const oncategoryChange = (event) => {
                     v-model="values.businessCategory"
                     @change="oncategoryChange"
                   >
-                    <option value="" selected>Open this select menu</option>
+                    <option value="" selected>Select Category</option>
                     {{
                       categoryOptions
                     }}
@@ -188,6 +241,10 @@ const oncategoryChange = (event) => {
                       {{ option.label }}
                     </option>
                   </select>
+                  <div class="text-danger">
+                    {{ allErrors.businessCategory }}
+                  </div>
+
                   <div v-if="showOthersCategoryName">
                     <label for="othersCategoryName" class="form-label"
                       >About Category</label
@@ -207,7 +264,7 @@ const oncategoryChange = (event) => {
                     name="phone"
                     v-model="values.phone"
                   />
-                  <span>{{ errors.phone ? errors.phone[0] : "" }}</span>
+                  <div class="text-danger">{{ allErrors.phone }}</div>
                   <label for="formFileLg" class="form-label"
                     >Website Logo</label
                   >
@@ -220,13 +277,13 @@ const oncategoryChange = (event) => {
                     @change="onFileChange"
                   />
                   <i class="fa fa-upload"></i>
+                  <div class="text-danger">{{ allErrors.logo }}</div>
                 </div>
 
                 <button
                   type="button"
                   class="btn btn-primary next-step"
-                  :disabled="!values.businessName || !values.businessCategory"
-                  @click="nextStep"
+                  @click="nextStep('first')"
                 >
                   Get started
                 </button>
@@ -234,7 +291,7 @@ const oncategoryChange = (event) => {
 
               <div class="step step-2" v-if="currentStep === 2">
                 <div class="mb-3">
-                  <h3>Is one of these your listing?</h3>
+                  <h3>Fill your address detail?</h3>
                   <label for="address" class="form-label">Address*</label>
                   <input
                     type="text"
@@ -243,6 +300,7 @@ const oncategoryChange = (event) => {
                     name="address"
                     v-model="values.address"
                   />
+                  <div class="text-danger">{{ allErrors.address }}</div>
                   <label for="city" class="form-label">City*</label>
                   <input
                     type="text"
@@ -251,6 +309,7 @@ const oncategoryChange = (event) => {
                     name="city"
                     v-model="values.city"
                   />
+                  <div class="text-danger">{{ allErrors.city }}</div>
                   <label for="state" class="form-label">State*</label>
                   <input
                     type="text"
@@ -259,6 +318,8 @@ const oncategoryChange = (event) => {
                     name="state"
                     v-model="values.state"
                   />
+                  <div class="text-danger">{{ allErrors.state }}</div>
+
                   <label for="zip" class="form-label">Zip Code*</label>
                   <input
                     type="text"
@@ -267,6 +328,8 @@ const oncategoryChange = (event) => {
                     name="zip"
                     v-model="values.zip"
                   />
+                  <div class="text-danger">{{ allErrors.zip }}</div>
+
                   <label for="country" class="form-label">Country*</label>
                   <select
                     class="form-select"
@@ -274,11 +337,12 @@ const oncategoryChange = (event) => {
                     aria-label="Select an option"
                     v-model="values.country"
                   >
-                    <option value="">Open this select menu</option>
+                    <option value="">Select Country</option>
                     <option value="india">India</option>
                     <option value="europe">Europe</option>
                     <option value="england">England</option>
                   </select>
+                  <div class="text-danger">{{ allErrors.country }}</div>
                 </div>
 
                 <button
@@ -291,14 +355,7 @@ const oncategoryChange = (event) => {
                 <button
                   type="button"
                   class="btn btn-primary next-step"
-                  :disabled="
-                    !values.address ||
-                    !values.city ||
-                    !values.state ||
-                    !values.zip ||
-                    !values.country
-                  "
-                  @click="nextStep"
+                  @click="nextStep('second')"
                 >
                   Next
                 </button>
@@ -350,12 +407,15 @@ const oncategoryChange = (event) => {
                     <div class="success alert"></div>
                     <p>
                       Successfully created your Site
-                      <a href="url" class="wesbite-url">{{ domainUrl }}</a>
+                      <a
+                        class="wesbite-url"
+                        @click="openLinkInNewTab(domainUrl)"
+                        >{{ domainUrl }}</a
+                      >
                     </p>
 
                     <button
                       class="go-home"
-                      type="sumit"
                       @click="openLinkInNewTab(domainUrl)"
                     >
                       Preview
