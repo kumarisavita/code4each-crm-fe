@@ -2357,7 +2357,7 @@ a.button-trial.btn-md:hover {
     transform-origin: 50% 85%;
 }
 
-.fade:not(.show) {
+div#exampleModal .fade:not(.show) {
     opacity: 0.3;
     background: #0000007a;
 }
