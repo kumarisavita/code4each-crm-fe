@@ -11,7 +11,7 @@ app.config.errorHandler = (err, vm, info) => {
 };
 
 app.use(vue3GoogleLogin, {
-    clientId: '467874272347-f241lioo004ksju0qudsroorkb5lf6au.apps.googleusercontent.com'
+    clientId: '725628821892-6lojkrl63celrm16gh182sdujfpagk5b.apps.googleusercontent.com'
 
 })
 app.use(createPinia())
