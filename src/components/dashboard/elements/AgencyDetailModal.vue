@@ -102,9 +102,13 @@ const submitAgencyDetailC = handleSubmit(async () => {
     );
     if (response.status === 200 && response.data.success) {
       message.value = response?.data?.message;
-      domainUrl.value = response?.data?.website_domain;
+      if (response?.data?.website_domain) {
+        domainUrl.value = response?.data?.website_domain;
+        currentStep.value = 5;
+      } else {
+        currentStep.value = 6;
+      }
       EventBus.emit("fetchDashboardData");
-      currentStep.value = 5;
     }
   } catch (error) {
     errorMessage.value = error.response?.data?.message;
@@ -415,10 +419,37 @@ const oncategoryChange = (event) => {
                     </p>
 
                     <button
+                      v-if="domainUrl"
                       class="go-home"
+                      data-bs-dismiss="modal"
+                      aria-label="Close"
                       @click="openLinkInNewTab(domainUrl)"
                     >
                       Preview
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <div class="step step-5" v-if="currentStep === 6">
+                <!-- Step 2 form fields here -->
+                <div class="mb-3">
+                  <div class="Successfully">
+                    <h1>Thank you !</h1>
+
+                    <div class="success alert"></div>
+                    <p>
+                      We're currently experiencing a high volume of requests.
+                      Your site will be automatically created based on your
+                      requirements. Please check back later. Thank you for your
+                      patience.
+                    </p>
+
+                    <button
+                      class="go-home"
+                      data-bs-dismiss="modal"
+                      aria-label="Close"
+                    >
+                      OK
                     </button>
                   </div>
                 </div>

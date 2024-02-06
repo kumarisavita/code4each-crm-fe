@@ -135,6 +135,8 @@ const login = handleSubmit(async () => {
 });
 
 const hideModal = () => {
+  allErrors.value = {};
+  allErrorsLogin.value = {};
   loginModalShow.value = false;
   showSignUpModal.value = false;
   formData.value = {};
@@ -177,7 +179,7 @@ onMounted(async () => {
         >
           <i class="fa fa-align-left"></i>
         </button>
-        <a class="navbar-brand-logo" href="index.html">
+        <a class="navbar-brand-logo" href="/">
           <img class="img-fluid" src="/images/speedylogo.png" alt="logo" />
         </a>
         <div class="add-listing d-none d-sm-block">
@@ -231,13 +233,13 @@ onMounted(async () => {
                 <span></span>
                 <span></span>
               </a>
-              <a
+              <!-- <a
                 class="btn-2 btn-link ps-md-4 hover-slide-right"
                 href="#"
                 role="button"
               >
                 Watch demo video</a
-              >
+              > -->
             </div>
           </div>
         </div>
@@ -267,7 +269,7 @@ onMounted(async () => {
                 we were finally able to create the exact website we had in
                 mind!"
               </p>
-              <div class="custom-button" id="button-hover">
+              <div class="custom-1" id="button-hover">
                 <a
                   class="btn btn-lg button-trial rounded-pill hover-top"
                   @click="showSignUpModal = true"
@@ -417,12 +419,6 @@ onMounted(async () => {
                         We provide the most responsive and functional IT design
                         for companies and businesses worldwide.
                       </div>
-                      <div class="feature-btn">
-                        <a href="#">
-                          <span class="button-text">Discover now</span>
-                          <i class="fa fa-long-arrow-right"></i>
-                        </a>
-                      </div>
                     </div>
                   </div>
                 </div>
@@ -441,12 +437,6 @@ onMounted(async () => {
                       <div class="text">
                         It’s possible to simultaneously manage and transform
                         information from one server to another.
-                      </div>
-                      <div class="feature-btn">
-                        <a href="#">
-                          <span class="button-text">Discover now</span>
-                          <i class="fa fa-long-arrow-right"></i>
-                        </a>
                       </div>
                     </div>
                   </div>
@@ -467,12 +457,6 @@ onMounted(async () => {
                       <div class="text">
                         We provide the most responsive and functional IT design
                         for companies and businesses worldwide.
-                      </div>
-                      <div class="feature-btn">
-                        <a href="#">
-                          <span class="button-text">Discover now</span>
-                          <i class="fa fa-long-arrow-right"></i>
-                        </a>
                       </div>
                     </div>
                   </div>
@@ -495,12 +479,6 @@ onMounted(async () => {
                         We provide the most responsive and functional IT design
                         for companies and businesses worldwide.
                       </div>
-                      <div class="feature-btn">
-                        <a href="#">
-                          <span class="button-text">Discover now</span>
-                          <i class="fa fa-long-arrow-right"></i>
-                        </a>
-                      </div>
                     </div>
                   </div>
                   <!-- ht-box-icon End -->
@@ -522,12 +500,6 @@ onMounted(async () => {
                         We provide the most responsive and functional IT design
                         for companies and businesses worldwide.
                       </div>
-                      <div class="feature-btn">
-                        <a href="#">
-                          <span class="button-text">Discover now</span>
-                          <i class="fa fa-long-arrow-right"></i>
-                        </a>
-                      </div>
                     </div>
                   </div>
                   <!-- ht-box-icon End -->
@@ -548,12 +520,6 @@ onMounted(async () => {
                       <div class="text">
                         We provide the most responsive and functional IT design
                         for companies and businesses worldwide.
-                      </div>
-                      <div class="feature-btn">
-                        <a href="#">
-                          <span class="button-text">Discover now</span>
-                          <i class="fa fa-long-arrow-right"></i>
-                        </a>
                       </div>
                     </div>
                   </div>
@@ -613,7 +579,10 @@ onMounted(async () => {
                 Know more about your sales, customers, and where your revenue is
                 coming from with detailed e-commerce analytics.
               </p>
+
               <div class="custom-1" id="button-hover">
+                <h5>Free Trial . No Credit Card Required</h5>
+
                 <a
                   class="btn btn-lg button-trial rounded-pill hover-top"
                   @click="showSignUpModal = true"
@@ -622,8 +591,6 @@ onMounted(async () => {
                   <span></span>
                   <span></span>
                 </a>
-
-                <h5>Free Trial . No Credit Card Required</h5>
               </div>
             </div>
           </div>
@@ -639,6 +606,8 @@ onMounted(async () => {
                 to build trust and convert more of your visitors.
               </p>
               <div class="custom-2" id="button-hover">
+                <h5>Free Trial . No Credit Card Required</h5>
+
                 <a
                   class="btn btn-lg button-trial rounded-pill hover-top"
                   @click="showSignUpModal = true"
@@ -647,8 +616,6 @@ onMounted(async () => {
                   <span></span>
                   <span></span>
                 </a>
-
-                <h5>Free Trial . No Credit Card Required</h5>
               </div>
             </div>
           </div>
@@ -691,6 +658,7 @@ onMounted(async () => {
                 <h3>Build your email lists and segments</h3>
               </div>
               <div class="custom-3" id="button-hover">
+                <h5>Free Trial . No Credit Card Required</h5>
                 <a
                   class="btn btn-lg button-trial rounded-pill hover-top"
                   @click="showSignUpModal = true"
@@ -699,8 +667,6 @@ onMounted(async () => {
                   <span></span>
                   <span></span>
                 </a>
-
-                <h5>Free Trial . No Credit Card Required</h5>
               </div>
             </div>
           </div>
@@ -785,7 +751,7 @@ onMounted(async () => {
         <div class="footer-single-block">
           <div class="footer-title-block">
             <h3 class="footer-heading">
-              Addrees <span class="color-shape"></span>
+              Address <span class="color-shape"></span>
             </h3>
           </div>
           <div class="footer-link-block">
@@ -926,13 +892,13 @@ onMounted(async () => {
               </div>
               <div class="main-form">
                 <div class="form-group">
-                  <label for="exampleInputEmail1">E-mail </label>
+                  <label for="exampleInputEmail1">Email </label>
                   <input
                     type="email"
                     class="form-control"
                     id="exampleInputEmail1"
                     aria-describedby="emailHelp"
-                    placeholder="E-mail"
+                    placeholder="Email"
                     v-model="formData.email"
                   />
                   <div class="text-danger">{{ allErrors.email }}</div>
@@ -960,18 +926,20 @@ onMounted(async () => {
                 />
                 <div class="text-danger">{{ allErrors.password }}</div>
               </div>
-              <button
-                type="submit"
-                class="btn btn-primary1"
-                @click="registerUser"
-                :disabled="isDisabledSignUp"
-              >
-                Sign Up
-              </button>
-              <div v-if="loading" class="three-body4">
-                <div class="three-body__dot1"></div>
-                <div class="three-body__dot1"></div>
-                <div class="three-body__dot1"></div>
+              <div class="dual-logo">
+                <button
+                  type="submit"
+                  class="btn btn-primary1"
+                  @click="registerUser"
+                  :disabled="isDisabledSignUp"
+                >
+                  Sign Up
+                </button>
+                <div v-if="loading" class="three-body3">
+                  <div class="three-body__dot1"></div>
+                  <div class="three-body__dot1"></div>
+                  <div class="three-body__dot1"></div>
+                </div>
               </div>
             </form>
           </div>
@@ -1044,16 +1012,17 @@ onMounted(async () => {
               <i class="fa fa-times"></i>
             </button>
 
-            <h1>Start Your 7 Day Free Trial Today!</h1>
+            <h1>Login!</h1>
 
             <form class="form-start">
               <div class="main-form1">
                 <div class="form-group">
-                  <label for="exampleInputEmail1">E-mail </label>
+                  <label for="exampleInputEmail1">Email </label>
                   <input
                     type="email"
                     class="form-control"
                     id="exampleInputEmail1"
+                    placeholder="Email"
                     aria-describedby="emailHelp"
                     v-model="formDataLogin.email"
                   />
@@ -1072,19 +1041,20 @@ onMounted(async () => {
                 </div>
                 <div class="text-danger">{{ backendError }}</div>
               </div>
-
-              <button
-                type="submit"
-                class="btn btn-primary1"
-                @click="login"
-                :disabled="isDisabledLoginUp"
-              >
-                Login
-              </button>
-              <div v-if="loading" class="three-body3">
-                <div class="three-body__dot1"></div>
-                <div class="three-body__dot1"></div>
-                <div class="three-body__dot1"></div>
+              <div class="dual-logo">
+                <button
+                  type="submit"
+                  class="btn btn-primary1"
+                  @click="login"
+                  :disabled="isDisabledLoginUp"
+                >
+                  Login
+                </button>
+                <div v-if="loading" class="three-body3">
+                  <div class="three-body__dot1"></div>
+                  <div class="three-body__dot1"></div>
+                  <div class="three-body__dot1"></div>
+                </div>
               </div>
             </form>
           </div>

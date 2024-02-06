@@ -117,7 +117,8 @@ const emptyForm = () => {
 };
 </script>
 <template>
-  <section id="content-wrapper main-content side-content">
+  <Loader v-if="loading" />
+  <section v-else id="content-wrapper main-content side-content">
     <div class="side-app">
       <div class="" style="margin-left: 18%" v-if="dashboardData.notification">
         <Alert
@@ -158,30 +159,15 @@ const emptyForm = () => {
             </div>
           </div>
 
-          <div class="section-wrapper">
-            <!-- <h3
-              class="text-muted mb-4"
-              v-if="dashboardData?.agency_website_info?.length >= 1"
-            >
-              {{ dashboardData?.agency_website_info?.length }}
-              {{
-                dashboardData?.agency_website_info?.length > 1
-                  ? "websites..."
-                  : "website..."
-              }}
-            </h3> -->
-          </div>
-          <div class="card-wrappers">
-            <!-- <div> -->
-            <div
-              class="card"
-              aria-hidden="true"
-              data-toggle="modal"
-              data-target="#exampleModalRight"
-              v-for="(dash, index) in dashboardData.agency_website_info"
-              :key="index"
-              @click="updateSite(dash.website_id)"
-            >
+          <div class="section-wrapper"></div>
+          <div
+            class="card-wrappers card-info"
+            v-if="
+              dashboardData?.agency_website_info.length > 0 &&
+              !dashboardData?.agency_website_info[0].website_id
+            "
+          >
+            <div class="card">
               <div
                 class="card-primary"
                 aria-hidden="true"
@@ -190,33 +176,73 @@ const emptyForm = () => {
               >
                 <div class="valign">
                   <h5>
-                    <span class="cards-icons"
-                      >{{ dash.business_name.charAt(0).toUpperCase() }}
-                    </span>
+                    <i class="fa fa-info-circle"></i>
                     <br />
                   </h5>
                 </div>
               </div>
               <div class="card-content">
                 <div class="form-content">
-                  <form class="text-start mb-2 mt-3">
-                    <div class="form-field mb-4">
-                      <h4 class="form-label text-dark">
-                        {{ dash.business_name }}
-                      </h4>
-                      <div class="input-group mb-3">
-                        <a href="#" class="website-links">{{
-                          dash.website_domain
-                        }}</a>
-                      </div>
-                      <p class="text-muted">
-                        Created at {{ formattedDate(dash.created_at) }}
-                      </p>
-                    </div>
-                  </form>
+                  <p class="text-info message">
+                    We're currently experiencing a high volume of requests. Your
+                    site will be automatically created based on your
+                    requirements. Please check back later. Thank you for your
+                    patience.
+                  </p>
                 </div>
               </div>
             </div>
+          </div>
+          <div class="card-wrappers">
+            <div
+              v-for="(dash, index) in dashboardData.agency_website_info"
+              :key="index"
+            >
+              <div
+                v-if="dash.website_id"
+                class="card"
+                aria-hidden="true"
+                data-toggle="modal"
+                data-target="#exampleModalRight"
+                @click="updateSite(dash.website_id)"
+              >
+                <div
+                  class="card-primary"
+                  aria-hidden="true"
+                  data-toggle="modal"
+                  data-target="#exampleModalRight"
+                >
+                  <div class="valign">
+                    <h5>
+                      <span class="cards-icons"
+                        >{{ dash.business_name.charAt(0).toUpperCase() }}
+                      </span>
+                      <br />
+                    </h5>
+                  </div>
+                </div>
+                <div class="card-content">
+                  <div class="form-content">
+                    <form class="text-start mb-2 mt-3">
+                      <div class="form-field mb-4">
+                        <h4 class="form-label text-dark">
+                          {{ dash.business_name }}
+                        </h4>
+                        <div class="input-group mb-3">
+                          <a href="#" class="website-links">{{
+                            dash.website_domain
+                          }}</a>
+                        </div>
+                        <p class="text-muted">
+                          Created at {{ formattedDate(dash.created_at) }}
+                        </p>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+
             <div
               class="ag-courses_item"
               aria-hidden="true"
@@ -245,7 +271,6 @@ const emptyForm = () => {
       </div>
     </div>
   </section>
-  <Loader v-if="loading" />
   <SiteSettings />
   <AgencyDetailModal
     :showModal="showModal"

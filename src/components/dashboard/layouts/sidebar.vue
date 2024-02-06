@@ -53,7 +53,10 @@
         </li>
         <li
           class="sidebar-list-item"
-          v-if="dashboardData?.agency_website_info?.length >= 1"
+          v-if="
+            dashboardData?.agency_website_info?.length >= 1 &&
+            dashboardData?.agency_website_info[0].website_id
+          "
         >
           <a
             class="sidebar-link text-muted"
