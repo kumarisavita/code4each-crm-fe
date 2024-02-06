@@ -80,13 +80,21 @@ const registerUser = handleSubmit(async () => {
       loading.value = false;
       router.push("/dashboard");
     }
-  } catch (validationErrors) {
-    const errors = validationErrors.inner.reduce((acc, error) => {
-      acc[error.path] = error.message;
-      return acc;
-    }, {});
+  } catch (error) {
+    const errors =
+      error.inner && Array.isArray(error.inner)
+        ? error.inner.reduce((acc, err) => {
+            acc[err.path] = err.message;
+            return acc;
+          }, {})
+        : {};
 
     allErrors.value = errors;
+    if (error.response && error.response.data && error.response.data.errors) {
+      backendError.value = Object.values(error.response.data.errors).flat();
+    } else {
+      backendError.value = error?.response?.data?.message; // Set an error message
+    }
   }
   isDisabledSignUp.value = false;
   loading.value = false;
@@ -926,6 +934,7 @@ onMounted(async () => {
                 />
                 <div class="text-danger">{{ allErrors.password }}</div>
               </div>
+              <div class="text-danger">{{ backendError }}</div>
               <div class="dual-logo">
                 <button
                   type="submit"

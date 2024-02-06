@@ -104,8 +104,6 @@ const submitFeedback = handleSubmit(async () => {
     }, {});
 
     allErrors.value = errors;
-    // errorMessage.value = error.response?.data?.message;
-    // console.error(allErrors.value);
   }
   emptyForm();
 });
@@ -230,7 +228,7 @@ const emptyForm = () => {
                         </h4>
                         <div class="input-group mb-3">
                           <a href="#" class="website-links">{{
-                            dash.website_domain
+                            dash.website_detail.website_domain
                           }}</a>
                         </div>
                         <p class="text-muted">
