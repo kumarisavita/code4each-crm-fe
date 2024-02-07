@@ -372,7 +372,7 @@ const oncategoryChange = (event) => {
           </div>
           <section class="Settings-form">
             <div class="form-wrapper">
-              <h2>Your website settings form</h2>
+              <h2>Your website settings</h2>
               <div class="row">
                 <div class="col-sm-6 form-group">
                   <label for="category_id" class="form-label"

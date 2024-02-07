@@ -78,7 +78,7 @@ const router = createRouter({
     },
     {
       path: '/home',
-      name: 'home',
+      name: 'homePage',
       component: MyHomeView
     },
   ]
