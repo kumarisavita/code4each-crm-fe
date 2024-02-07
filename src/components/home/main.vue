@@ -49,8 +49,9 @@ const validationSchema = yup.object({
     .required("Email is a required field"),
   password: yup
     .string()
-    .required("Password is a required field")
-    .matches(/^\d{6}$/, "Enter a valid 10-digit password"),
+    .min(6, "Password must be at least 6 characters")
+    .max(20, "Password must not exceed 20 characters")
+    .required("Password is a required field"),
   phone: yup
     .string()
     .required("Phone Number is a required field")
@@ -64,8 +65,9 @@ const validationSchemaLogin = yup.object({
     .required("Email is a required field"),
   password: yup
     .string()
-    .required("Password is a required field")
-    .matches(/^\d{6}$/, "Enter a valid 6-digit password"),
+    .min(6, "Password must be at least 6 characters")
+    .max(20, "Password must not exceed 20 characters")
+    .required("Password is a required field"),
 });
 
 const registerUser = handleSubmit(async () => {
