@@ -19,6 +19,8 @@ const files = ref([]);
 const currentStep = ref(1);
 const allDashboardData = ref();
 const animatedSvg = ref(null);
+const startTime = ref(null);
+const timeSpent = ref(null);
 const values = ref({});
 const allErrors = ref({});
 
@@ -76,6 +78,7 @@ const validationSchemaSeconds = yup.object({
 
 const submitAgencyDetailC = handleSubmit(async () => {
   try {
+    startTimer();
     currentStep.value = 4;
     let formValues = values.value;
     const formData = new FormData();
@@ -104,6 +107,7 @@ const submitAgencyDetailC = handleSubmit(async () => {
       message.value = response?.data?.message;
       if (response?.data?.website_domain) {
         domainUrl.value = response?.data?.website_domain;
+        getTimeSpent();
         currentStep.value = 5;
       } else {
         currentStep.value = 6;
@@ -187,6 +191,21 @@ const oncategoryChange = (event) => {
     values.value.othersCategoryName = "";
   }
 };
+
+const startTimer = () => {
+  startTime.value = Date.now();
+};
+
+const getTimeSpent = () => {
+  timeSpent.value = Math.floor((Date.now() - startTime.value) / 1000);
+};
+
+const formatTime = (milliseconds) => {
+  const seconds = Math.floor(milliseconds / 1000);
+  const minutes = Math.floor(seconds / 60);
+  const remainingSeconds = seconds % 60;
+  return `${minutes} minutes ${remainingSeconds} seconds`;
+};
 </script>
 <template>
   <div class="modal fade" id="basicModal" tabindex="-1" aria-hidden="true">
@@ -253,12 +272,12 @@ const oncategoryChange = (event) => {
                     <label for="othersCategoryName" class="form-label"
                       >About Category</label
                     >
-                    <textarea
+                    <input
                       class="form-control input"
-                      placeholder="Wright About Category You Want.."
+                      placeholder="Write About Category You Want.."
                       rows="3"
                       v-model="values.othersCategoryName"
-                    ></textarea>
+                    />
                   </div>
                   <label for="phone" class="form-label">Phone*</label>
                   <input
@@ -403,12 +422,16 @@ const oncategoryChange = (event) => {
                 </div>
               </div>
               <div class="step step-5" v-if="currentStep === 5">
-                <!-- Step 2 form fields here -->
                 <div class="mb-3">
                   <div class="Successfully">
-                    <h1>Thank you !</h1>
+                    <h1>Congratulations!</h1>
+                    <p>Your site get ready in {{ timeSpent }} seconds....</p>
 
-                    <div class="success alert"></div>
+                    <div class="face">
+                      <div class="eye"></div>
+                      <div class="eye right"></div>
+                      <div class="mouth happy"></div>
+                    </div>
                     <p>
                       Successfully created your Site
                       <a
@@ -417,16 +440,19 @@ const oncategoryChange = (event) => {
                         >{{ domainUrl }}</a
                       >
                     </p>
-
-                    <button
-                      v-if="domainUrl"
-                      class="go-home"
-                      data-bs-dismiss="modal"
-                      aria-label="Close"
-                      @click="openLinkInNewTab(domainUrl)"
-                    >
-                      Preview
-                    </button>
+                    <div class="buttons-share">
+                      <div class="button1">
+                        <button
+                          v-if="domainUrl"
+                          class="go-home"
+                          data-bs-dismiss="modal"
+                          aria-label="Close"
+                          @click="openLinkInNewTab(domainUrl)"
+                        >
+                          Preview
+                        </button>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>

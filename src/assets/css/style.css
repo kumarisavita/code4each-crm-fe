@@ -108,6 +108,7 @@ a.navbar-brand.fw-bold.text-uppercase.text-base img {
     display: flex;
     justify-content: center;
     margin: 0px auto;
+    cursor: pointer;
 }
 
 .dropdown-menu.dropdown-menu-end.dropdown-menu-animated.show {
@@ -125,6 +126,11 @@ a.navbar-brand.fw-bold.text-uppercase.text-base img {
     font-size: 18px;
     color: #6c757d;
     white-space: nowrap;
+
+}
+
+a.dropdown-item {
+    cursor: pointer;
 }
 
 .nav-link-icon .notification-badge {
@@ -840,6 +846,7 @@ select.form-select {
     width: 100%;
     padding: 5px 0px 2px;
     max-height: 110px;
+    cursor: pointer;
     transition: 0.3s;
 }
 
@@ -886,7 +893,6 @@ select.form-select {
 
 .button-wrap .custom-button:hover {
     background: transparent;
-
     color: #1d2b64;
     cursor: pointer;
     font-weight: 600;
@@ -996,6 +1002,8 @@ select.form-select {
     font-weight: 400;
     letter-spacing: 0.04em;
     line-height: 1.25rem;
+    display: flex;
+    align-items: center;
     padding: 0px 0px 0px 10px;
     /* width: 100%; */
 }
@@ -1007,11 +1015,12 @@ select.form-select {
     margin-bottom: 0.3rem;
 }
 
-a.website-links {
+.website-links {
     text-decoration: none;
     color: #000;
     font-weight: 600;
     font-size: 18px;
+    margin-bottom: 0;
 }
 
 .card-wrappers .valign {
@@ -1061,7 +1070,8 @@ button.btn.btn-success.linkBtn {
 }
 
 .website-links {
-    color: #4650dd;
+    color: #1d2b64;
+    cursor: pointer;
 }
 
 /* .main-container {
@@ -1096,6 +1106,11 @@ button.btn.btn-success.linkBtn {
 
 div#modalContactForm .modal-dialog {
     min-width: 700px;
+}
+
+.modal.drawer.right-align .modal-header p {
+    cursor: pointer;
+    margin-bottom: 0;
 }
 
 .modal.drawer .modal-dialog .modal-content {
@@ -1134,7 +1149,8 @@ div#modalContactForm .modal-dialog {
     display: flex;
     justify-content: flex-end;
     margin: 0px auto;
-    width: 100%;
+    /* width: 40%; */
+    margin-right: 0;
 }
 
 #create-popup .modal-header {
@@ -1308,7 +1324,8 @@ section.Settings-form {
 }
 
 .modal.drawer.right-align .modal-header {
-    padding: 1rem 1rem;
+    padding: 2rem 1rem;
+    width: 100%;
 }
 
 button#button-addon2 {
@@ -3111,7 +3128,7 @@ select.form-select1 {
 }
 
 .modal-dialog.fade:not(.show) {
-    opacity: 0.6;
+    opacity: 2.6;
 }
 
 @keyframes spin78236 {

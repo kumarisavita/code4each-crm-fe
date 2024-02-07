@@ -372,6 +372,7 @@ const oncategoryChange = (event) => {
           </div>
           <section class="Settings-form">
             <div class="form-wrapper">
+              <h2>Your website settings form</h2>
               <div class="row">
                 <div class="col-sm-6 form-group">
                   <label for="category_id" class="form-label"
@@ -400,7 +401,7 @@ const oncategoryChange = (event) => {
                     <label for="" class="form-label">About Category</label>
                     <input
                       class="form-control input"
-                      placeholder="Wright About Category You Want.."
+                      placeholder="Write About Category You Want.."
                       rows="2"
                       v-model="formData.others_category_name"
                     />
@@ -565,6 +566,11 @@ const oncategoryChange = (event) => {
             >
               <span class="button-fill-text">Submit</span>
             </button>
+            <div v-if="isDisabled" class="three-body3">
+              <div class="three-body__dot1"></div>
+              <div class="three-body__dot1"></div>
+              <div class="three-body__dot1"></div>
+            </div>
           </div>
           <!-- <div class="button-wrap">
             <button

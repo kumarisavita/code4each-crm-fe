@@ -31,6 +31,7 @@ const values = ref({
   type: "", // Default value
 });
 const errorMessage = ref("");
+const feedBackloading = ref(false);
 allErrors;
 watch(
   () => props.dashboardData,
@@ -81,6 +82,7 @@ const validationSchema = yup.object({
 
 const submitFeedback = handleSubmit(async () => {
   try {
+    feedBackloading.value = true;
     let formValues = values.value;
     await validationSchema.validate(values.value, { abortEarly: false });
     const formData = new FormData();
@@ -96,6 +98,7 @@ const submitFeedback = handleSubmit(async () => {
     const response = await WordpressService.FeedBack.submitFeedback(formData);
     if (response.status === 200 && response.data.success) {
       emptyForm();
+      allErrors.value = {};
     }
   } catch (validationErrors) {
     const errors = validationErrors.inner.reduce((acc, error) => {
@@ -105,7 +108,7 @@ const submitFeedback = handleSubmit(async () => {
 
     allErrors.value = errors;
   }
-  emptyForm();
+  feedBackloading.value = false;
 });
 
 const emptyForm = () => {
@@ -227,9 +230,9 @@ const emptyForm = () => {
                           {{ dash.business_name }}
                         </h4>
                         <div class="input-group mb-3">
-                          <a href="#" class="website-links">{{
-                            dash.website_detail.website_domain
-                          }}</a>
+                          <p class="website-links">
+                            {{ dash.website_detail.website_domain }}
+                          </p>
                         </div>
                         <p class="text-muted">
                           Created at {{ formattedDate(dash.created_at) }}
@@ -303,7 +306,7 @@ const emptyForm = () => {
               <p>What do you think of the editing tool?</p>
 
               <label data-error="wrong" data-success="right" for="form34"
-                >Title</label
+                >Title*</label
               >
               <input
                 type="text"
@@ -315,7 +318,7 @@ const emptyForm = () => {
               <div class="text-danger">{{ allErrors.title }}</div>
 
               <label data-error="wrong" data-success="right" for="form34"
-                >Type</label
+                >Type*</label
               >
               <select
                 class="form-select1"
@@ -332,7 +335,7 @@ const emptyForm = () => {
               </select>
               <div class="text-danger">{{ allErrors.type }}</div>
               <label data-error="wrong" data-success="right" for="form34"
-                >Care to share more about it?</label
+                >Message*</label
               >
               <textarea
                 class="form-control input"
@@ -343,6 +346,11 @@ const emptyForm = () => {
               <div class="text-danger">{{ allErrors.message }}</div>
 
               <div class="user-actions">
+                <div v-if="feedBackloading" class="three-body3">
+                  <div class="three-body__dot1"></div>
+                  <div class="three-body__dot1"></div>
+                  <div class="three-body__dot1"></div>
+                </div>
                 <button class="feedback-btn-primary" @click="submitFeedback">
                   Send
                 </button>

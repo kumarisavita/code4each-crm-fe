@@ -47,7 +47,10 @@ const validationSchema = yup.object({
     .string()
     .email("Invalid email format")
     .required("Email is a required field"),
-  password: yup.string().required("Password name is a required field"),
+  password: yup
+    .string()
+    .required("Password is a required field")
+    .matches(/^\d{6}$/, "Enter a valid 10-digit password"),
   phone: yup
     .string()
     .required("Phone Number is a required field")
@@ -59,7 +62,10 @@ const validationSchemaLogin = yup.object({
     .string()
     .email("Invalid email format")
     .required("Email is a required field"),
-  password: yup.string().required("Password name is a required field"),
+  password: yup
+    .string()
+    .required("Password is a required field")
+    .matches(/^\d{6}$/, "Enter a valid 6-digit password"),
 });
 
 const registerUser = handleSubmit(async () => {

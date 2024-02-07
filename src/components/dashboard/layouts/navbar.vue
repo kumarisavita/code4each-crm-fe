@@ -1,5 +1,7 @@
 <script setup>
-import { defineEmits, ref, defineProps } from "vue";
+import { defineEmits, ref, defineProps, onMounted } from "vue";
+import { useRouter } from "vue-router";
+const router = useRouter();
 
 const emits = defineEmits();
 const isSidebarToggled = ref(true);
@@ -14,6 +16,9 @@ const logout = () => {
   emits("logout");
 };
 
+const navigate = () => {
+  router.push("/");
+};
 const props = defineProps({
   dashboardData: Object,
 });
@@ -22,13 +27,15 @@ const props = defineProps({
   <header class="header">
     <nav class="navbar navbar-expand-lg px-4 py-2 bg-white shadow">
       <a
-        class="sidebar-toggler text-gray-500 me-4 me-lg-5 lead"
-        href="#"
+        class="sidebar-toggler text-gray-500 me-4 me-lg-5 lead sidetoggle-s"
         @click="toggleSidebar"
       >
         <i class="fa fa-align-left"></i>
       </a>
-      <a class="navbar-brand fw-bold text-uppercase text-base" href="#">
+      <a
+        class="navbar-brand fw-bold text-uppercase text-base"
+        @click="navigate"
+      >
         <span class="d-none d-brand-partial">Bubbly </span>
         <span class="d-none d-sm-inline">
           <img src="/images/speedylogo.png" />
@@ -104,11 +111,6 @@ const props = defineProps({
             aria-expanded="false"
             @click="showUserMenu = !showUserMenu"
           >
-            <!-- <img
-              class="avatar p-1"
-              src="https://d19m59y37dris4.cloudfront.net/bubbly/1-2/img/avatar-6.jpg"
-              alt="Jason Doe"
-            /> -->
             <span class="avatar p-1">
               {{ dashboardData?.name.charAt(0).toUpperCase() }}</span
             >
@@ -125,9 +127,6 @@ const props = defineProps({
               <small>{{ dashboardData?.agency.name }}</small>
             </div>
             <div class="dropdown-divider"></div>
-            <!-- <a class="dropdown-item" href="#">Settings</a>
-            <a class="dropdown-item" href="#">Activity log </a> -->
-            <!-- <div class="dropdown-divider"></div> -->
             <a class="dropdown-item" @click="logout">Logout</a>
           </div>
         </li>
@@ -135,3 +134,8 @@ const props = defineProps({
     </nav>
   </header>
 </template>
+<style scoped>
+.sidetoggle-s {
+  cursor: pointer;
+}
+</style>

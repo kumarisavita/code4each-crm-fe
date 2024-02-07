@@ -236,10 +236,3 @@ const getSiteDeatils = async () => {
 };
 </script>
 
-<style scoped>
-.select-li {
-  margin-right: 20px;
-  margin-left: 20px;
-  margin-bottom: 20px;
-}
-</style>
