@@ -38,7 +38,7 @@ const sendMailToVerifyEmail = handleSubmit(async (values) => {
       bakendError.value = Object.values(error.response.data.errors).flat();
     } else {
       console.error(error);
-      errorMesssage.value = "server error try after some time"; // Set an error message
+      errorMesssage.value = "server error try after some time";
     }
   }
 });

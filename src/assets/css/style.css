@@ -3217,3 +3217,11 @@ select.form-select1 {
 .card-info .valign h5 {
     font-size: 40px;
 }
+
+/* 
+.alert-simple.alert-success {
+    border: 1px solid rgba(36, 241, 6, 0.46);
+    background-color: rgb(7 149 66 / 12%);
+    box-shadow: 0px 0px 2px #259c08;
+    color: #197817;
+    /* text-shadow: 0px 0px #fbfdff; */

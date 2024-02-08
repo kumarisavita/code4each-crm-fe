@@ -314,7 +314,7 @@ const formatTime = (milliseconds) => {
 
               <div class="step step-2" v-if="currentStep === 2">
                 <div class="mb-3">
-                  <h3>Fill your address detail?</h3>
+                  <h3>Fill your address detail</h3>
                   <label for="address" class="form-label">Address*</label>
                   <input
                     type="text"

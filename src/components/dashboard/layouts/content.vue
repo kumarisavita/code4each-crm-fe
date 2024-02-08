@@ -227,7 +227,11 @@ const emptyForm = () => {
                     <form class="text-start mb-2 mt-3">
                       <div class="form-field mb-4">
                         <h4 class="form-label text-dark">
-                          {{ dash.business_name }}
+                          {{
+                            dash.business_name.replace(/\b\w/g, (char) =>
+                              char.toUpperCase()
+                            )
+                          }}
                         </h4>
                         <div class="input-group mb-3">
                           <p class="website-links">
@@ -303,8 +307,6 @@ const emptyForm = () => {
               <div class="close-button"></div>
 
               <h1 class="title">Give feedback / Inquiry</h1>
-              <p>What do you think of the editing tool?</p>
-
               <label data-error="wrong" data-success="right" for="form34"
                 >Title*</label
               >
@@ -339,7 +341,7 @@ const emptyForm = () => {
               >
               <textarea
                 class="form-control input"
-                placeholder="Description..(optional)"
+                placeholder="Write Your Message.."
                 rows="5"
                 v-model="values.message"
               ></textarea>

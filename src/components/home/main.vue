@@ -18,16 +18,24 @@ import Loader from "@/components/common/Loader.vue";
 const route = useRoute();
 const allErrors = ref({});
 const allErrorsLogin = ref({});
+const allErrorsForget = ref({});
+const allErrorsResset = ref({});
+const formDataForget = ref({});
+const formDataResset = ref({});
 const router = useRouter();
 const { Errors, resetForm, handleSubmit } = useForm();
 const formData = ref({});
 const showSignUpModal = ref(false);
 const isDisabledSignUp = ref(false);
+const forgetModalShow = ref(false);
 const loginModalShow = ref(false);
 const loading = ref(false);
 const isDisabledLoginUp = ref(false);
 const formDataLogin = ref({});
 const backendError = ref("");
+const isForgetAction = ref(false);
+const ModalShowing = ref(false);
+const showSuccessMeassge = ref(false);
 
 const toggleSignLogin = (sign = false) => {
   backendError.value = "";
@@ -37,6 +45,18 @@ const toggleSignLogin = (sign = false) => {
   } else {
     loginModalShow.value = true;
     showSignUpModal.value = false;
+  }
+};
+
+const showModal = (modal) => {
+  ModalShowing.value = true;
+  backendError.value = "";
+  if (modal === "forget") {
+    loginModalShow.value = showSignUpModal.value = false;
+    forgetModalShow.value = true;
+  } else if (modal === "login") {
+    loginModalShow.value = true;
+    forgetModalShow.value = showSignUpModal.value = false;
   }
 };
 
@@ -76,9 +96,6 @@ const registerUser = handleSubmit(async () => {
     loading.value = true;
     await validationSchema.validate(formData.value, { abortEarly: false });
     allErrors.value = {};
-    const customHeaders = {
-      "Content-Type": "multipart/form-data",
-    };
 
     const response = await WordpressService.registerUser(formData.value);
     if (response.status === 200 && response.data.success) {
@@ -151,8 +168,10 @@ const login = handleSubmit(async () => {
 });
 
 const hideModal = () => {
+  ModalShowing.value = false;
   allErrors.value = {};
   allErrorsLogin.value = {};
+  forgetModalShow.value = false;
   loginModalShow.value = false;
   showSignUpModal.value = false;
   formData.value = {};
@@ -179,6 +198,51 @@ onMounted(async () => {
   if (route.query.login) {
     loginModalShow.value = true;
   }
+});
+
+const validationSchemaForget = yup.object({
+  email: yup
+    .string()
+    .email("Invalid email format")
+    .required("Email is a required field"),
+});
+
+const sendMailToVerifyEmail = handleSubmit(async () => {
+  try {
+    loading.value = true;
+    isForgetAction.value = true;
+    await validationSchemaForget.validate(formDataForget.value, {
+      abortEarly: false,
+    });
+    allErrorsForget.value = {};
+    const response = await WordpressService.ResetPassword.forgotPassword(
+      formDataForget.value
+    );
+    if (response.status === 200 && response.data.success) {
+      showSuccessMeassge.value = true;
+
+      setTimeout(() => {
+        showSuccessMeassge.value = false;
+      }, 5000);
+    }
+  } catch (error) {
+    const errors =
+      error.inner && Array.isArray(error.inner)
+        ? error.inner.reduce((acc, err) => {
+            acc[err.path] = err.message;
+            return acc;
+          }, {})
+        : {};
+
+    allErrorsForget.value = errors;
+    if (error.response && error.response.data && error.response.data.errors) {
+      backendError.value = Object.values(error.response.data.errors).flat();
+    } else {
+      backendError.value = "Something is wrong try after sometime"; // Set an error message
+    }
+  }
+  loading.value = false;
+  isForgetAction.value = false;
 });
 </script>
 <template>
@@ -214,7 +278,6 @@ onMounted(async () => {
           background-size: cover;
         "
       ></div>
-      <!--/.bg-holder-->
       <div class="container position-relative">
         <div class="row align-items-center py-8">
           <div class="col-md-6 col-lg-6 order-md-1 text-center text-md-end">
@@ -307,10 +370,7 @@ onMounted(async () => {
                 loop="loop"
                 muted="muted"
                 style="opacity: 1"
-              >
-                <!--<source src="https://content.simvoly.com/s/24444282803329/uploads/A-Home/drag-video2-2864231.webm" type='video/webm;codecs="vp8, vorbis"'>-->
-                <!-- <source src="/images/1a-6401489.mp4" type="video/mp4" /> -->
-              </video>
+              ></video>
             </div>
           </div>
         </div>
@@ -387,10 +447,7 @@ onMounted(async () => {
                 <a
                   class="btn btn-lg button-trial rounded-pill hover-top"
                   @click="showSignUpModal = true"
-                  >Try for free <span></span>
-                  <span></span>
-                  <span></span>
-                  <span></span>
+                  >Try for free
                 </a>
               </div>
             </div>
@@ -555,10 +612,7 @@ onMounted(async () => {
               href="#"
               data-bs-toggle="modal"
               data-bs-target="#exampleModal"
-              >Talk to a consultant<span></span>
-              <span></span>
-              <span></span>
-              <span></span>
+              >Talk to a consultant
             </a>
 
             <a href="#" class="ht-btn ht-btn-md btn-try hover-top"
@@ -602,10 +656,7 @@ onMounted(async () => {
                 <a
                   class="btn btn-lg button-trial rounded-pill hover-top"
                   @click="showSignUpModal = true"
-                  >Try for free <span></span>
-                  <span></span>
-                  <span></span>
-                  <span></span>
+                  >Try for free
                 </a>
               </div>
             </div>
@@ -627,10 +678,7 @@ onMounted(async () => {
                 <a
                   class="btn btn-lg button-trial rounded-pill hover-top"
                   @click="showSignUpModal = true"
-                  >Try for free <span></span>
-                  <span></span>
-                  <span></span>
-                  <span></span>
+                  >Try for free
                 </a>
               </div>
             </div>
@@ -678,10 +726,7 @@ onMounted(async () => {
                 <a
                   class="btn btn-lg button-trial rounded-pill hover-top"
                   @click="showSignUpModal = true"
-                  >Try for free <span></span>
-                  <span></span>
-                  <span></span>
-                  <span></span>
+                  >Try for free
                 </a>
               </div>
             </div>
@@ -866,8 +911,6 @@ onMounted(async () => {
     <div class="modal-dialog popup-model" role="document">
       <div class="modal-content">
         <div class="modal-body">
-          <!-- <Loader v-if="loading" /> -->
-
           <div class="column" id="main">
             <button
               type="button"
@@ -942,6 +985,9 @@ onMounted(async () => {
                 />
                 <div class="text-danger">{{ allErrors.password }}</div>
               </div>
+              <a class="text-body forgotPassword" @click="showModal('forget')"
+                >Forgot password?</a
+              >
               <div class="text-danger">{{ backendError }}</div>
               <div class="dual-logo">
                 <button
@@ -961,7 +1007,6 @@ onMounted(async () => {
             </form>
           </div>
           <div>
-            <!-- <?xml version="1.0" encoding="UTF-8"?> -->
             <svg
               width="67px"
               height="578px"
@@ -970,7 +1015,6 @@ onMounted(async () => {
               xmlns="http://www.w3.org/2000/svg"
               xmlns:xlink="http://www.w3.org/1999/xlink"
             >
-              <!-- Generator: Sketch 53.2 (72643) - https://sketchapp.com -->
               <title>Path</title>
               <desc>Created with Sketch.</desc>
               <g
@@ -999,6 +1043,7 @@ onMounted(async () => {
               >
                 Login
               </button>
+              <GoogleLogin :callback="googleSignUp" prompt auto-login />
             </div>
           </div>
         </div>
@@ -1007,6 +1052,7 @@ onMounted(async () => {
   </div>
   <div v-if="showSignUpModal" class="modal-backdrop fade show"></div>
   <div v-if="loginModalShow" class="modal-backdrop fade show"></div>
+  <div v-if="ModalShowing" class="modal-backdrop fade show"></div>
   <div
     class="modal fade"
     :class="{ show: loginModalShow, 'd-block': loginModalShow }"
@@ -1056,6 +1102,10 @@ onMounted(async () => {
                   />
                   <div class="text-danger">{{ allErrorsLogin.password }}</div>
                 </div>
+                <a class="text-body forgotPassword" @click="showModal('forget')"
+                  >Forgot password?</a
+                >
+
                 <div class="text-danger">{{ backendError }}</div>
               </div>
               <div class="dual-logo">
@@ -1076,7 +1126,6 @@ onMounted(async () => {
             </form>
           </div>
           <div>
-            <!-- <?xml version="1.0" encoding="UTF-8"?> -->
             <svg
               width="67px"
               height="578px"
@@ -1085,7 +1134,6 @@ onMounted(async () => {
               xmlns="http://www.w3.org/2000/svg"
               xmlns:xlink="http://www.w3.org/1999/xlink"
             >
-              <!-- Generator: Sketch 53.2 (72643) - https://sketchapp.com -->
               <title>Path</title>
               <desc>Created with Sketch.</desc>
               <g
@@ -1121,5 +1169,118 @@ onMounted(async () => {
       </div>
     </div>
   </div>
+
+  <div
+    class="modal fade"
+    :class="{ show: forgetModalShow, 'd-block': forgetModalShow }"
+    id="exampleModalLabel"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="exampleModalLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog popup-model" role="document">
+      <div class="modal-content">
+        <div class="modal-body">
+          <div class="column" id="main">
+            <button
+              type="button"
+              class="btn-close"
+              @click="hideModal"
+              aria-label="Close"
+            >
+              <i class="fa fa-times"></i>
+            </button>
+
+            <h1>Forgot Password!</h1>
+
+            <form class="form-start">
+              <div class="main-form1">
+                <div class="form-group">
+                  <label for="exampleInputEmail1">Email </label>
+                  <input
+                    type="email"
+                    class="form-control"
+                    id="exampleInputEmail1"
+                    placeholder="Email"
+                    aria-describedby="emailHelp"
+                    v-model="formDataForget.email"
+                  />
+                  <div class="text-danger">{{ allErrorsForget.email }}</div>
+                </div>
+                <div class="text-danger">{{ backendError }}</div>
+                <span class="succmsg" v-if="showSuccessMeassge">
+                  Please check your inbox and verify your email!
+                </span>
+              </div>
+
+              <div class="dual-logo">
+                <button
+                  type="submit"
+                  class="btn btn-primary1"
+                  @click="sendMailToVerifyEmail"
+                  :disabled="isForgetAction"
+                >
+                  SEND MAIL
+                </button>
+                <div v-if="loading" class="three-body3">
+                  <div class="three-body__dot1"></div>
+                  <div class="three-body__dot1"></div>
+                  <div class="three-body__dot1"></div>
+                </div>
+              </div>
+            </form>
+          </div>
+          <div>
+            <svg
+              width="67px"
+              height="578px"
+              viewBox="0 0 67 578"
+              version="1.1"
+              xmlns="http://www.w3.org/2000/svg"
+              xmlns:xlink="http://www.w3.org/1999/xlink"
+            >
+              <title>Path</title>
+              <desc>Created with Sketch.</desc>
+              <g
+                id="Page-1"
+                stroke="none"
+                stroke-width="1"
+                fill="none"
+                fill-rule="evenodd"
+              >
+                <path
+                  d="M11.3847656,-5.68434189e-14 C-7.44726562,36.7213542 5.14322917,126.757812 49.15625,270.109375 C70.9827986,341.199016 54.8877465,443.829224 0.87109375,578 L67,578 L67,-5.68434189e-14 L11.3847656,-5.68434189e-14 Z"
+                  id="Path"
+                  fill="#0e1532"
+                ></path>
+              </g>
+            </svg>
+          </div>
+          <div class="column" id="secondary">
+            <div class="sec-content">
+              <h2>Welcome Back!</h2>
+              <h3>Already have an account?</h3>
+              <button
+                type="button"
+                @click="showModal('login')"
+                class="btn btn-primary"
+              >
+                Login
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
+<style scoped>
+.forgotPassword {
+  cursor: pointer;
+}
+.succmsg {
+  color: "#197817";
+}
+</style>
 

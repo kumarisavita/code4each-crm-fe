@@ -1,73 +1,57 @@
 <template>
-  <section class="login-section" id="loginPage">
-    <div class="d-flex align-items-center justify-content-end">
-      <router-link to="/" class="backBtn">Register</router-link>
-    </div>
-    <img
-      class="wave"
-      src="https://raw.githubusercontent.com/sefyudem/Responsive-Login-Form/master/img/wave.png"
-    />
-    <div class="login-wrapper">
-      <div class="container">
-        <div class="img">
-          <img
-            src="https://raw.githubusercontent.com/sefyudem/Responsive-Login-Form/master/img/bg.svg"
-          />
-        </div>
-        <div class="login-content">
-          <div>
-            <form @submit.prevent="resetPassword">
-              <img
-                src="https://raw.githubusercontent.com/sefyudem/Responsive-Login-Form/master/img/avatar.svg"
+  <section class="rest-in">
+    <div class="container">
+      <div class="resetin-content">
+        <div class="resetin-form">
+          <h2 class="form-title">Reset Form</h2>
+          <form>
+            <div class="form-group">
+              <label for="Password">Password</label>
+              <input
+                type="password"
+                class="form-control"
+                id="exampleInputpassword"
+                name="firstname"
+                placeholder="Enter  your new  password"
+                v-model="formData.password"
               />
-              <h2 class="title">Welcome</h2>
+              <div class="text-danger">{{ allErrorsReset.password }}</div>
+            </div>
+            <div class="form-group">
+              <label for="Confirm  password">Confirm password</label>
+              <input
+                type="password"
+                class="form-control"
+                id="exampleInputConfirm  password"
+                name="lastname"
+                placeholder="Enter your Confirm  password "
+                v-model="formData.confirm_password"
+              />
+              <div class="text-danger">
+                {{ allErrorsReset.confirm_password }}
+              </div>
+            </div>
+            <div v-if="showSuccessMeassge">Password Resst successfully!</div>
+            <div class="text-danger">{{ backendError }}</div>
 
-              <!--**************** Display loginError message if it's not empty ********-->
-              <div
-                v-if="errorMesssage"
-                class="error-message text-danger text-center"
+            <div class="form-group form-button">
+              <button
+                type="submit"
+                name="signin"
+                id="signin"
+                class="form-submit"
+                @click="resetPassword"
+                :disabled="isForgetAction"
               >
-                {{ errorMesssage }}
+                Submit
+              </button>
+              <div v-if="loading" class="three-body3">
+                <div class="three-body__dot1"></div>
+                <div class="three-body__dot1"></div>
+                <div class="three-body__dot1"></div>
               </div>
-              <div class="alert-danger">
-                <div v-if="bakendError.length > 0">
-                  <ul>
-                    <li
-                      v-for="error in bakendError"
-                      :key="error"
-                      class="text-danger"
-                    >
-                      {{ error }}
-                    </li>
-                  </ul>
-                </div>
-              </div>
-              <LoginInputDiv
-                class="one"
-                iconClass="fa-user"
-                fieldLabel="Email"
-                fieldName="email"
-                :disabled="true"
-                :hiddenValue="email"
-              />
-
-              <LoginInputDiv
-                class="on"
-                iconClass="fa-lock"
-                fieldLabel="Password"
-                fieldName="password"
-                type="password"
-              />
-              <LoginInputDiv
-                class="pass"
-                iconClass="fa-lock"
-                fieldLabel="Confirm"
-                fieldName="confirm_password"
-                type="password"
-              />
-              <button type="submit" class="btn-link">Save</button>
-            </form>
-          </div>
+            </div>
+          </form>
         </div>
       </div>
     </div>
@@ -83,10 +67,17 @@ import * as yup from "yup";
 import LoginInputDiv from "@/components/login/elements/LoginInputDiv.vue";
 import ForgetPasswordSendEmail from "@/components/forget_password/ForgetPasswordSendEmail.vue";
 import Swal from "sweetalert2";
+import "@/assets/css/reset.css";
 
 const route = useRoute();
 const loginSuccess = ref(false);
 const showForgetForm = ref(false);
+const isForgetAction = ref(false);
+const showSuccessMeassge = ref(false);
+const loading = ref(false);
+const backendError = ref("");
+const allErrorsReset = ref({});
+const formData = ref({});
 
 const bakendError = ref("");
 const errorMesssage = ref("");
@@ -94,43 +85,56 @@ const router = useRouter();
 
 const email = ref(route.query.email);
 const password = ref("");
-const { handleSubmit } = useForm({
-  validationSchema: yup.object({
-    password: yup.string().required().min(6),
-    confirm_password: yup
-      .string()
-      .oneOf([yup.ref("password"), null], "Passwords must match")
-      .required("Confirm password is required"),
-  }),
+const { Errors, resetForm, handleSubmit } = useForm();
+
+const validationSchema = yup.object({
+  password: yup
+    .string()
+    .min(6, "Password must be at least 6 characters")
+    .max(20, "Password must not exceed 20 characters")
+    .required("Password is a required field"),
+  confirm_password: yup
+    .string()
+    .oneOf([yup.ref("password"), null], "Passwords must match")
+    .required("Confirm password is a required field"),
 });
 
-const resetPassword = handleSubmit(async (values) => {
+const resetPassword = handleSubmit(async () => {
   try {
+    loading.value = true;
+    isForgetAction.value = true;
+    await validationSchema.validate(formData.value, {
+      abortEarly: false,
+    });
+    allErrorsReset.value = {};
     const response = await WordpressService.ResetPassword.resetPassword({
       email: route.query.email,
       token: route.query.token,
-      password: values.password,
-      password_confirmation: values.confirm_password,
+      password: formData.value.password,
+      password_confirmation: formData.value.confirm_password,
     });
     if (response.status === 200 && response.data.success) {
-      Swal.fire("Done!", "Password updated Sucessfully!", "success").then(
-        (result) => {
-          if (result.isConfirmed) {
-            router.push("/login");
-          }
-        }
-      );
+      showSuccessMeassge.value = true;
+      formData.value = {};
+      setTimeout(() => {
+        showSuccessMeassge.value = false;
+      }, 5000);
     }
   } catch (error) {
-    if (error.response && error.response.data && error.response.data.errors) {
-      bakendError.value = Object.values(error.response.data.errors).flat();
-    } else {
-      console.error(error);
-      errorMesssage.value = error?.response?.data?.error; // Set an error message
+    const errors =
+      error.inner && Array.isArray(error.inner)
+        ? error.inner.reduce((acc, err) => {
+            acc[err.path] = err.message;
+            return acc;
+          }, {})
+        : {};
+
+    allErrorsReset.value = errors;
+    if (error.response && error.response.data && error.response.data.error) {
+      backendError.value = error.response.data.error;
     }
   }
+  loading.value = false;
+  isForgetAction.value = false;
 });
 </script>
-<style >
-@import "../../assets/login.css";
-</style>
