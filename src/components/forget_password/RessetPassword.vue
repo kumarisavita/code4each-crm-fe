@@ -3,7 +3,11 @@
     <div class="container">
       <div class="resetin-content">
         <div class="resetin-form">
-          <h2 class="form-title">Reset Form</h2>
+          <!-- <h2 class="form-title">Reset Password</h2> -->
+          <div class="horizontal-info-container text-center">
+            <img src="/images/speedylogo.png" />
+            <p class="horizontal-heading">Reset your password</p>
+          </div>
           <form>
             <div class="form-group">
               <label for="Password">Password</label>
@@ -15,6 +19,17 @@
                 placeholder="Enter  your new  password"
                 v-model="formData.password"
               />
+              <span
+                v-if="showPassword"
+                toggle="#password-field"
+                class="fa fa-fw fa-eye field-icon toggle-password"
+                @click="showPassword"
+              ></span>
+              <span
+                v-else
+                toggle="#password-field"
+                class="fa fa-eye-slash field-icon toggle-password"
+              ></span>
               <div class="text-danger">{{ allErrorsReset.password }}</div>
             </div>
             <div class="form-group">
@@ -45,6 +60,7 @@
               >
                 Submit
               </button>
+
               <div v-if="loading" class="three-body3">
                 <div class="three-body__dot1"></div>
                 <div class="three-body__dot1"></div>
@@ -53,6 +69,9 @@
             </div>
           </form>
         </div>
+        <a href="" class="back-reset">
+          <i class="fa fa-hand-o-right"></i>Back to home page
+        </a>
       </div>
     </div>
   </section>
@@ -74,6 +93,7 @@ const loginSuccess = ref(false);
 const showForgetForm = ref(false);
 const isForgetAction = ref(false);
 const showSuccessMeassge = ref(false);
+const showPassword = ref(true);
 const loading = ref(false);
 const backendError = ref("");
 const allErrorsReset = ref({});
@@ -90,11 +110,13 @@ const { Errors, resetForm, handleSubmit } = useForm();
 const validationSchema = yup.object({
   password: yup
     .string()
+    .transform((value) => value.trim())
     .min(6, "Password must be at least 6 characters")
     .max(20, "Password must not exceed 20 characters")
     .required("Password is a required field"),
   confirm_password: yup
     .string()
+    .transform((value) => value.trim())
     .oneOf([yup.ref("password"), null], "Passwords must match")
     .required("Confirm password is a required field"),
 });
@@ -130,7 +152,18 @@ const resetPassword = handleSubmit(async () => {
         : {};
 
     allErrorsReset.value = errors;
-    if (error.response && error.response.data && error.response.data.error) {
+    if (error.response && error.response.data && error.response.data.errors) {
+      allErrorsReset.value = Object.fromEntries(
+        Object.entries(error.response.data.errors).map(([key, value]) => [
+          key,
+          Array.isArray(value) ? value[0] : value,
+        ])
+      );
+    } else if (
+      error.response &&
+      error.response.data &&
+      error.response.data.error
+    ) {
       backendError.value = error.response.data.error;
     }
   }

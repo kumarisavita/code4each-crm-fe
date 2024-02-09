@@ -116,9 +116,14 @@ const registerUser = handleSubmit(async () => {
 
     allErrors.value = errors;
     if (error.response && error.response.data && error.response.data.errors) {
-      backendError.value = Object.values(error.response.data.errors).flat();
+      allErrors.value = Object.fromEntries(
+        Object.entries(error.response.data.errors).map(([key, value]) => [
+          key,
+          Array.isArray(value) ? value[0] : value,
+        ])
+      );
     } else {
-      backendError.value = error?.response?.data?.message; // Set an error message
+      backendError.value = error?.response?.data?.message;
     }
   }
   isDisabledSignUp.value = false;
@@ -158,9 +163,14 @@ const login = handleSubmit(async () => {
 
     allErrorsLogin.value = errors;
     if (error.response && error.response.data && error.response.data.errors) {
-      backendError.value = Object.values(error.response.data.errors).flat();
+      allErrorsLogin.value = Object.fromEntries(
+        Object.entries(error.response.data.errors).map(([key, value]) => [
+          key,
+          Array.isArray(value) ? value[0] : value,
+        ])
+      );
     } else {
-      backendError.value = error?.response?.data?.message; // Set an error message
+      backendError.value = error?.response?.data?.message;
     }
   }
   loading.value = false;
@@ -237,8 +247,6 @@ const sendMailToVerifyEmail = handleSubmit(async () => {
     allErrorsForget.value = errors;
     if (error.response && error.response.data && error.response.data.errors) {
       backendError.value = Object.values(error.response.data.errors).flat();
-    } else {
-      backendError.value = "Something is wrong try after sometime"; // Set an error message
     }
   }
   loading.value = false;
