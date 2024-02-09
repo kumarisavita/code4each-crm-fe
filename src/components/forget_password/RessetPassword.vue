@@ -12,7 +12,7 @@
             <div class="form-group">
               <label for="Password">Password</label>
               <input
-                type="password"
+                :type="showPassword ? 'text' : 'password'"
                 class="form-control"
                 id="exampleInputpassword"
                 name="firstname"
@@ -20,22 +20,23 @@
                 v-model="formData.password"
               />
               <span
-                v-if="showPassword"
+                v-if="!showPassword"
                 toggle="#password-field"
                 class="fa fa-fw fa-eye field-icon toggle-password"
-                @click="showPassword"
+                @click="showPassword = !showPassword"
               ></span>
               <span
                 v-else
                 toggle="#password-field"
                 class="fa fa-eye-slash field-icon toggle-password"
+                @click="showPassword = !showPassword"
               ></span>
               <div class="text-danger">{{ allErrorsReset.password }}</div>
             </div>
             <div class="form-group">
               <label for="Confirm  password">Confirm password</label>
               <input
-                type="password"
+                :type="showPassword ? 'text' : 'password'"
                 class="form-control"
                 id="exampleInputConfirm  password"
                 name="lastname"
@@ -50,6 +51,11 @@
             <div class="text-danger">{{ backendError }}</div>
 
             <div class="form-group form-button">
+              <div v-if="loading" class="three-body5">
+                <div class="three-body__dot"></div>
+                <div class="three-body__dot"></div>
+                <div class="three-body__dot"></div>
+              </div>
               <button
                 type="submit"
                 name="signin"
@@ -60,16 +66,10 @@
               >
                 Submit
               </button>
-
-              <div v-if="loading" class="three-body3">
-                <div class="three-body__dot1"></div>
-                <div class="three-body__dot1"></div>
-                <div class="three-body__dot1"></div>
-              </div>
             </div>
           </form>
         </div>
-        <a href="" class="back-reset">
+        <a class="back-reset" @click="navigate">
           <i class="fa fa-hand-o-right"></i>Back to home page
         </a>
       </div>
@@ -93,7 +93,7 @@ const loginSuccess = ref(false);
 const showForgetForm = ref(false);
 const isForgetAction = ref(false);
 const showSuccessMeassge = ref(false);
-const showPassword = ref(true);
+const showPassword = ref(false);
 const loading = ref(false);
 const backendError = ref("");
 const allErrorsReset = ref({});
@@ -170,4 +170,7 @@ const resetPassword = handleSubmit(async () => {
   loading.value = false;
   isForgetAction.value = false;
 });
+const navigate = () => {
+  router.push("/");
+};
 </script>
