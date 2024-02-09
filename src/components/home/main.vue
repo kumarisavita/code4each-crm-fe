@@ -61,33 +61,33 @@ const showModal = (modal) => {
 };
 
 const validationSchema = yup.object({
-  company_name: yup.string().required("Company name is a required field"),
-  name: yup.string().required("Name is a required field"),
+  company_name: yup.string().required("Please enter your company name."),
+  name: yup.string().required("Please enter your name."),
   email: yup
     .string()
-    .email("Invalid email format")
-    .required("Email is a required field"),
+    .email("Please enter a valid email address.")
+    .required("Please enter your email address."),
   password: yup
     .string()
-    .min(6, "Password must be at least 6 characters")
-    .max(20, "Password must not exceed 20 characters")
-    .required("Password is a required field"),
+    .min(6, "Password must be at least 6 characters.")
+    .max(20, "Password must not exceed 20 characters.")
+    .required("Please enter your password."),
   phone: yup
     .string()
-    .required("Phone Number is a required field")
-    .matches(/^\d{10}$/, "Enter a valid 10-digit phone number"),
+    .required("Please enter your phone number.")
+    .matches(/^\d{10}$/, "Enter a valid 10-digit phone number."),
 });
 
 const validationSchemaLogin = yup.object({
   email: yup
     .string()
-    .email("Invalid email format")
-    .required("Email is a required field"),
+    .email("Please enter a valid email address.")
+    .required("Please enter your email address."),
   password: yup
     .string()
-    .min(6, "Password must be at least 6 characters")
-    .max(20, "Password must not exceed 20 characters")
-    .required("Password is a required field"),
+    .min(6, "Password must be at least 6 characters.")
+    .max(20, "Password must not exceed 20 characters.")
+    .required("Please enter your password."),
 });
 
 const registerUser = handleSubmit(async () => {
@@ -213,8 +213,8 @@ onMounted(async () => {
 const validationSchemaForget = yup.object({
   email: yup
     .string()
-    .email("Invalid email format")
-    .required("Email is a required field"),
+    .email("Please enter a valid email address.")
+    .required("Please provide your email address."),
 });
 
 const sendMailToVerifyEmail = handleSubmit(async () => {
@@ -303,13 +303,14 @@ const sendMailToVerifyEmail = handleSubmit(async () => {
               Build Your Website. <br /><span
                 class="d-block d-lg-none d-xl-block"
                 style="color: #1c316a"
-                >Start A Funnel. Sell Anything!</span
+                >In Less Then 10 Seconds</span
               >
             </h1>
             <p class="mt-3 mb-4">
-              Start your website, engage with your audience,and grow
-              <br class="d-none d-lg-block" />and grow your business online from
-              one place.
+              Create your website with no designers, no coders, no expenses! 
+              <br class="d-none d-lg-block" />
+              SpeedySites will design a completely unique website that you can start editing right away.
+             
             </p>
             <div class="buttons-design">
               <a
@@ -338,7 +339,7 @@ const sendMailToVerifyEmail = handleSubmit(async () => {
     <div class="container">
       <div class="row d-flex justify-content-center">
         <div class="col-12">
-          <h2>Websites & Funnels Working Together</h2>
+          <h2>Build A Fully Functional Website</h2>
           <p>
             The first platform that combines both under one place working
             seamlessly.
@@ -993,10 +994,21 @@ const sendMailToVerifyEmail = handleSubmit(async () => {
                 />
                 <div class="text-danger">{{ allErrors.password }}</div>
               </div>
-              <a class="text-body forgotPassword" @click="showModal('forget')"
-                >Forgot password?</a
-              >
+              
               <div class="text-danger">{{ backendError }}</div>
+              <div class="form-group mt-3">
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" id="gridCheck">
+                  <label class="form-check-label" for="gridCheck">
+                    Remember Me
+                  </label>
+                </div>
+              </div>
+              <div class="form-group">
+                  <a class="text-body forgotPassword" @click="showModal('forget')"
+                  >Forgot password?</a
+                >
+              </div>
               <div class="dual-logo">
                 <button
                   type="submit"
@@ -1083,7 +1095,7 @@ const sendMailToVerifyEmail = handleSubmit(async () => {
               <i class="fa fa-times"></i>
             </button>
 
-            <h1>Login!</h1>
+            <h1>Login</h1>
 
             <form class="form-start">
               <div class="main-form1">
@@ -1200,7 +1212,7 @@ const sendMailToVerifyEmail = handleSubmit(async () => {
               <i class="fa fa-times"></i>
             </button>
 
-            <h1>Forgot Password!</h1>
+            <h1>Forgot Password?</h1>
 
             <form class="form-start">
               <div class="main-form1">
@@ -1210,7 +1222,7 @@ const sendMailToVerifyEmail = handleSubmit(async () => {
                     type="email"
                     class="form-control"
                     id="exampleInputEmail1"
-                    placeholder="Email"
+                    placeholder="Enter Registered Email"
                     aria-describedby="emailHelp"
                     v-model="formDataForget.email"
                   />
@@ -1229,7 +1241,7 @@ const sendMailToVerifyEmail = handleSubmit(async () => {
                   @click="sendMailToVerifyEmail"
                   :disabled="isForgetAction"
                 >
-                  SEND MAIL
+                  Email Reset Link
                 </button>
                 <div v-if="loading" class="three-body3">
                   <div class="three-body__dot1"></div>
