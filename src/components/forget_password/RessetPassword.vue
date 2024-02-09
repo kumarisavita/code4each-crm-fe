@@ -47,7 +47,18 @@
                 {{ allErrorsReset.confirm_password }}
               </div>
             </div>
-            <div v-if="showSuccessMeassge">Password Resst successfully!</div>
+            <div
+              v-if="showSuccessMeassge"
+              class="mt-3"
+              style="
+                background-color: #dff0d8;
+                color: #3c763d;
+                padding: 10px;
+                border: 1px solid #d6e9c6;
+              "
+            >
+              Password Resst successfully!
+            </div>
             <div class="text-danger">{{ backendError }}</div>
 
             <div class="form-group form-button">

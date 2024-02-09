@@ -90,6 +90,7 @@ const submitFeedback = handleSubmit(async () => {
     formData.append("title", formValues.title);
     formData.append("agency_id", allDashboardData.value?.user?.agency_id);
     formData.append("email", allDashboardData.value?.user?.email);
+    formData.append("name", allDashboardData.value?.user?.name);
     formData.append(
       "phone",
       allDashboardData.value.user.phone ? allDashboardData.value.user.phone : ""
