@@ -567,9 +567,9 @@ const navigate = () => {
                       <i class="fa fa-heart-o"></i>
                     </div>
                     <div class="content">
-                      <h5 class="heading">Templates Library</h5>
+                      <h5 class="heading">Custom Templates</h5>
                       <div class="text">
-                        Pre defined website templates to choose from matching your business needs.
+                        Enjoy unlimited freedom to design numerous templates for websites, pages, blocks, pop-ups, and emails to suit your needs.
                       </div>
                     </div>
                   </div>
@@ -613,69 +613,6 @@ const navigate = () => {
                   <!-- ht-box-icon End -->
                 </div>
               </div>
-              <div
-                class="col-lg-4 col-md-6 wow move-up animated"
-                style="visibility: visible"
-              >
-                <div class="ht-box-icon style-02 single-svg-icon-box">
-                  <!-- ht-box-icon Start -->
-                  <div class="icon-box-wrap">
-                    <div class="icon">
-                      <i class="fa fa-shield" aria-hidden="true"></i>
-                    </div>
-                    <div class="content">
-                      <h5 class="heading">Business Reform</h5>
-                      <div class="text">
-                        We provide the most responsive and functional IT design
-                        for companies and businesses worldwide.
-                      </div>
-                    </div>
-                  </div>
-                  <!-- ht-box-icon End -->
-                </div>
-              </div>
-              <div
-                class="col-lg-4 col-md-6 wow move-up animated"
-                style="visibility: visible"
-              >
-                <div class="ht-box-icon style-02 single-svg-icon-box">
-                  <!-- ht-box-icon Start -->
-                  <div class="icon-box-wrap">
-                    <div class="icon">
-                      <i class="fa fa-shield" aria-hidden="true"></i>
-                    </div>
-                    <div class="content">
-                      <h5 class="heading">Infrastructure Plan</h5>
-                      <div class="text">
-                        We provide the most responsive and functional IT design
-                        for companies and businesses worldwide.
-                      </div>
-                    </div>
-                  </div>
-                  <!-- ht-box-icon End -->
-                </div>
-              </div>
-              <div
-                class="col-lg-4 col-md-6 wow move-up animated"
-                style="visibility: visible"
-              >
-                <div class="ht-box-icon style-02 single-svg-icon-box">
-                  <!-- ht-box-icon Start -->
-                  <div class="icon-box-wrap">
-                    <div class="icon">
-                      <i class="fa fa-shield" aria-hidden="true"></i>
-                    </div>
-                    <div class="content">
-                      <h5 class="heading">Firewall Advance</h5>
-                      <div class="text">
-                        We provide the most responsive and functional IT design
-                        for companies and businesses worldwide.
-                      </div>
-                    </div>
-                  </div>
-                  <!-- ht-box-icon End -->
-                </div>
-              </div>
             </div>
           </div>
         </div>
@@ -699,7 +636,7 @@ const navigate = () => {
               <a
                 class="btn btn-lg button-trial rounded-pill hover-top"
                 @click="showModal('feedback')"
-                >Contact To Us
+                >Contact Us
                 <span></span>
                 <span></span>
                 <span></span>
@@ -711,83 +648,7 @@ const navigate = () => {
       </div>
     </div>
   </div>
-  <section class="sectione-Commerce1">
-    <div class="container">
-      <div class="row d-flex justify-content-center">
-        <div class="col-12">
-          <h4>E-Commerce Made Smart</h4>
-          <h2>New Evolution In Selling Online</h2>
-          <p>
-            With the power of a storefront, sales funnels, detailed analytics,
-            and full customization freedom.
-          </p>
-        </div>
-      </div>
-      <div class="row">
-        <div class="ecommerce-row">
-          <div class="col-lg-6 col-md-6">
-            <div class="E-Commerce">
-              <img src="/images/datailedimg.png" />
-            </div>
-          </div>
-          <div class="col-lg-6 col-md-12">
-            <div class="E-Commerce-text">
-              <h3>Detailed Analytics</h3>
-              <p class="e-commercetext">
-                Know more about your sales, customers, and where your revenue is
-                coming from with detailed e-commerce analytics.
-              </p>
 
-              <div class="custom-1" id="button-hover">
-                <h5>Free Trial . No Credit Card Required</h5>
-
-                <a
-                  class="btn btn-lg button-trial rounded-pill hover-top"
-                  @click="showSignUpModal = true"
-                  >Try for free
-                  <span></span>
-                  <span></span>
-                  <span></span>
-                  <span> </span>
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="custom-checkouts-row">
-          <div class="col-lg-6 col-md-12">
-            <div class="custom-checkouts-text">
-              <h3>Custom Checkouts</h3>
-              <p class="customtext">
-                Have the freedom to shape and design the looks of your checkouts
-                to build trust and convert more of your visitors.
-              </p>
-              <div class="custom-2" id="button-hover">
-                <h5>Free Trial . No Credit Card Required</h5>
-
-                <a
-                  class="btn btn-lg button-trial rounded-pill hover-top"
-                  @click="showSignUpModal = true"
-                  >Try for free
-                  <span></span>
-                  <span></span>
-                  <span></span>
-                  <span> </span>
-                </a>
-              </div>
-            </div>
-          </div>
-          <div class="col-lg-6 col-md-6">
-            <div class="E-Commerce1">
-              <img src="/images/datailedimg1.png" />
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
   <section class="email-custom">
     <div class="container-fluid grid-row">
       <div class="grid-customsection">
