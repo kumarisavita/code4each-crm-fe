@@ -485,10 +485,9 @@ const navigate = () => {
           </div>
           <div class="col-lg-6 col-md-6">
             <div class="textarea1">
-              <h3>Achieve Much More With Funnels</h3>
+              <h3>Think of SpeedySites as your personal website developer</h3>
               <p class="abouttext2">
-                Funnels are pages connected together with a specific goal that
-                can have a HUGE impact on your business.
+                Where you partner with SpeedySites who grasp your business objectives and design a customized website aligned with your brand guidelines, ensuring continuous support.
               </p>
               <div
                 class="type1 icon-section"
@@ -503,47 +502,29 @@ const navigate = () => {
                   <div class="icon-title text-widget-content">
                     <h4 style="line-height: 1.4">
                       <span style="font-size: 20px"
-                        >A/B Split Test Your Pages</span
+                        >Fast & Easy To Use</span
                       >
                     </h4>
                   </div>
                 </div>
                 <div class="icon-content">
                   <div class="text-widget-content">
-                    <p>
+                    <!--<p>
                       The first platform that allows you to A/B test your
                       website pages thanks to the built-in funnels.
-                    </p>
+                    </p>-->
+                    <div class="custom-list">
+                      <ul>
+                        <li><strong>Step 1:</strong> Login / Signup to SpeedySites</li>
+                        <li><strong>Step 1:</strong> Enter the name of your business</li>
+                        <li><strong>Step 2:</strong> Submit keywords describing your business</li>
+                        <li><strong>Step 3:</strong> Get your website ready in seconds!</li>
+                      </ul>
+                    </div>
                   </div>
                 </div>
               </div>
-              <div
-                class="type1 icon-section"
-                style="background: transparent; padding: 6px"
-              >
-                <div class="icon-header-wrapper">
-                  <div class="icon border-color-secondary1">
-                    <i
-                      class="icon-section-icon fa fa-hand-o-right color-secondary1"
-                    ></i>
-                  </div>
-                  <div class="icon-title text-widget-content">
-                    <h4 style="line-height: 1.4">
-                      <span style="font-size: 20px"
-                        >Sales Funnels & Custom Checkouts</span
-                      >
-                    </h4>
-                  </div>
-                </div>
-                <div class="icon-content">
-                  <div class="text-widget-content">
-                    <p>
-                      Customize the sales steps for the customer that wants to
-                      buy your products.
-                    </p>
-                  </div>
-                </div>
-              </div>
+             
               <div class="custom-button1" id="button-hover">
                 <a
                   class="btn btn-lg button-trial rounded-pill hover-top"
@@ -567,14 +548,16 @@ const navigate = () => {
       <div class="row">
         <div class="col-lg-12">
           <div class="section-title-wrap text-center section-space--mb_40">
-            <h6 class="section-sub-title mb-20">Industries we Serve</h6>
+            <!--<h6 class="section-sub-title mb-20">Industries we Serve</h6>-->
             <h3 class="heading">
-              Services We Deliver <br />
-              we provide
-              <span class="text-color-primary">
-                truly prominent IT solutions.</span
-              >
+              More Than Just A Website Builder <br />
+              
             </h3>
+            <h5><span class="text-color-primary">
+                The most unique and powerful platform on the planet as your own
+                </span
+              >
+              </h5>
           </div>
         </div>
       </div>
@@ -592,10 +575,9 @@ const navigate = () => {
                       <i class="fa fa-heart-o"></i>
                     </div>
                     <div class="content">
-                      <h5 class="heading">IT Design</h5>
+                      <h5 class="heading">Custom Templates</h5>
                       <div class="text">
-                        We provide the most responsive and functional IT design
-                        for companies and businesses worldwide.
+                        Enjoy unlimited freedom to design numerous templates for websites, pages, blocks, pop-ups, and emails to suit your needs.
                       </div>
                     </div>
                   </div>
@@ -611,10 +593,9 @@ const navigate = () => {
                       <i class="fa fa-suitcase" aria-hidden="true"></i>
                     </div>
                     <div class="content">
-                      <h5 class="heading">IT Management</h5>
+                      <h5 class="heading">Custom Branding</h5>
                       <div class="text">
-                        It’s possible to simultaneously manage and transform
-                        information from one server to another.
+                        Tailor your platform to reflect your brand identity with features like adding your logo, domain, and custom styling.
                       </div>
                     </div>
                   </div>
@@ -631,31 +612,9 @@ const navigate = () => {
                       <i class="fa fa-shield" aria-hidden="true"></i>
                     </div>
                     <div class="content">
-                      <h5 class="heading">Data Security</h5>
+                      <h5 class="heading">Drag & Drop Building Editor</h5>
                       <div class="text">
-                        We provide the most responsive and functional IT design
-                        for companies and businesses worldwide.
-                      </div>
-                    </div>
-                  </div>
-                  <!-- ht-box-icon End -->
-                </div>
-              </div>
-              <div
-                class="col-lg-4 col-md-6 wow move-up animated"
-                style="visibility: visible"
-              >
-                <div class="ht-box-icon style-02 single-svg-icon-box">
-                  <!-- ht-box-icon Start -->
-                  <div class="icon-box-wrap">
-                    <div class="icon">
-                      <i class="fa fa-shield" aria-hidden="true"></i>
-                    </div>
-                    <div class="content">
-                      <h5 class="heading">Business Reform</h5>
-                      <div class="text">
-                        We provide the most responsive and functional IT design
-                        for companies and businesses worldwide.
+                        Create pages as fast as humanly possible with our drag & drop builder.
                       </div>
                     </div>
                   </div>
@@ -673,10 +632,9 @@ const navigate = () => {
                       <i class="fa fa-shield" aria-hidden="true"></i>
                     </div>
                     <div class="content">
-                      <h5 class="heading">Infrastructure Plan</h5>
+                      <h5 class="heading">Fully DIY Platform</h5>
                       <div class="text">
-                        We provide the most responsive and functional IT design
-                        for companies and businesses worldwide.
+                        Let your customers do it all: register -> choose business type -> create & customize without your assistance.
                       </div>
                     </div>
                   </div>
@@ -694,10 +652,29 @@ const navigate = () => {
                       <i class="fa fa-shield" aria-hidden="true"></i>
                     </div>
                     <div class="content">
-                      <h5 class="heading">Firewall Advance</h5>
+                      <h5 class="heading">Manage All Customers From One Place</h5>
                       <div class="text">
-                        We provide the most responsive and functional IT design
-                        for companies and businesses worldwide.
+                        Simplify customer organization within projects while controlling access levels for team members effortlessly.
+                      </div>
+                    </div>
+                  </div>
+                  <!-- ht-box-icon End -->
+                </div>
+              </div>
+              <div
+                class="col-lg-4 col-md-6 wow move-up animated"
+                style="visibility: visible"
+              >
+                <div class="ht-box-icon style-02 single-svg-icon-box">
+                  <!-- ht-box-icon Start -->
+                  <div class="icon-box-wrap">
+                    <div class="icon">
+                      <i class="fa fa-shield" aria-hidden="true"></i>
+                    </div>
+                    <div class="content">
+                      <h5 class="heading">True All-In-One Platform</h5>
+                      <div class="text">
+                        The only platform that combines Websites + CRM + Email Marketing + Appointments in one solution.
                       </div>
                     </div>
                   </div>
@@ -771,8 +748,6 @@ const navigate = () => {
               </p>
 
               <div class="custom-1" id="button-hover">
-                <h5>Free Trial . No Credit Card Required</h5>
-
                 <a
                   class="btn btn-lg button-trial rounded-pill hover-top"
                   @click="showSignUpModal = true"
@@ -782,6 +757,7 @@ const navigate = () => {
                   <span></span>
                   <span> </span>
                 </a>
+                <h5>Free Trial. No Credit Card Required</h5>
               </div>
             </div>
           </div>
@@ -797,8 +773,6 @@ const navigate = () => {
                 to build trust and convert more of your visitors.
               </p>
               <div class="custom-2" id="button-hover">
-                <h5>Free Trial . No Credit Card Required</h5>
-
                 <a
                   class="btn btn-lg button-trial rounded-pill hover-top"
                   @click="showSignUpModal = true"
@@ -808,6 +782,7 @@ const navigate = () => {
                   <span></span>
                   <span> </span>
                 </a>
+                <h5>Free Trial. No Credit Card Required</h5>
               </div>
             </div>
           </div>
@@ -849,8 +824,7 @@ const navigate = () => {
                 <i class="fa fa-hand-o-right"></i>
                 <h3>Build your email lists and segments</h3>
               </div>
-              <div class="custom-3" id="button-hover">
-                <h5>Free Trial . No Credit Card Required</h5>
+              <div class="custom-3" id="button-hover">                
                 <a
                   class="btn btn-lg button-trial rounded-pill hover-top"
                   @click="showSignUpModal = true"
@@ -860,6 +834,7 @@ const navigate = () => {
                   <span></span>
                   <span> </span>
                 </a>
+                <h5>Free Trial. No Credit Card Required</h5>
               </div>
             </div>
           </div>
@@ -900,13 +875,12 @@ const navigate = () => {
           </div>
           <div class="footer-content">
             <p class="footer-details">
-              Properties are most budget friendly so you have are find
-              opportunity is main responsibility to clients
+              Get your business online quickly with Speedy Sites.
             </p>
             <!-- <div class="footer-copyright-text small-device-none">© <a  class="company-link">Brandbes.</a> All Rights Reserved - Privacy Policy </div> -->
           </div>
         </div>
-        <div class="footer-single-block">
+        <!----<div class="footer-single-block">
           <div class="footer-title-block">
             <h3 class="footer-heading">
               Address <span class="color-shape"></span>
@@ -933,7 +907,7 @@ const navigate = () => {
               </div>
             </div>
           </div>
-        </div>
+        </div>-->
         <div class="footer-single-block address-block">
           <div class="footer-title-block">
             <h3 class="footer-heading">
@@ -967,7 +941,7 @@ const navigate = () => {
       </div>
       <div class="footer-bottom">
         <div class="footer-bottom-text">
-          Code4Each.<a> All Rights Reserved - Privacy Policy </a>
+          SpeedySites.<a> All Rights Reserved - Privacy Policy </a>
         </div>
       </div>
     </div>
