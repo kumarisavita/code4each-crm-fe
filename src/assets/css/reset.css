@@ -1,13 +1,5 @@
-* {
-    padding: 0;
-    margin: 0;
-    text-decoration: none;
-    box-shadow: border-box;
-}
-
-body {
-    font-family: ui-sans-serif;
-    background-color: #d3d3d3;
+body{
+    font-family: Avenir,sans-serif;
 }
 .rest-in {
 	/* display: flex;
@@ -241,35 +233,40 @@ section.rest-in {
 	 font-size: 22px;
 	 font-weight: bold;
 	 text-transform: capitalize;
+	 cursor: pointer;
 }
  .rest-in .resetin-form .horizontal-info-container .horizontal-subtitle {
 	 letter-spacing: 1px;
 	 margin-bottom: 20px;
 	 text-align: left;
 }
+.horizontal-info-container.text-center a {
+    cursor: pointer;}
  .rest-in span.fa.fa-eye.field-icon.toggle-password {
 	/* position: absolute;
 	 */
 	/* text-align: right;
 	 */
-	 display: flex;
-	 justify-content: flex-end;
-	 margin: -30px 10px;
-	 float: right;
-	 color: #1d2b64;
-	 font-weight: 600;
+	display: flex;
+	justify-content: flex-end;
+	margin: -30px 10px;
+	float: right;
+	color: #1d2b64;
+	font-weight: 600;
+	cursor: pointer;
 }
 .rest-in span.fa.fa-eye-slash.field-icon.toggle-password {
 	/* position: absolute;
 	 */
 	/* text-align: right;
 	 */
-	 display: flex;
-	 justify-content: flex-end;
-	 margin: -30px 10px;
-	 float: right;
-	 color: #1d2b64;
-	 font-weight: 600;
+	display: flex;
+	justify-content: flex-end;
+	margin: -30px 10px;
+	float: right;
+	color: #1d2b64;
+	font-weight: 600;
+	cursor: pointer;
 }
 
  .rest-in .three-body5 {

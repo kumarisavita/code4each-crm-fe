@@ -4,7 +4,7 @@ import { useRouter } from "vue-router";
 const router = useRouter();
 
 const emits = defineEmits();
-const isSidebarToggled = ref(true);
+const isSidebarToggled = ref(false);
 const showUserMenu = ref(false);
 
 const toggleSidebar = () => {

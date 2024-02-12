@@ -74,6 +74,13 @@ const formattedDate = (stringDate) => {
   return date.toLocaleDateString("en-US", options);
 };
 
+const calculateDaysDifference = (stringDate) => {
+  let currentDate = new Date();
+  let targetDate = new Date(stringDate);
+  const oneDay = 24 * 60 * 60 * 1000;
+  const diffMilliseconds = Math.abs(currentDate - targetDate);
+  return 15 - Math.round(diffMilliseconds / oneDay);
+};
 const validationSchema = yup.object({
   title: yup.string().required("Title is a required field"),
   type: yup.string().required("Type is a required field"),
@@ -240,7 +247,8 @@ const emptyForm = () => {
                           </p>
                         </div>
                         <p class="text-muted">
-                          Created at {{ formattedDate(dash.created_at) }}
+                          Created at
+                          {{ formattedDate(dash.created_at) }}
                         </p>
                       </div>
                     </form>

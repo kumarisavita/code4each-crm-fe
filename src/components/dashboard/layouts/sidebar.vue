@@ -26,7 +26,6 @@
                 }}
               </h3>
               <a
-                href="#"
                 class="website-links"
                 data-toggle="modal"
                 data-target="#myModal"
@@ -39,7 +38,6 @@
           </div>
         </div>
       </div>
-      <!-- <h6 class="sidebar-heading">Main</h6> -->
       <ul class="list-unstyled">
         <li class="sidebar-list-item">
           <router-link
@@ -61,7 +59,6 @@
           <a
             class="sidebar-link text-muted"
             :class="{ active: currentRoute.includes('/customize') }"
-            href="#"
             data-bs-target="#cmsDropdown"
             role="button"
             aria-expanded="false"
@@ -125,6 +122,45 @@
           </ul>
         </li>
       </ul>
+      <!-- <ul class="list-unstyled">
+        <li class="sidebar-list-item">
+          <a class="sidebar-link text-muted" href="index.html">
+            <i class="fa fa-home me-3"></i>
+            <span class="sidebar-link-title"> Dashboard</span>
+          </a>
+        </li>
+        <li class="sidebar-list-item">
+          <a
+            class="sidebar-link text-muted active"
+            href="components.html"
+            data-bs-target="#cmsDropdown"
+            aria-expanded="false"
+            data-bs-toggle="collapse"
+          >
+            <i class="fa fa-book me-3"></i>
+            <span class="sidebar-link-title">Customize</span>
+          </a>
+          <ul class="sidebar-menu list-unstyled collapse" id="cmsDropdown">
+            <li class="sidebar-list-item">
+              <a class="sidebar-link text-muted" href="colors.html">Colors</a>
+            </li>
+            <li class="sidebar-list-item">
+              <a class="sidebar-link text-muted" href="fonts.html">Fonts</a>
+            </li>
+            <li class="sidebar-list-item">
+              <a class="sidebar-link text-muted" href="social-links.html"
+                >Social Links</a
+              >
+            </li>
+          </ul>
+        </li>
+        <li class="sidebar-list-item">
+          <a class="sidebar-link text-muted">
+            <i class="fa fa-line-chart me-3"></i>
+            <span class="sidebar-link-title"> Widgets </span>
+          </a>
+        </li>
+      </ul> -->
       <div class="dashboard-design" v-if="currentRoute === '/dashboard'">
         <div class="feedback-btn">
           <button
@@ -180,6 +216,7 @@ const dashboardData = ref([]);
 const isActive = (routePath) => route.path === routePath;
 const store = useStore();
 const selectedValue = ref();
+const compoentUl = ref(false);
 const siteSettingsDeatil = ref([]);
 
 const handleSelectChange = (selectedValue) => {

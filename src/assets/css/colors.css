@@ -1,6 +1,4 @@
-body{
-    font-family: ui-sans-serif;
-}
+
 * {
     padding: 0;
     margin: 0;
@@ -435,7 +433,7 @@ button.active-btn.btn-primary i{
     /* box-shadow: 0 -6px 38px rgb(0 0 0 / 9%), 0 6px 38px rgb(0 0 0 / 19%); */
     border-radius: 4px;
     overflow-y: scroll;
-    height: 85vh;
+    height: 70vh;
 }
 label.form-field.social-links.mb-2 img {
     width: 5%;
@@ -448,7 +446,7 @@ label.form-field.social-links.mb-2 {
     gap: 5px;
 }
 p.suuccess-msg {
-    font-size: 18px;
+    font-size: 16px;
     padding: 5px 0px 0px;
     margin-bottom: 0;
     color: #0aa10a;

@@ -13,7 +13,7 @@ import { useForm } from "vee-validate";
 import { useAuth } from "@/service/useAuth";
 import { useRouter, useRoute } from "vue-router";
 import * as yup from "yup";
-import Loader from "@/components/common/Loader.vue";
+import config from "/config";
 
 const route = useRoute();
 const allErrors = ref({});
@@ -706,37 +706,33 @@ const navigate = () => {
             </div>
           </div>
         </div>
-        <div class="col-lg-12">
-          <div
-            class="feature-list-button-box mt-30 text-center"
-            id="button-hover"
-          >
-            <a
-              class="btn btn-lg button-trial rounded-pill hover-top"
-              @click="showModal('signup')"
-              >TRY FOR FREE
-              <span></span>
-              <span></span>
-              <span></span>
-              <span> </span>
-            </a>
-
-            <a
-              class="ht-btn ht-btn-md btn-try hover-top"
-              @click="showModal('feedback')"
-              style="curser: pointer"
-              >CONTACT US NOW
-            </a>
-            <!-- <a
-              class="btn btn-lg button-trial rounded-pill hover-top"
-              @click="showModal('feedback')"
-              style="curser: pointer"
-              >CONTACT US NOW
-              <span></span>
-              <span></span>
-              <span></span>
-              <span></span>
-            </a> -->
+        <div class="col-lg-12 d-flex">
+          <div class="main-div">
+            <div
+              class="feature-list-button-box mt-30 text-center"
+              id="button-hover"
+            >
+              <a
+                class="btn btn-lg button-trial rounded-pill hover-top"
+                @click="showModal('signup')"
+                >TRY FOR FREE
+                <span></span>
+                <span></span>
+                <span></span>
+                <span> </span>
+              </a>
+            </div>
+            <div class="add-listing d-none d-sm-block">
+              <a
+                class="btn btn-lg button-trial rounded-pill hover-top"
+                @click="showModal('feedback')"
+                >Contact To Us
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+              </a>
+            </div>
           </div>
         </div>
       </div>
@@ -905,7 +901,7 @@ const navigate = () => {
             <!-- <div class="footer-copyright-text small-device-none">© <a  class="company-link">Brandbes.</a> All Rights Reserved - Privacy Policy </div> -->
           </div>
         </div>
-        <div class="footer-single-block">
+        <!-- <div class="footer-single-block">
           <div class="footer-title-block">
             <h3 class="footer-heading">
               Address <span class="color-shape"></span>
@@ -932,7 +928,7 @@ const navigate = () => {
               </div>
             </div>
           </div>
-        </div>
+        </div> -->
         <div class="footer-single-block address-block">
           <div class="footer-title-block">
             <h3 class="footer-heading">
@@ -941,32 +937,34 @@ const navigate = () => {
           </div>
 
           <div class="footer-social-network-block">
-            <a target="_blank" class="social-single-link w-inline-block">
+            <a
+              target="_blank"
+              :href="config.FACEBOOK_URL"
+              class="social-single-link w-inline-block"
+            >
               <i class="fa fa-facebook-f"></i>
             </a>
-            <a target="_blank" class="social-single-link w-inline-block">
-              <i class="fa fa-whatsapp"></i>
-            </a>
-            <a target="_blank" class="social-single-link w-inline-block">
-              <i class="fa fa-linkedin"></i>
-            </a>
-          </div>
-          <div class="footer-social-network-block">
-            <a target="_blank" class="social-single-link w-inline-block">
+            <a
+              :href="config.INSTAGRAM_URL"
+              target="_blank"
+              class="social-single-link w-inline-block"
+            >
               <i class="fa fa-instagram"></i>
             </a>
-            <a target="_blank" class="social-single-link w-inline-block">
-              <i class="fa fa-twitter"></i>
-            </a>
-            <a target="_blank" class="social-single-link w-inline-block">
-              <i class="fa fa-envelope"></i>
+            <a
+              :href="config.YOUTUBE_URL"
+              target="_blank"
+              class="social-single-link w-inline-block"
+            >
+              <i class="fa fa-youtube-play"></i>
             </a>
           </div>
+          <div class="footer-social-network-block"></div>
         </div>
       </div>
       <div class="footer-bottom">
         <div class="footer-bottom-text">
-          Code4Each.<a> All Rights Reserved - Privacy Policy </a>
+          Speedysites.<a> All Rights Reserved - Privacy Policy </a>
         </div>
       </div>
     </div>
@@ -1057,9 +1055,6 @@ const navigate = () => {
                 />
                 <div class="text-danger">{{ allErrors.password }}</div>
               </div>
-              <a class="text-body forgotPassword" @click="showModal('forget')"
-                >Forgot password?</a
-              >
               <div class="text-danger">{{ backendError }}</div>
               <div class="dual-logo">
                 <button
