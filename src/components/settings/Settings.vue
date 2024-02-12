@@ -57,7 +57,6 @@ watch(
   () => store.websiteId,
   async (newWebsiteId, oldWebsiteId) => {
     loadingForSettings.value = true;
-    // await fetchDashboardData();
     await getSiteDeatils();
     await openModalWithCategories();
     loadingForSettings.value = false;
@@ -127,7 +126,6 @@ const openModal = async (compType, oldComponentUniqueeId) => {
 };
 
 onMounted(async () => {
-  // await fetchDashboardData();
   allErrors.value = {};
   await getSiteDeatils();
   await openModalWithCategories();
@@ -172,7 +170,6 @@ const updateWebsiteSettings = handleSubmit(async () => {
       formData.value,
       customHeaders
     );
-    console.log(response, "pppppppppppp");
     if (response.status === 200 && response.data.success) {
       await fetchDashboardData();
       await getSiteDeatils();
@@ -277,7 +274,6 @@ const oncategoryChange = (event) => {
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <!-- <div v-if="siteSettingsDeatil"> -->
           <img
             v-if="siteSettingsDeatil?.agency_website_detail?.logo"
             :src="
@@ -287,7 +283,7 @@ const oncategoryChange = (event) => {
           <span v-else>{{
             siteSettingsDeatil?.agency_website_detail?.business_name
           }}</span>
-          <!-- </div> -->
+
           <button
             type="button"
             class="close"
@@ -300,50 +296,21 @@ const oncategoryChange = (event) => {
         <div class="modal-body">
           <div class="box-2">
             <div class="box-inner-2">
-              <!-- <div class="logoimg">
-                <div>
-                  <p class="fw-bold">Instance Access</p>
-                  <p class="text-wrapper">
-                    Complete your purchase by providing your payment details
-                  </p>
-                </div>
-                <div class="speedylogo">
-                  <img
-                    v-if="siteSettingsDeatil?.agency_website_detail?.logo"
-                    :src="
-                      config.CRM_API_URL +
-                      siteSettingsDeatil.agency_website_detail.logo
-                    "
-                  />
-                  <span v-else>{{
-                    siteSettingsDeatil?.agency_website_detail?.business_name
-                  }}</span>
-                </div>
-              </div> -->
               <form class="text-start mb-2 mt-3">
                 <label for="basic-url" class="form-label">Website URL</label>
                 <div class="form-field mb-4">
                   <div class="input-group mb-3">
-                    <!-- <input
-                      type="url"
-                      class="form-control"
-                      :placeholder="siteSettingsDeatil.website_domain"
-                      :aria-label="siteSettingsDeatil.website_domain"
-                      aria-describedby="button-addon2"
-                      :disabled="true"
-                    /> -->
-                    <div class="input-group mb-3">
-                      <a
-                        href="#"
-                        @click="
-                          openLinkInNewTab(siteSettingsDeatil.website_domain)
-                        "
-                        class="website-links"
-                      >
-                        {{ siteSettingsDeatil.website_domain }}
-                      </a>
-                    </div>
+                    <a
+                      href="#"
+                      @click="
+                        openLinkInNewTab(siteSettingsDeatil.website_domain)
+                      "
+                      class="website-links"
+                    >
+                      {{ siteSettingsDeatil.website_domain }}
+                    </a>
                   </div>
+
                   <button
                     class="btn btn-outline-success btn-success linkBtn"
                     type="button"
@@ -490,16 +457,10 @@ const oncategoryChange = (event) => {
                     @change="onFileChange"
                     id="logo"
                   />
-                  <!-- <i class="fa fa-upload"></i> -->
+
                   <div class="text-danger">{{ allErrors.logo }}</div>
                 </div>
 
-                <!-- <div class="col-sm-6 form-group">
-                  <label for="logo" class="form-label filupp">
-                    <span class="filupp-file-name js-value">Website Logo</span>
-                  </label>
-                  <div class="text-danger">{{ allErrors.logo }}</div>
-                </div> -->
                 <div class="col-sm-6 form-group">
                   <label for="zip" class="form-label">Phone*</label>
                   <input
@@ -511,7 +472,7 @@ const oncategoryChange = (event) => {
                   />
                   <div class="text-danger">{{ allErrors.phone }}</div>
                 </div>
-                <div class="col-sm-12 form-group">
+                <div class="col-sm-12 form-group mb-5">
                   <label for="" class="form-label">Description</label>
                   <textarea
                     class="form-control input"
@@ -524,31 +485,6 @@ const oncategoryChange = (event) => {
             </div>
           </section>
         </div>
-
-        <!-- <div class="modal-footer">
-          <div class="col-sm-6 form-group">
-            <button
-              type="submit"
-              class="btn btn-success mt-4"
-              @click="updateWebsiteSettings"
-              :disabled="isDisabled"
-            >
-              Submit
-              <AnimationLoader v-if="isDisabled" />
-            </button>
-          </div>
-          <div class="col-sm-6 form-group">
-            <button
-              type="button"
-              class="btn btn-success-1 mt-4"
-              @click="goToCutomize"
-              data-dismiss="modal"
-            >
-              Customize
-            </button>
-          </div>
-        </div> -->
-
         <div class="modal-footer">
           <div class="button-wrap">
             <button
@@ -572,206 +508,9 @@ const oncategoryChange = (event) => {
               <div class="three-body__dot1"></div>
             </div>
           </div>
-          <!-- <div class="button-wrap">
-            <button
-              class="custom-button"
-              type="button"
-              @click="goToCutomize"
-              data-dismiss="modal"
-            >
-              <span class="button-text">Customize</span>
-            </button>
-
-            <button
-              class="custom-button-fill"
-              @click="updateWebsiteSettings"
-              :disabled="isDisabled"
-            >
-              <span class="button-fill-text"
-                >Submit
-                <AnimationLoader v-if="isDisabled" />
-              </span>
-            </button>
-          </div> -->
         </div>
       </div>
     </div>
   </div>
-  <!-- <div class="page" id="dasboardPage">
-    <div class="page-main">
-      <div id="wrapper" :class="{ toggled: isSidebarToggled }">
-        <SideBar :dashboardData="dashboardData"></SideBar>
-        <NavBar
-          @logout="logout"
-          @nav-bar-toggle="navBarToggle"
-          :dashboardData="dashboardData?.user"
-        ></NavBar>
-        <div v-if="loadingForSettings">
-          <div class="spinner-container">
-            <div class="spinner-border text-warning" role="status">
-              <span class="visually-hidden">Loading...</span>
-            </div>
-          </div>
-        </div>
-        <section v-else id="content-wrapper main-content side-content">
-          <form
-            @submit.prevent="updateWebsiteSettings"
-            enctype="multipart/form-data"
-            class="settings-form"
-          >
-            <div
-              v-if="errorMessage"
-              class="error-message text-danger text-center"
-            >
-              {{ errorMessage }}
-            </div>
-            <div v-if="message" class="error-message text-success text-center">
-              {{ message }}
-            </div>
-            <div class="form-group">
-              <SelectBox
-                name="category_id"
-                inputClass="form-select"
-                ariaLabel="Select an option"
-                :options="categoryOptions"
-                defaultText="Open this select menu"
-                :defaultValue="
-                  siteSettingsDeatil?.agency_website_detail?.website_category_id
-                "
-                label="Website Category"
-              >
-              </SelectBox>
-              <VeeInput
-                name="business_name"
-                placeholder="Business Name"
-                class="form-control input"
-                :hiddenValue="
-                  siteSettingsDeatil?.agency_website_detail?.business_name
-                "
-                label="Business Name"
-              />
-              <VeeInput
-                name="address"
-                placeholder="Address"
-                class="form-control input"
-                label="Address"
-                :hiddenValue="
-                  siteSettingsDeatil?.agency_website_detail?.address
-                "
-              />
-              <img
-                v-if="siteSettingsDeatil?.agency_website_detail?.logo"
-                :src="
-                  config.CRM_API_URL +
-                  siteSettingsDeatil?.agency_website_detail?.logo
-                "
-                alt="Dynamic"
-                width="400"
-                class="mb-3 mt-3 d-flex"
-              />
-              <VeeInput
-                name="logo"
-                placeholder="Website Logo"
-                class="form-control input"
-                label="Website Logo"
-                type="file"
-              />
-              <VeeInput
-                name="description"
-                :textarea="true"
-                placeholder="Description..(optional)"
-                class="form-control input"
-                label="Description"
-                :hiddenValue="
-                  siteSettingsDeatil?.agency_website_detail?.description
-                "
-              />
-              <VeeInput
-                name="website_id"
-                type="hidden"
-                :hiddenValue="store.websiteId"
-              />
-              <button type="submit" class="btn btn-success mt-4">Submit</button>
-            </div>
-          </form>
-        </section>
-      </div>
-    </div>
-  </div> -->
 </template>
-<style>
-.image-container {
-  position: relative;
-  display: inline-block;
-  margin: 10px;
-}
 
-.button-container {
-  position: absolute;
-  bottom: 49px;
-  right: 488px;
-}
-
-/* .custom-button {
-  background-color: rgba(163, 48, 19, 0.2);
-  color: #000;
-  border: none;
-  padding: 10px 20px;
-  cursor: pointer; */
-
-/* Additional styles */
-
-/* 
-.custom-button:hover {
-  background-color: rgba(21, 62, 105, 0.2);
-  opacity: 1;
-} */
-
-.testimonial-container {
-  display: grid;
-  grid-template-columns: repeat(3, auto);
-  grid-column-gap: 15px;
-}
-
-.testimonial {
-  background-color: #f9f9f9;
-  border: 1px solid #ddd;
-  padding: 10px;
-  text-align: center;
-  /* width: 300px; */
-  margin: 10px 0px;
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
-}
-
-.testimonialImg {
-  width: 150px;
-  height: 120px;
-}
-
-p {
-  font-size: 16px;
-  line-height: 1.5;
-}
-.custom-modal-lg {
-  max-width: 50%;
-}
-
-.flagWiseImg {
-  width: 300px;
-  border: 2px solid green;
-  box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.5);
-}
-
-.settings-form {
-  margin: 40px;
-}
-.success-message {
-  background-color: #090a09; /* Green background color */
-  color: white; /* White text color */
-  padding: 5px; /* Smaller padding */
-  border-radius: 5px; /* Rounded corners */
-  margin-top: 10px; /* Margin at the top */
-  font-size: 12px; /* Smaller font size */
-  height: 28px;
-}
-</style>

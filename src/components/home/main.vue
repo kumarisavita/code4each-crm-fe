@@ -13,7 +13,7 @@ import { useForm } from "vee-validate";
 import { useAuth } from "@/service/useAuth";
 import { useRouter, useRoute } from "vue-router";
 import * as yup from "yup";
-import Loader from "@/components/common/Loader.vue";
+import config from "/config";
 
 const route = useRoute();
 const allErrors = ref({});
@@ -613,46 +613,181 @@ const navigate = () => {
                   <!-- ht-box-icon End -->
                 </div>
               </div>
+              <div
+                class="col-lg-4 col-md-6 wow move-up animated"
+                style="visibility: visible"
+              >
+                <div class="ht-box-icon style-02 single-svg-icon-box">
+                  <!-- ht-box-icon Start -->
+                  <div class="icon-box-wrap">
+                    <div class="icon">
+                      <i class="fa fa-shield" aria-hidden="true"></i>
+                    </div>
+                    <div class="content">
+                      <h5 class="heading">Business Reform</h5>
+                      <div class="text">
+                        We provide the most responsive and functional IT design
+                        for companies and businesses worldwide.
+                      </div>
+                    </div>
+                  </div>
+                  <!-- ht-box-icon End -->
+                </div>
+              </div>
+              <div
+                class="col-lg-4 col-md-6 wow move-up animated"
+                style="visibility: visible"
+              >
+                <div class="ht-box-icon style-02 single-svg-icon-box">
+                  <!-- ht-box-icon Start -->
+                  <div class="icon-box-wrap">
+                    <div class="icon">
+                      <i class="fa fa-shield" aria-hidden="true"></i>
+                    </div>
+                    <div class="content">
+                      <h5 class="heading">Infrastructure Plan</h5>
+                      <div class="text">
+                        We provide the most responsive and functional IT design
+                        for companies and businesses worldwide.
+                      </div>
+                    </div>
+                  </div>
+                  <!-- ht-box-icon End -->
+                </div>
+              </div>
+              <div
+                class="col-lg-4 col-md-6 wow move-up animated"
+                style="visibility: visible"
+              >
+                <div class="ht-box-icon style-02 single-svg-icon-box">
+                  <!-- ht-box-icon Start -->
+                  <div class="icon-box-wrap">
+                    <div class="icon">
+                      <i class="fa fa-shield" aria-hidden="true"></i>
+                    </div>
+                    <div class="content">
+                      <h5 class="heading">Firewall Advance</h5>
+                      <div class="text">
+                        We provide the most responsive and functional IT design
+                        for companies and businesses worldwide.
+                      </div>
+                    </div>
+                  </div>
+                  <!-- ht-box-icon End -->
+                </div>
+              </div>
             </div>
           </div>
         </div>
-        <div class="col-lg-12">
-          <div
-            class="feature-list-button-box mt-30 text-center"
-            id="button-hover"
-          >
-            <a
-              class="btn btn-lg button-trial rounded-pill hover-top"
-              @click="showModal('signup')"
-              >TRY FOR FREE
-              <span></span>
-              <span></span>
-              <span></span>
-              <span> </span>
-            </a>
-
-            <a
-              class="ht-btn ht-btn-md btn-try hover-top"
-              @click="showModal('feedback')"
-              style="curser: pointer"
-              >CONTACT US
-            </a>
-            <!-- <a
-              class="btn btn-lg button-trial rounded-pill hover-top"
-              @click="showModal('feedback')"
-              style="curser: pointer"
-              >CONTACT US NOW
-              <span></span>
-              <span></span>
-              <span></span>
-              <span></span>
-            </a> -->
+        <div class="col-lg-12 d-flex">
+          <div class="main-div">
+            <div
+              class="feature-list-button-box mt-30 text-center"
+              id="button-hover"
+            >
+              <a
+                class="btn btn-lg button-trial rounded-pill hover-top"
+                @click="showModal('signup')"
+                >TRY FOR FREE
+                <span></span>
+                <span></span>
+                <span></span>
+                <span> </span>
+              </a>
+            </div>
+            <div class="add-listing d-none d-sm-block">
+              <a
+                class="btn btn-lg button-trial rounded-pill hover-top"
+                @click="showModal('feedback')"
+                >Contact To Us
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+              </a>
+            </div>
           </div>
         </div>
       </div>
     </div>
   </div>
- 
+  <section class="sectione-Commerce1">
+    <div class="container">
+      <div class="row d-flex justify-content-center">
+        <div class="col-12">
+          <h4>E-Commerce Made Smart</h4>
+          <h2>New Evolution In Selling Online</h2>
+          <p>
+            With the power of a storefront, sales funnels, detailed analytics,
+            and full customization freedom.
+          </p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="ecommerce-row">
+          <div class="col-lg-6 col-md-6">
+            <div class="E-Commerce">
+              <img src="/images/datailedimg.png" />
+            </div>
+          </div>
+          <div class="col-lg-6 col-md-12">
+            <div class="E-Commerce-text">
+              <h3>Detailed Analytics</h3>
+              <p class="e-commercetext">
+                Know more about your sales, customers, and where your revenue is
+                coming from with detailed e-commerce analytics.
+              </p>
+
+              <div class="custom-1" id="button-hover">
+                <h5>Free Trial . No Credit Card Required</h5>
+
+                <a
+                  class="btn btn-lg button-trial rounded-pill hover-top"
+                  @click="showSignUpModal = true"
+                  >Try for free
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                  <span> </span>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="custom-checkouts-row">
+          <div class="col-lg-6 col-md-12">
+            <div class="custom-checkouts-text">
+              <h3>Custom Checkouts</h3>
+              <p class="customtext">
+                Have the freedom to shape and design the looks of your checkouts
+                to build trust and convert more of your visitors.
+              </p>
+              <div class="custom-2" id="button-hover">
+                <h5>Free Trial . No Credit Card Required</h5>
+
+                <a
+                  class="btn btn-lg button-trial rounded-pill hover-top"
+                  @click="showSignUpModal = true"
+                  >Try for free
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                  <span> </span>
+                </a>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-6 col-md-6">
+            <div class="E-Commerce1">
+              <img src="/images/datailedimg1.png" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
   <section class="email-custom">
     <div class="container-fluid grid-row">
       <div class="grid-customsection">
@@ -738,7 +873,7 @@ const navigate = () => {
             <!-- <div class="footer-copyright-text small-device-none">© <a  class="company-link">Brandbes.</a> All Rights Reserved - Privacy Policy </div> -->
           </div>
         </div>
-        <!----<div class="footer-single-block">
+        <!-- <div class="footer-single-block">
           <div class="footer-title-block">
             <h3 class="footer-heading">
               Address <span class="color-shape"></span>
@@ -765,7 +900,7 @@ const navigate = () => {
               </div>
             </div>
           </div>
-        </div>-->
+        </div> -->
         <div class="footer-single-block address-block">
           <div class="footer-title-block">
             <h3 class="footer-heading">
@@ -774,32 +909,34 @@ const navigate = () => {
           </div>
 
           <div class="footer-social-network-block">
-            <a target="_blank" class="social-single-link w-inline-block">
+            <a
+              target="_blank"
+              :href="config.FACEBOOK_URL"
+              class="social-single-link w-inline-block"
+            >
               <i class="fa fa-facebook-f"></i>
             </a>
-            <a target="_blank" class="social-single-link w-inline-block">
-              <i class="fa fa-whatsapp"></i>
-            </a>
-            <a target="_blank" class="social-single-link w-inline-block">
-              <i class="fa fa-linkedin"></i>
-            </a>
-          </div>
-          <div class="footer-social-network-block">
-            <a target="_blank" class="social-single-link w-inline-block">
+            <a
+              :href="config.INSTAGRAM_URL"
+              target="_blank"
+              class="social-single-link w-inline-block"
+            >
               <i class="fa fa-instagram"></i>
             </a>
-            <a target="_blank" class="social-single-link w-inline-block">
-              <i class="fa fa-twitter"></i>
-            </a>
-            <a target="_blank" class="social-single-link w-inline-block">
-              <i class="fa fa-envelope"></i>
+            <a
+              :href="config.YOUTUBE_URL"
+              target="_blank"
+              class="social-single-link w-inline-block"
+            >
+              <i class="fa fa-youtube-play"></i>
             </a>
           </div>
+          <div class="footer-social-network-block"></div>
         </div>
       </div>
       <div class="footer-bottom">
         <div class="footer-bottom-text">
-          SpeedySites.<a> All Rights Reserved - Privacy Policy </a>
+          Speedysites.<a> All Rights Reserved - Privacy Policy </a>
         </div>
       </div>
     </div>
@@ -890,7 +1027,6 @@ const navigate = () => {
                 />
                 <div class="text-danger">{{ allErrors.password }}</div>
               </div>
-              
               <div class="text-danger">{{ backendError }}</div>
               <div class="form-group mt-3">
                 <div class="form-check">

@@ -318,7 +318,7 @@ button.active-btn.btn-primary i{
     border: 0.25rem solid #204969;
     border-radius: 0.75rem;
     color: rgba(255, 255, 255, .9);
-    font-family: Bitter;
+ 
     line-height: 1;
     margin: auto;
     padding: 12px 30px;
@@ -425,7 +425,7 @@ button.active-btn.btn-primary i{
         border: 3px solid #204969;
         border-radius: 0.75rem;
         color: rgba(255, 255, 255, .9);
-        font-family: Bitter;
+     
         line-height: 1;
         margin: auto;
         padding: 7px 20px;
@@ -497,7 +497,7 @@ button.active-btn.btn-primary i{
         border: 0;
         background-color: #294b6c;
         color: #fff;
-        font-family: Bitter;
+     
         line-height: 1;
         margin: auto;
         padding: 9px 20px;
