@@ -386,7 +386,7 @@ const navigate = () => {
           <div class="col-md-6 col-lg-6 text-center text-md-start">
             <span
               class="badge bg-light rounded-pill text-dark align-items-center d-flex flex-row-reverse justify-content-end mx-auto mx-md-0 ps-0 w-75 w-sm-50 w-md-75 w-xl-50 mb-3"
-              >#1 Editiors Choice App of 2020<img
+              >Average website creation time on SpeedySites is 5 SEC<img
                 class="img-fluid float-start me-3"
                 src="/images/arrow-right.png"
                 alt=""
@@ -399,9 +399,9 @@ const navigate = () => {
               >
             </h1>
             <p class="mt-3 mb-4">
-              Create your website with no designers, no coders, no expenses! 
+              Create your website with no coding skills and no designing expertise! 
               <br class="d-none d-lg-block" />
-              SpeedySites will design a completely unique website that you can start editing right away.
+              SpeedySites will design a completely unique website that you can start using right away.
              
             </p>
             <div class="buttons-design">
@@ -463,15 +463,7 @@ const navigate = () => {
           </div>
           <div class="col-lg-7 col-md-6">
             <div class="about-img">
-              <video
-                class="simple-video"
-                poster="#"
-                playsinline=""
-                autoplay="autoplay"
-                loop="loop"
-                muted="muted"
-                style="opacity: 1"
-              ></video>
+              <img src="/images/datailedimg1.png" />
             </div>
           </div>
         </div>
@@ -575,9 +567,9 @@ const navigate = () => {
                       <i class="fa fa-heart-o"></i>
                     </div>
                     <div class="content">
-                      <h5 class="heading">Custom Templates</h5>
+                      <h5 class="heading">Templates Library</h5>
                       <div class="text">
-                        Enjoy unlimited freedom to design numerous templates for websites, pages, blocks, pop-ups, and emails to suit your needs.
+                        Pre defined website templates to choose from matching your business needs.
                       </div>
                     </div>
                   </div>
@@ -621,66 +613,6 @@ const navigate = () => {
                   <!-- ht-box-icon End -->
                 </div>
               </div>
-              <div
-                class="col-lg-4 col-md-6 wow move-up animated"
-                style="visibility: visible"
-              >
-                <div class="ht-box-icon style-02 single-svg-icon-box">
-                  <!-- ht-box-icon Start -->
-                  <div class="icon-box-wrap">
-                    <div class="icon">
-                      <i class="fa fa-shield" aria-hidden="true"></i>
-                    </div>
-                    <div class="content">
-                      <h5 class="heading">Fully DIY Platform</h5>
-                      <div class="text">
-                        Let your customers do it all: register -> choose business type -> create & customize without your assistance.
-                      </div>
-                    </div>
-                  </div>
-                  <!-- ht-box-icon End -->
-                </div>
-              </div>
-              <div
-                class="col-lg-4 col-md-6 wow move-up animated"
-                style="visibility: visible"
-              >
-                <div class="ht-box-icon style-02 single-svg-icon-box">
-                  <!-- ht-box-icon Start -->
-                  <div class="icon-box-wrap">
-                    <div class="icon">
-                      <i class="fa fa-shield" aria-hidden="true"></i>
-                    </div>
-                    <div class="content">
-                      <h5 class="heading">Manage All Customers From One Place</h5>
-                      <div class="text">
-                        Simplify customer organization within projects while controlling access levels for team members effortlessly.
-                      </div>
-                    </div>
-                  </div>
-                  <!-- ht-box-icon End -->
-                </div>
-              </div>
-              <div
-                class="col-lg-4 col-md-6 wow move-up animated"
-                style="visibility: visible"
-              >
-                <div class="ht-box-icon style-02 single-svg-icon-box">
-                  <!-- ht-box-icon Start -->
-                  <div class="icon-box-wrap">
-                    <div class="icon">
-                      <i class="fa fa-shield" aria-hidden="true"></i>
-                    </div>
-                    <div class="content">
-                      <h5 class="heading">True All-In-One Platform</h5>
-                      <div class="text">
-                        The only platform that combines Websites + CRM + Email Marketing + Appointments in one solution.
-                      </div>
-                    </div>
-                  </div>
-                  <!-- ht-box-icon End -->
-                </div>
-              </div>
             </div>
           </div>
         </div>
@@ -703,7 +635,7 @@ const navigate = () => {
               class="ht-btn ht-btn-md btn-try hover-top"
               @click="showModal('feedback')"
               style="curser: pointer"
-              >CONTACT US NOW
+              >CONTACT US
             </a>
             <!-- <a
               class="btn btn-lg button-trial rounded-pill hover-top"
@@ -720,81 +652,7 @@ const navigate = () => {
       </div>
     </div>
   </div>
-  <section class="sectione-Commerce1">
-    <div class="container">
-      <div class="row d-flex justify-content-center">
-        <div class="col-12">
-          <h4>E-Commerce Made Smart</h4>
-          <h2>New Evolution In Selling Online</h2>
-          <p>
-            With the power of a storefront, sales funnels, detailed analytics,
-            and full customization freedom.
-          </p>
-        </div>
-      </div>
-      <div class="row">
-        <div class="ecommerce-row">
-          <div class="col-lg-6 col-md-6">
-            <div class="E-Commerce">
-              <img src="/images/datailedimg.png" />
-            </div>
-          </div>
-          <div class="col-lg-6 col-md-12">
-            <div class="E-Commerce-text">
-              <h3>Detailed Analytics</h3>
-              <p class="e-commercetext">
-                Know more about your sales, customers, and where your revenue is
-                coming from with detailed e-commerce analytics.
-              </p>
-
-              <div class="custom-1" id="button-hover">
-                <a
-                  class="btn btn-lg button-trial rounded-pill hover-top"
-                  @click="showSignUpModal = true"
-                  >Try for free
-                  <span></span>
-                  <span></span>
-                  <span></span>
-                  <span> </span>
-                </a>
-                <h5>Free Trial. No Credit Card Required</h5>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="custom-checkouts-row">
-          <div class="col-lg-6 col-md-12">
-            <div class="custom-checkouts-text">
-              <h3>Custom Checkouts</h3>
-              <p class="customtext">
-                Have the freedom to shape and design the looks of your checkouts
-                to build trust and convert more of your visitors.
-              </p>
-              <div class="custom-2" id="button-hover">
-                <a
-                  class="btn btn-lg button-trial rounded-pill hover-top"
-                  @click="showSignUpModal = true"
-                  >Try for free
-                  <span></span>
-                  <span></span>
-                  <span></span>
-                  <span> </span>
-                </a>
-                <h5>Free Trial. No Credit Card Required</h5>
-              </div>
-            </div>
-          </div>
-          <div class="col-lg-6 col-md-6">
-            <div class="E-Commerce1">
-              <img src="/images/datailedimg1.png" />
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
+ 
   <section class="email-custom">
     <div class="container-fluid grid-row">
       <div class="grid-customsection">
@@ -875,7 +733,7 @@ const navigate = () => {
           </div>
           <div class="footer-content">
             <p class="footer-details">
-              Get your business online quickly with Speedy Sites.
+              Instant Websites, Zero Coding, Maximum Impact!
             </p>
             <!-- <div class="footer-copyright-text small-device-none">© <a  class="company-link">Brandbes.</a> All Rights Reserved - Privacy Policy </div> -->
           </div>
@@ -911,7 +769,7 @@ const navigate = () => {
         <div class="footer-single-block address-block">
           <div class="footer-title-block">
             <h3 class="footer-heading">
-              Soical links <span class="color-shape"></span>
+              Social links <span class="color-shape"></span>
             </h3>
           </div>
 
