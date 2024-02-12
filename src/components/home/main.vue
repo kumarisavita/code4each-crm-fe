@@ -36,27 +36,40 @@ const backendError = ref("");
 const isForgetAction = ref(false);
 const ModalShowing = ref(false);
 const showSuccessMeassge = ref(false);
-
-const toggleSignLogin = (sign = false) => {
-  backendError.value = "";
-  if (sign) {
-    loginModalShow.value = false;
-    showSignUpModal.value = true;
-  } else {
-    loginModalShow.value = true;
-    showSignUpModal.value = false;
-  }
-};
+const feedBackvalues = ref({});
+const feedbackModalShow = ref(false);
+const feedbackMsg = ref(false);
+const feedBackloading = ref(false);
+const loginExist = ref(false);
+const allErrorsFeedback = ref({});
 
 const showModal = (modal) => {
   ModalShowing.value = true;
   backendError.value = "";
   if (modal === "forget") {
-    loginModalShow.value = showSignUpModal.value = false;
+    loginModalShow.value =
+      showSignUpModal.value =
+      feedbackModalShow.value =
+        false;
     forgetModalShow.value = true;
   } else if (modal === "login") {
     loginModalShow.value = true;
-    forgetModalShow.value = showSignUpModal.value = false;
+    forgetModalShow.value =
+      showSignUpModal.value =
+      feedbackModalShow.value =
+        false;
+  } else if (modal === "feedback") {
+    feedbackModalShow.value = true;
+    forgetModalShow.value =
+      showSignUpModal.value =
+      loginModalShow.value =
+        false;
+  } else if (modal === "signup") {
+    showSignUpModal.value = true;
+    forgetModalShow.value =
+      feedbackModalShow.value =
+      loginModalShow.value =
+        false;
   }
 };
 
@@ -179,13 +192,18 @@ const login = handleSubmit(async () => {
 
 const hideModal = () => {
   ModalShowing.value = false;
-  allErrors.value = {};
-  allErrorsLogin.value = {};
+  feedbackModalShow.value = false;
   forgetModalShow.value = false;
   loginModalShow.value = false;
   showSignUpModal.value = false;
+  allErrors.value = {};
+  allErrorsLogin.value = {};
+  allErrorsResset.value = {};
+  allErrorsFeedback.value = {};
   formData.value = {};
   formDataLogin.value = {};
+  feedBackvalues.value = {};
+  formDataForget.value = {};
 };
 
 const googleSignUp = async (response) => {
@@ -205,6 +223,10 @@ const googleSignUp = async (response) => {
 };
 
 onMounted(async () => {
+  const storedToken = localStorage.getItem("access_token");
+  if (storedToken) {
+    loginExist.value = storedToken;
+  }
   if (route.query.login) {
     loginModalShow.value = true;
   }
@@ -233,6 +255,7 @@ const sendMailToVerifyEmail = handleSubmit(async () => {
 
       setTimeout(() => {
         showSuccessMeassge.value = false;
+        hideModal();
       }, 5000);
     }
   } catch (error) {
@@ -252,6 +275,58 @@ const sendMailToVerifyEmail = handleSubmit(async () => {
   loading.value = false;
   isForgetAction.value = false;
 });
+
+const validationSchemaFeedBack = yup.object({
+  message: yup.string().required("Message is a required field"),
+  name: yup.string().required("Name is a required field"),
+  email: yup
+    .string()
+    .email("Invalid email format")
+    .required("Email is a required field"),
+  phone: yup
+    .string()
+    .required("Phone Number is a required field")
+    .matches(/^\d{10}$/, "Enter a valid 10-digit phone number"),
+});
+
+const submitFeedback = handleSubmit(async () => {
+  try {
+    feedBackloading.value = true;
+    let formValues = feedBackvalues.value;
+    await validationSchemaFeedBack.validate(feedBackvalues.value, {
+      abortEarly: false,
+    });
+    const formData = new FormData();
+    formData.append("type", "inquiry");
+    formData.append("title", "this is home page contact mail");
+    formData.append("email", formValues.email);
+    formData.append("phone", formValues.phone);
+    formData.append("name", formValues.name);
+    formData.append("message", formValues.message);
+    const response = await WordpressService.FeedBack.submitFeedback(formData);
+    if (response.status === 200 && response.data.success) {
+      allErrorsFeedback.value = {};
+      feedBackvalues.value = {};
+      feedbackMsg.value = true;
+      setTimeout(() => {
+        feedbackMsg.value = false;
+        hideModal();
+      }, 5000);
+    }
+  } catch (validationErrors) {
+    const errors = validationErrors.inner.reduce((acc, error) => {
+      acc[error.path] = error.message;
+      return acc;
+    }, {});
+
+    allErrorsFeedback.value = errors;
+  }
+  feedBackloading.value = false;
+});
+
+const navigate = () => {
+  router.push("/dashboard");
+};
 </script>
 <template>
   <header class="header-section">
@@ -267,13 +342,19 @@ const sendMailToVerifyEmail = handleSubmit(async () => {
         >
           <i class="fa fa-align-left"></i>
         </button>
-        <a class="navbar-brand-logo" href="/">
+        <a class="navbar-brand-logo">
           <img class="img-fluid" src="/images/speedylogo.png" alt="logo" />
         </a>
         <div class="add-listing d-none d-sm-block">
-          <a class="btn btn-primary btn-md" @click="loginModalShow = true"
-            ><i class="fa fa-plus-circle"></i> Login to dashboard
+          <a
+            v-if="!loginExist"
+            class="btn btn-primary btn-md"
+            @click="showModal('login')"
+            ><i class="fa fa-plus-circle"></i> LOGIN / SIGNUP
           </a>
+          <a v-else class="btn btn-primary btn-md" @click="navigate"
+            >DASHBOARD</a
+          >
         </div>
       </div>
     </nav>
@@ -457,6 +538,10 @@ const sendMailToVerifyEmail = handleSubmit(async () => {
                   class="btn btn-lg button-trial rounded-pill hover-top"
                   @click="showSignUpModal = true"
                   >Try for free
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                  <span> </span>
                 </a>
               </div>
             </div>
@@ -618,14 +703,19 @@ const sendMailToVerifyEmail = handleSubmit(async () => {
           >
             <a
               class="btn btn-lg button-trial rounded-pill hover-top"
-              href="#"
-              data-bs-toggle="modal"
-              data-bs-target="#exampleModal"
-              >Talk to a consultant
+              @click="showModal('signup')"
+              >TRY FOR FREE
+              <span></span>
+              <span></span>
+              <span></span>
+              <span> </span>
             </a>
 
-            <a href="#" class="ht-btn ht-btn-md btn-try hover-top"
-              >Contact us now
+            <a
+              class="ht-btn ht-btn-md btn-try hover-top"
+              @click="showModal('feedback')"
+              style="curser: pointer"
+              >CONTACT US NOW
             </a>
           </div>
         </div>
@@ -666,6 +756,10 @@ const sendMailToVerifyEmail = handleSubmit(async () => {
                   class="btn btn-lg button-trial rounded-pill hover-top"
                   @click="showSignUpModal = true"
                   >Try for free
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                  <span> </span>
                 </a>
               </div>
             </div>
@@ -688,6 +782,10 @@ const sendMailToVerifyEmail = handleSubmit(async () => {
                   class="btn btn-lg button-trial rounded-pill hover-top"
                   @click="showSignUpModal = true"
                   >Try for free
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                  <span> </span>
                 </a>
               </div>
             </div>
@@ -736,6 +834,10 @@ const sendMailToVerifyEmail = handleSubmit(async () => {
                   class="btn btn-lg button-trial rounded-pill hover-top"
                   @click="showSignUpModal = true"
                   >Try for free
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                  <span> </span>
                 </a>
               </div>
             </div>
@@ -744,68 +846,32 @@ const sendMailToVerifyEmail = handleSubmit(async () => {
       </div>
     </div>
   </section>
+
   <div class="footer-section">
     <div class="container w-container">
       <div class="subscription-wrapper">
         <div class="subscription-text-side">
-          <h3 class="subscription-heading">Are you a Home Owner?</h3>
-          <p class="subscription-details-text">
-            Put your email address and get listed.
-          </p>
+          <h3 class="subscription-heading">
+            Questions? Feedback? Contact us for prompt assistance and support
+          </h3>
         </div>
         <div class="subscription-form-side">
-          <div class="subscription-form-block w-form">
-            <form
-              id="wf-form-Subscription"
-              name="wf-form-Subscription"
-              data-name="Subscription"
-              method="get"
-              class="subscription-form"
-              data-wf-page-id="6224513e7396e87469269d7c"
-              data-wf-element-id="98cbcd15-ebec-acd4-d0c3-f43ba56fbf96"
-              aria-label="Subscription"
-            >
-              <input
-                type="email"
-                class="email-field w-input"
-                maxlength="256"
-                name="Email"
-                data-name="Email"
-                placeholder="Enter your email here..."
-                id="Email-3"
-                required=""
-              />
-              <input
-                type="submit"
-                value="Get Listed"
-                data-wait="Please wait..."
-                class="button submit-button w-button"
-              />
-            </form>
-            <div
-              class="w-form-done"
-              tabindex="-1"
-              role="region"
-              aria-label="Subscription success"
-            >
-              <div>Thank you! Your submission has been received!</div>
-            </div>
-            <div
-              class="w-form-fail"
-              tabindex="-1"
-              role="region"
-              aria-label="Subscription failure"
-            >
-              <div>Oops! Something went wrong while submitting the form.</div>
-            </div>
-          </div>
+          <a
+            class="btn btn-lg button-trial rounded-pill hover-top"
+            @click="showModal('feedback')"
+            >Contact Us
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+          </a>
         </div>
       </div>
       <div class="footer-wrapper">
         <div class="footer-single-block footer-logo-blojg">
           <div class="footer-logo-block">
             <img
-              src="/images/speedylogo.png"
+              src="images/speedylogo.png"
               loading="lazy"
               alt="Footer Logo Image"
               class="footer-logo-image"
@@ -816,6 +882,7 @@ const sendMailToVerifyEmail = handleSubmit(async () => {
               Properties are most budget friendly so you have are find
               opportunity is main responsibility to clients
             </p>
+            <!-- <div class="footer-copyright-text small-device-none">© <a  class="company-link">Brandbes.</a> All Rights Reserved - Privacy Policy </div> -->
           </div>
         </div>
         <div class="footer-single-block">
@@ -841,7 +908,7 @@ const sendMailToVerifyEmail = handleSubmit(async () => {
               </div>
               <div>
                 <i class="fa fa-envelope"></i>
-                <p><a href="#">hr@code4each.com</a></p>
+                <p><a>hr@code4each.com</a></p>
               </div>
             </div>
           </div>
@@ -854,48 +921,24 @@ const sendMailToVerifyEmail = handleSubmit(async () => {
           </div>
 
           <div class="footer-social-network-block">
-            <a
-              href="#"
-              target="_blank"
-              class="social-single-link w-inline-block"
-            >
+            <a target="_blank" class="social-single-link w-inline-block">
               <i class="fa fa-facebook-f"></i>
             </a>
-            <a
-              href="#"
-              target="_blank"
-              class="social-single-link w-inline-block"
-            >
+            <a target="_blank" class="social-single-link w-inline-block">
               <i class="fa fa-whatsapp"></i>
             </a>
-            <a
-              href="#"
-              target="_blank"
-              class="social-single-link w-inline-block"
-            >
+            <a target="_blank" class="social-single-link w-inline-block">
               <i class="fa fa-linkedin"></i>
             </a>
           </div>
           <div class="footer-social-network-block">
-            <a
-              href="#"
-              target="_blank"
-              class="social-single-link w-inline-block"
-            >
+            <a target="_blank" class="social-single-link w-inline-block">
               <i class="fa fa-instagram"></i>
             </a>
-            <a
-              href="#"
-              target="_blank"
-              class="social-single-link w-inline-block"
-            >
+            <a target="_blank" class="social-single-link w-inline-block">
               <i class="fa fa-twitter"></i>
             </a>
-            <a
-              href="#"
-              target="_blank"
-              class="social-single-link w-inline-block"
-            >
+            <a target="_blank" class="social-single-link w-inline-block">
               <i class="fa fa-envelope"></i>
             </a>
           </div>
@@ -903,7 +946,7 @@ const sendMailToVerifyEmail = handleSubmit(async () => {
       </div>
       <div class="footer-bottom">
         <div class="footer-bottom-text">
-          SpeedySites.<a> All Rights Reserved - Privacy Policy </a>
+          Code4Each.<a> All Rights Reserved - Privacy Policy </a>
         </div>
       </div>
     </div>
@@ -1058,7 +1101,7 @@ const sendMailToVerifyEmail = handleSubmit(async () => {
               <h3>Already have an account?</h3>
               <button
                 type="button"
-                @click="toggleSignLogin()"
+                @click="showModal('login')"
                 class="btn btn-primary"
               >
                 Login
@@ -1070,8 +1113,6 @@ const sendMailToVerifyEmail = handleSubmit(async () => {
       </div>
     </div>
   </div>
-  <div v-if="showSignUpModal" class="modal-backdrop fade show"></div>
-  <div v-if="loginModalShow" class="modal-backdrop fade show"></div>
   <div v-if="ModalShowing" class="modal-backdrop fade show"></div>
   <div
     class="modal fade"
@@ -1178,7 +1219,7 @@ const sendMailToVerifyEmail = handleSubmit(async () => {
               <button
                 type="button"
                 class="btn btn-primary"
-                @click="toggleSignLogin(true)"
+                @click="showModal('signup')"
               >
                 Sign Up
               </button>
@@ -1226,12 +1267,21 @@ const sendMailToVerifyEmail = handleSubmit(async () => {
                     aria-describedby="emailHelp"
                     v-model="formDataForget.email"
                   />
-                  <div class="text-danger">{{ allErrorsForget.email }}</div>
                 </div>
+                <div class="text-danger">{{ allErrorsForget.email }}</div>
                 <div class="text-danger">{{ backendError }}</div>
-                <span class="succmsg" v-if="showSuccessMeassge">
+                <div
+                  v-if="showSuccessMeassge"
+                  class="mt-3"
+                  style="
+                    background-color: #dff0d8;
+                    color: #3c763d;
+                    padding: 10px;
+                    border: 1px solid #d6e9c6;
+                  "
+                >
                   Please check your inbox and verify your email!
-                </span>
+                </div>
               </div>
 
               <div class="dual-logo">
@@ -1288,6 +1338,114 @@ const sendMailToVerifyEmail = handleSubmit(async () => {
               >
                 Login
               </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div
+    class="modal feedback-model fade"
+    id="modalContactForm"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="myModalLabel"
+    aria-hidden="true"
+    :class="{ show: feedbackModalShow, 'd-block': feedbackModalShow }"
+  >
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header" style="border: 0">
+          <button
+            type="button"
+            class="btn-close"
+            @click="hideModal"
+            aria-hidden="true"
+          ></button>
+        </div>
+        <div class="modal-body mx-3">
+          <div class="card-layout layout-medium">
+            <div class="content">
+              <div class="close-button"></div>
+
+              <h1 class="title">Contact Us</h1>
+              <label data-error="wrong" data-success="right" for="form34"
+                >Name*</label
+              >
+              <input
+                type="text"
+                class="form-control"
+                id="field1"
+                placeholder="title"
+                v-model="feedBackvalues.name"
+              />
+              <div class="text-danger">{{ allErrorsFeedback.name }}</div>
+              <label data-error="wrong" data-success="right" for="form34"
+                >Email*</label
+              >
+              <input
+                type="text"
+                class="form-control"
+                id="field1"
+                placeholder="title"
+                v-model="feedBackvalues.email"
+              />
+              <div class="text-danger">{{ allErrorsFeedback.email }}</div>
+              <label data-error="wrong" data-success="right" for="form34"
+                >Phone*</label
+              >
+              <input
+                type="text"
+                class="form-control"
+                id="field1"
+                placeholder="title"
+                v-model="feedBackvalues.phone"
+              />
+              <div class="text-danger">{{ allErrorsFeedback.phone }}</div>
+              <label data-error="wrong" data-success="right" for="form34"
+                >Message*</label
+              >
+
+              <textarea
+                class="form-control input"
+                placeholder="Write Your Message.."
+                rows="5"
+                v-model="feedBackvalues.message"
+              ></textarea>
+              <div class="text-danger">{{ allErrorsFeedback.message }}</div>
+              <div
+                v-if="feedbackMsg"
+                class="mt-3"
+                style="
+                  background-color: #dff0d8;
+                  color: #3c763d;
+                  padding: 10px;
+                  border: 1px solid #d6e9c6;
+                "
+              >
+                Thank you for reaching out! Your message has been successfully
+                submitted. We'll get back to you as soon as possible.
+              </div>
+              <div class="user-actions">
+                <div v-if="feedBackloading" class="three-body3">
+                  <div class="three-body__dot1"></div>
+                  <div class="three-body__dot1"></div>
+                  <div class="three-body__dot1"></div>
+                </div>
+                <button class="feedback-btn-primary" @click="submitFeedback">
+                  Send
+                </button>
+
+                <button
+                  class="feedback-btn-outline"
+                  data-dismiss="modal"
+                  aria-hidden="true"
+                  @click="hideModal"
+                >
+                  Cancel
+                </button>
+              </div>
             </div>
           </div>
         </div>
