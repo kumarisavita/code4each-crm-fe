@@ -348,13 +348,24 @@ const navigate = () => {
         <div class="add-listing d-none d-sm-block">
           <a
             v-if="!loginExist"
-            class="btn btn-primary btn-md"
+            class="btn btn-lg button-trial rounded-pill hover-top"
             @click="showModal('login')"
-            ><i class="fa fa-plus-circle"></i> LOGIN / SIGNUP
+            >LOGIN / SIGNUP
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
           </a>
-          <a v-else class="btn btn-primary btn-md" @click="navigate"
-            >DASHBOARD</a
-          >
+          <a
+            v-else
+            class="btn btn-lg button-trial rounded-pill hover-top"
+            @click="navigate"
+            >DASHBOARD
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+          </a>
         </div>
       </div>
     </nav>
@@ -716,6 +727,16 @@ const navigate = () => {
               style="curser: pointer"
               >CONTACT US NOW
             </a>
+            <!-- <a
+              class="btn btn-lg button-trial rounded-pill hover-top"
+              @click="showModal('feedback')"
+              style="curser: pointer"
+              >CONTACT US NOW
+              <span></span>
+              <span></span>
+              <span></span>
+              <span></span>
+            </a> -->
           </div>
         </div>
       </div>
@@ -870,7 +891,7 @@ const navigate = () => {
         <div class="footer-single-block footer-logo-blojg">
           <div class="footer-logo-block">
             <img
-              src="images/speedylogo.png"
+              src="/images/speedylogo.png"
               loading="lazy"
               alt="Footer Logo Image"
               class="footer-logo-image"
@@ -1365,7 +1386,7 @@ const navigate = () => {
                 type="text"
                 class="form-control"
                 id="field1"
-                placeholder="title"
+                placeholder="Name"
                 v-model="feedBackvalues.name"
               />
               <div class="text-danger">{{ allErrorsFeedback.name }}</div>
@@ -1376,7 +1397,7 @@ const navigate = () => {
                 type="text"
                 class="form-control"
                 id="field1"
-                placeholder="title"
+                placeholder="Email"
                 v-model="feedBackvalues.email"
               />
               <div class="text-danger">{{ allErrorsFeedback.email }}</div>
@@ -1387,7 +1408,7 @@ const navigate = () => {
                 type="text"
                 class="form-control"
                 id="field1"
-                placeholder="title"
+                placeholder="Phone"
                 v-model="feedBackvalues.phone"
               />
               <div class="text-danger">{{ allErrorsFeedback.phone }}</div>

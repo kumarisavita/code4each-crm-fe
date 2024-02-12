@@ -24008,7 +24008,7 @@ button.btn.btn-primary.prev-step:hover {
     text-align: center;
     margin-bottom: 30px;
     font-size: 35px;
-    font-family: ui-sans-serif
+    /* font-family: ui-sans-serif */
 }
 
 .notsee-map h2.nUCQf {
@@ -24226,7 +24226,7 @@ a.skip-btn {
     font-weight: 700;
     font-size: 32px;
     color: #1d2b64;
-    font-family: ui-sans-serif;
+    /* font-family: ui-sans-serif; */
     z-index: 2;
     position: relative
 }
@@ -25774,7 +25774,7 @@ div#main {
 }
 
 body {
-    font-family: ui-sans-serif
+    /* font-family: ui-sans-serif */
 }
 
 .header-section {
@@ -25895,7 +25895,7 @@ li.nav-item a.nav-link.active {
     align-self: center;
     -webkit-box-flex: 0;
     -ms-flex: 0 0 160px;
-    flex: 0 0 160px;
+    flex: -6 0 160px;
     text-align: right
 }
 
@@ -25908,7 +25908,7 @@ li.nav-item a.nav-link.active {
     border-color: var(--c4e-primaryColor-2)
 }
 
-a.btn.btn-primary.btn-md {
+/* a.btn.btn-primary.btn-md {
     font-size: 15px;
     font-weight: 500;
     border-radius: 3px;
@@ -25919,7 +25919,7 @@ a.btn.btn-primary.btn-md {
     gap: 8px;
     align-items: center;
     color: #fff
-}
+} */
 
 .navbar-toggler:focus {
     -webkit-box-shadow: none;
@@ -26103,16 +26103,6 @@ section.about-section p {
     padding: 3px 0
 }
 
-a.button-trial.btn-md {
-    border: 2px solid #1d2b64;
-    padding: 10px 40px;
-    font-size: 18px;
-    font-weight: 700;
-    color: #fff;
-    text-decoration: none;
-    background: #1d2b64;
-    border-radius: 5px
-}
 
 .textarea1 h3 {
     display: flex;
@@ -28114,7 +28104,7 @@ a.text-body {
 }
 
 .custom-button:hover {
-    background-color: #153e6933;
+    /* background-color: #153e6933; */
     opacity: 1
 }
 
@@ -28242,7 +28232,7 @@ p {
 }
 
 body {
-    font-family: ui-sans-serif;
+    /* font-family: ui-sans-serif; */
     background-color: #d3d3d3
 }
 
@@ -28381,7 +28371,7 @@ label.label-agree-term {
 
 .form-group:last-child {
     margin-bottom: 0;
-    float: right
+
 }
 
 .resetin-form #signin {
@@ -28565,5 +28555,118 @@ p.error-msg {
 }
 
 .subscription-form-side .btn span:nth-child(4) {
+    --n: 4
+}
+
+
+/* ---------------dasktop button ---------------- */
+
+
+@keyframes spin78236 {
+    0% {
+        transform: rotate(0)
+    }
+
+    to {
+        transform: rotate(360deg)
+    }
+}
+
+@keyframes wobble1 {
+
+    0%,
+    to {
+        transform: translateY(0) scale(1);
+        opacity: 1
+    }
+
+    50% {
+        transform: translateY(-66%) scale(.65);
+        opacity: .8
+    }
+}
+
+@keyframes wobble2 {
+
+    0%,
+    to {
+        transform: translateY(0) scale(1);
+        opacity: 1
+    }
+
+    50% {
+        transform: translateY(66%) scale(.65);
+        opacity: .8
+    }
+}
+
+.add-listing .btn {
+    --c: #1d2b64;
+    color: #fff;
+    background-color: #1d2b64;
+    font-size: 16px;
+    border: .2em solid #1d2b64;
+    border-radius: .5em;
+    padding: 10px 10px 8px;
+    /* text-transform: uppercase; */
+    font-weight: 700;
+    /* letter-spacing: 0.1em; */
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+    /* transition: .5s; */
+    margin: 0;
+    border-radius: 5px !important;
+    /* transition: .5s ease all; */
+    transition: 0.3s;
+}
+
+
+.add-listing .hover-top {
+    -webkit-transform: translateY(0) translateZ(0);
+    transform: translateY(0) translateZ(0);
+    -webkit-transition: all .5s ease;
+    -o-transition: all .5s ease;
+    transition: all .5s ease;
+}
+
+.add-listing .btn span {
+    position: absolute;
+    width: 25%;
+    height: 100%;
+
+    background: #fff;
+    border: 2px solid #fff !important;
+    transform: translateY(150%);
+    border-radius: 50%;
+    left: calc((var(--n) - 1) * 25%);
+    transition: .5s;
+    transition-delay: calc((var(--n) - 1) * .1s);
+    z-index: -1
+}
+
+.add-listing .btn:hover {
+    color: #1d2b64;
+
+}
+
+.add-listing .btn:hover span {
+    transform: translateY(0) scale(2)
+}
+
+.add-listing .btn span:nth-child(1) {
+    --n: 1
+}
+
+.add-listing .btn span:nth-child(2) {
+    --n: 2
+}
+
+.add-listing .btn span:nth-child(3) {
+    --n: 3
+}
+
+.add-listing .btn span:nth-child(4) {
     --n: 4
 }
