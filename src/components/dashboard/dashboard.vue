@@ -7,7 +7,11 @@ import { useRouter } from "vue-router";
 import Swal from "sweetalert2";
 import { ref, defineProps, onMounted, provide, inject } from "vue";
 import WordpressService from "@/service/WordpressService";
+import FlashMessage from "@/components/common/FlashMessage.vue";
 import { EventBus } from "@/EventBus";
+import { useStore } from "@/stores/store";
+
+const store = useStore();
 
 const router = useRouter();
 const { logout } = useAuth();
@@ -59,6 +63,7 @@ onMounted(async () => {
   await fetchDashboardData();
   EventBus.on("fetchDashboardData", fetchDashboardData);
   EventBus.on("loadingOnOff", loadingOnOff);
+  // store.updateFlashMeassge(true, "Feedback shared sucessfully");
 });
 
 const regenerateWebsite = async () => {
@@ -85,6 +90,10 @@ provide("dashBoardMethods", {
 
 <template>
   <div class="page">
+    <FlashMessage :visible="store.flashMeassge" v-if="store.flashMeassge" />
+    <!-- <button
+      @click="store.updateFlashMeassge(true, 'this is my sucess message')"
+    ></button> -->
     <NavBar
       @logout="logout"
       @nav-bar-toggle="navBarToggle"

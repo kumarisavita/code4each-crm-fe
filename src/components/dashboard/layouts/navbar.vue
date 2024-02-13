@@ -38,7 +38,7 @@ const props = defineProps({
       >
         <span class="d-none d-brand-partial">Bubbly </span>
         <span class="d-none d-sm-inline">
-          <img src="/images/speedylogo.png" />
+          <img src="/images/logo-beta.png" />
         </span>
       </a>
       <ul class="ms-auto d-flex align-items-center list-unstyled mb-0">

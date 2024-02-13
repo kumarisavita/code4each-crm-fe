@@ -43,9 +43,7 @@ section#content-wrapper\ main-content\ side-content {
     box-shadow: 0 3px 4px rgba(0,0,0,0.16), 0 5px 20px rgba(0,0,0,0.23);
     
 }
-/* .page {
-    overflow: scroll;
-} */
+
 .py-md-5 {
     padding-top: 1rem!important;
     padding-bottom: 3rem!important;
@@ -88,7 +86,7 @@ section#content-wrapper\ main-content\ side-content {
     box-sizing: border-box;
     position: relative;
     width: 100%;
-    /* border-bottom: 1px solid lightgray; */
+    
 }
 .panel-header.panel-header-flex .panel-header-title {
     padding: 0;
@@ -426,24 +424,7 @@ button.preview-btn:hover{
     background: transparent;
     color: #1d2b64;
 }
-/* button.publish-btn {
-    position: absolute;
-    bottom: 30px;
-    left: 30px;
-    padding: 8px 30px;
-    background: transparent;
-    color: #1d2b64;
-    font-size: 18px;
-    border: 2px solid #1d2b64;
-    border-radius: 8px;
-    font-family: ui-sans-serif;
-    display: flex;
-    justify-content: left;
-} */
-/* button.publish-btn:hover{
-    background: #1d2b64;
-    color: #fff;
-} */
+
 .tabs i {
    
     margin: 0px;
@@ -499,9 +480,7 @@ button.preview-btn:hover{
 	justify-content: center;
 }
 
-/**
- * Tabs
- */
+
 .tabs {
 	display: flex;
 	flex-wrap: wrap;
@@ -637,7 +616,7 @@ button.button.btn-primary {
 }
 .upload__box {
     display:block;
-    /* justify-content: center; */
+    
     margin: 20px auto;
 }
 .upload__inputfile {
@@ -724,14 +703,7 @@ form.button-from.mt-2 label.form-label {
     font-weight: 700;
     padding: 15px 0px;
 }
-/* form.button-from.mt-2 input.form-control.input {
-    padding: 6px 10px;
-    color: white;
-    font-size: 16px;
-    color: #6b6a6a;
-    font-weight: 600;
-    padding: 20px 10px;
-} */
+
 form.button-from.mt-2 select.form-select {
     padding: 6px 10px;
     color: white;
@@ -1015,7 +987,6 @@ form.button-from.mt-2 select.form-select {
 }
 .oQFZy.T5IOE {
     overflow-y: scroll;
-    /* max-height: 100%; */
     height: 60vh;
     overflow: hidden;
 }
@@ -1253,7 +1224,7 @@ form.button-from.mt-2 select.form-select {
     .sidebar-link {
         display: flex;
         padding: 0.3rem 0.5rem;
-        transition: background 0.3s;
+        transition:  0.3s;
         text-decoration: none;
         align-items: center;
     }
@@ -1345,7 +1316,7 @@ form.button-from.mt-2 select.form-select {
         border: 2px solid #195cc5;
         border-radius: 5px;
         /* padding: 5px 5px; */
-    } */
+    } 
     button.button.btn-success {
         background: #198754 !important;
         border-color: #198754 !important;
@@ -1354,12 +1325,7 @@ form.button-from.mt-2 select.form-select {
         box-shadow: none !important;
         font-size: 12px;
     }
-    button.button.btn-primary {
-        /* border-radius: 20px;
-        padding: 1px 12px;
-        box-shadow: none !important;
-        font-size: 12px; */
-    }
+    
     .color2 {
         padding: 0px 0px;
         color: #fff;
@@ -1376,11 +1342,7 @@ form.button-from.mt-2 select.form-select {
         padding: 7px 0px;
     }
     form.button-from.mt-2 input.form-control.input {
-        /* padding: 6px 10px;
-        color: white;
-        font-size: 10px;
-        color: #a3a0a0;
-        /* font-weight: 300; */
+    
       
         height: 42px;
     }
@@ -1561,64 +1523,7 @@ svg.shape.shapea {
     font-family: "FontAwesome";
     color: #1d2b64;
 }
-/* ---------------new  loader design css start-----------------------
-.loading {
-    --speed-of-animation: 0.9s;
-    --gap: 2px;
-    --first-color: #4c86f9;
-    --second-color: #49a84c;
-    --third-color: #f6bb02;
-    --fourth-color: #f6bb02;
-    --fifth-color: #2196f3;
-    display: flex;
-    justify-content: end;
-    align-items: center;
-    width: 56px;
-    gap: 5px;
-    height: 26px;
-}
-   .loading span {
-    width: 4px;
-    height: 50px;
-    background: var(--first-color);
-    animation: scale var(--speed-of-animation) ease-in-out infinite;
-   }
-   
-   .loading span:nth-child(2) {
-    background: var(--second-color);
-    animation-delay: -0.8s;
-   }
-   
-   .loading span:nth-child(3) {
-    background: var(--third-color);
-    animation-delay: -0.7s;
-   }
-   
-   .loading span:nth-child(4) {
-    background: var(--fourth-color);
-    animation-delay: -0.6s;
-   }
-   
-   .loading span:nth-child(5) {
-    background: var(--fifth-color);
-    animation-delay: -0.5s;
-   }
-   
-   @keyframes scale {
-    0%, 40%, 100% {
-     transform: scaleY(0.05);
-    }
-   
-    20% {
-     transform: scaleY(1);
-    }
-   } */
 
-
-   /* ----------------new Loader design css end -------------------------- */
-
-
-/* new  loader design css */
 /*loader1 css begins*/
 .main-wrap {
     background-color: #2b4661;

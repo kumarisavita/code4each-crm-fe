@@ -64,7 +64,7 @@
             aria-expanded="false"
             data-bs-toggle="collapse"
           >
-            <i class="fa fa-book me-3"></i>
+            <i class="fa fa-cogs me-3"></i>
             <span class="sidebar-link-title">Customize </span>
           </a>
           <ul
@@ -84,7 +84,8 @@
                   active: currentRoute.includes('/customize/components'),
                 }"
               >
-                Components
+                <i class="fa fa-book me-3"></i>
+                <span class="sidebar-link-title"> Components</span>
               </router-link>
             </li>
             <li class="sidebar-list-item">
@@ -94,7 +95,9 @@
                 :class="{
                   active: currentRoute.includes('/customize/colors'),
                 }"
-                >Colors
+              >
+                <i class="fa fa-paint-brush" aria-hidden="true"></i
+                ><span class="sidebar-link-title">Colors</span>
               </router-link>
             </li>
             <li class="sidebar-list-item">
@@ -105,7 +108,8 @@
                   active: currentRoute.includes('/customize/fonts'),
                 }"
               >
-                Fonts
+                <i class="fa fa-font" aria-hidden="true"></i>
+                <span class="sidebar-link-title">Fonts</span>
               </router-link>
             </li>
             <li class="sidebar-list-item">
@@ -116,7 +120,8 @@
                   active: currentRoute.includes('/customize/social-links'),
                 }"
               >
-                Social Links
+                <i class="fa fa-bookmark me-3"></i>
+                <span class="sidebar-link-title">Social Links</span>
               </router-link>
             </li>
           </ul>
@@ -222,7 +227,7 @@
                 type="text"
                 class="form-control"
                 id="field1"
-                placeholder="title"
+                placeholder="Title"
                 v-model="values.title"
               />
               <div class="text-danger">{{ allErrors.title }}</div>
@@ -400,6 +405,7 @@ const submitFeedback = handleSubmit(async () => {
     const response = await WordpressService.FeedBack.submitFeedback(formData);
     if (response.status === 200 && response.data.success) {
       hideModal();
+      console.log("sidebar.vue");
       store.updateFlashMeassge(true, "Feedback shared sucessfully");
     }
   } catch (validationErrors) {

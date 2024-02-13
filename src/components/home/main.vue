@@ -41,18 +41,21 @@ const ModalShowing = ref(false);
 const showSuccessMeassge = ref(false);
 const feedBackvalues = ref({});
 const feedbackModalShow = ref(false);
+const alertShow = ref(false);
 const feedbackMsg = ref(false);
 const feedBackloading = ref(false);
 const loginExist = ref(false);
 const allErrorsFeedback = ref({});
 
 const showModal = (modal) => {
+  hideModal();
   ModalShowing.value = true;
   backendError.value = "";
   if (modal === "forget") {
     loginModalShow.value =
       showSignUpModal.value =
       feedbackModalShow.value =
+      alertShow.value =
         false;
     forgetModalShow.value = true;
   } else if (modal === "login") {
@@ -60,18 +63,28 @@ const showModal = (modal) => {
     forgetModalShow.value =
       showSignUpModal.value =
       feedbackModalShow.value =
+      alertShow.value =
         false;
   } else if (modal === "feedback") {
     feedbackModalShow.value = true;
     forgetModalShow.value =
       showSignUpModal.value =
       loginModalShow.value =
+      alertShow.value =
         false;
   } else if (modal === "signup") {
     showSignUpModal.value = true;
     forgetModalShow.value =
       feedbackModalShow.value =
       loginModalShow.value =
+      alertShow.value =
+        false;
+  } else if (modal === "alert") {
+    alertShow.value = true;
+    forgetModalShow.value =
+      feedbackModalShow.value =
+      loginModalShow.value =
+      showSignUpModal.value =
         false;
   }
 };
@@ -199,6 +212,7 @@ const hideModal = () => {
   forgetModalShow.value = false;
   loginModalShow.value = false;
   showSignUpModal.value = false;
+  alertShow.value = false;
   allErrors.value = {};
   allErrorsLogin.value = {};
   allErrorsResset.value = {};
@@ -225,7 +239,23 @@ const googleSignUp = async (response) => {
   }
 };
 
+const handleOutsideClick = (event) => {
+  if (alertShow.value) {
+    hideModal();
+  }
+};
+
 onMounted(async () => {
+  store.updateFlashMeassge(
+    true,
+    "Please check your inbox and verify your email!"
+  );
+  document.body.addEventListener("click", handleOutsideClick);
+  setTimeout(() => {
+    if (!ModalShowing.value && !loginExist.value) {
+      showModal("alert");
+    }
+  }, 10000);
   const storedToken = localStorage.getItem("access_token");
   if (storedToken) {
     loginExist.value = storedToken;
@@ -254,15 +284,17 @@ const sendMailToVerifyEmail = handleSubmit(async () => {
       formDataForget.value
     );
     if (response.status === 200 && response.data.success) {
-      showSuccessMeassge.value = true;
+      // showSuccessMeassge.value = true;
+      console.log("hereeeeeeeeeeeee");
+      hideModal();
       store.updateFlashMeassge(
         true,
         "Please check your inbox and verify your email!"
       );
-      setTimeout(() => {
-        showSuccessMeassge.value = false;
-        hideModal();
-      }, 5000);
+      // setTimeout(() => {
+      //   showSuccessMeassge.value = false;
+      //   hideModal();
+      // }, 5000);
     }
   } catch (error) {
     const errors =
@@ -335,7 +367,7 @@ const navigate = () => {
 };
 </script>
 <template>
-  <!-- <FlashMessage :visible="store.flashMeassge" v-if="true" /> -->
+  <FlashMessage :visible="store.flashMeassge" v-if="store.flashMeassge" />
   <header class="header-section">
     <nav
       class="navbar navbar-light bg-white navbar-static-top navbar-expand-lg header-sticky"
@@ -350,7 +382,7 @@ const navigate = () => {
           <i class="fa fa-align-left"></i>
         </button>
         <a class="navbar-brand-logo">
-          <img class="img-fluid" src="/images/speedylogo.png" alt="logo" />
+          <img class="img-fluid" src="/images/logo-beta.png" alt="logo" />
         </a>
         <div class="add-listing d-none d-sm-block">
           <a
@@ -415,7 +447,7 @@ const navigate = () => {
             <div class="buttons-design">
               <a
                 class="btn btn-lg button-trial rounded-pill hover-top"
-                @click="showSignUpModal = true"
+                @click="showModal('signup')"
                 >Try for free <span></span>
                 <span></span>
                 <span></span>
@@ -457,15 +489,19 @@ const navigate = () => {
                 we were finally able to create the exact website we had in
                 mind!"
               </p>
-              <div class="custom-1" id="button-hover">
+              <div class="custom-button1" id="button-hover">
                 <a
                   class="btn btn-lg button-trial rounded-pill hover-top"
-                  @click="showSignUpModal = true"
+                  @click="showModal('signup')"
                   >Try for free <span></span>
                   <span></span>
                   <span></span>
                   <span></span>
                 </a>
+                <h5>
+                  <i class="fa fa-check" aria-hidden="true"></i> Free Trial . No
+                  Credit Card Required
+                </h5>
               </div>
             </div>
           </div>
@@ -539,13 +575,16 @@ const navigate = () => {
               <div class="custom-button1" id="button-hover">
                 <a
                   class="btn btn-lg button-trial rounded-pill hover-top"
-                  @click="showSignUpModal = true"
-                  >Try for free
+                  @click="showModal('signup')"
+                  >Try for free <span></span>
                   <span></span>
                   <span></span>
                   <span></span>
-                  <span> </span>
                 </a>
+                <h5>
+                  <i class="fa fa-check" aria-hidden="true"></i> Free Trial . No
+                  Credit Card Required
+                </h5>
               </div>
             </div>
           </div>
@@ -702,14 +741,17 @@ const navigate = () => {
               <div class="custom-3" id="button-hover">
                 <a
                   class="btn btn-lg button-trial rounded-pill hover-top"
-                  @click="showSignUpModal = true"
+                  @click="showModal('signup')"
                   >Try for free
                   <span></span>
                   <span></span>
                   <span></span>
                   <span> </span>
                 </a>
-                <h5>Free Trial. No Credit Card Required</h5>
+                <h5>
+                  <i class="fa fa-check" aria-hidden="true"></i> Free Trial . No
+                  Credit Card Required
+                </h5>
               </div>
             </div>
           </div>
@@ -742,7 +784,7 @@ const navigate = () => {
         <div class="footer-single-block footer-logo-blojg">
           <div class="footer-logo-block">
             <img
-              src="/images/speedylogo.png"
+              src="/images/logo-beta.png"
               loading="lazy"
               alt="Footer Logo Image"
               class="footer-logo-image"
@@ -783,6 +825,7 @@ const navigate = () => {
             </div>
           </div>
         </div> -->
+        <hr class="my-4" />
         <div class="footer-single-block address-block">
           <div class="footer-title-block">
             <h3 class="footer-heading">
@@ -911,7 +954,7 @@ const navigate = () => {
               </div>
               <div class="text-danger">{{ backendError }}</div>
               <div class="form-group mt-3">
-                <div class="form-check">
+                <!-- <div class="form-check">
                   <input
                     class="form-check-input"
                     type="checkbox"
@@ -920,13 +963,9 @@ const navigate = () => {
                   <label class="form-check-label" for="gridCheck">
                     Remember Me
                   </label>
-                </div>
+                </div> -->
               </div>
-              <div class="form-group">
-                <a class="text-body forgotPassword" @click="showModal('forget')"
-                  >Forgot password?</a
-                >
-              </div>
+
               <div class="dual-logo">
                 <button
                   type="submit"
@@ -1326,6 +1365,42 @@ const navigate = () => {
       </div>
     </div>
   </div>
+
+  <div
+    class="modal try-free alert-try-free-modal"
+    id="exampleModaltry"
+    tabindex="-1"
+    role="dialog"
+    :class="{ show: alertShow, 'd-block': alertShow }"
+  >
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-body">
+          <div class="subscription-wrapper">
+            <div class="subscription-text-side">
+              <h3 class="subscription-heading">
+                Hey! We've noticed you've been exploring our website for the
+                last 10 seconds. Guess what our average website creation time is
+                5 seconds. Your business will be online in this time period.
+                Ready to take your online presence to new heights?
+              </h3>
+            </div>
+            <div class="subscription-form-side">
+              <a
+                class="btn btn-lg button-trial rounded-pill hover-top"
+                @click="showModal('signup')"
+                >TRY FOR FREE
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
 <style scoped>
 .forgotPassword {
@@ -1333,6 +1408,15 @@ const navigate = () => {
 }
 .succmsg {
   color: "#197817";
+}
+.alert-try-free-modal h3.subscription-heading {
+  font-size: 18px !important;
+  line-height: 28px;
+  font-weight: normal;
+  letter-spacing: 0 !important;
+}
+.alert-try-free-modal .subscription-text-side {
+  width: 85%;
 }
 </style>
 

@@ -1,5 +1,5 @@
 <template>
-  <div v-if="isAnimating" :class="['flash animate--drop-in-fade-out']">
+  <div :class="['flash animate--drop-in-fade-out']">
     <div class="flash__icon">
       <i class="icon fa fa-check-circle-o"></i>
     </div>
@@ -18,22 +18,25 @@ const props = defineProps({
 });
 
 const handlePageClick = () => {
-  setTimeout(() => {
-    store.updateFlashMeassge(false); // Corrected typo
-  }, 5000);
+  console.log("flash message 11");
+
+  // setTimeout(() => {
+  store.updateFlashMeassge(false); // Corrected typo
+  // }, 5000);
 };
 
 onMounted(() => {
-  isAnimating.value = true;
+  console.log("flash message");
+  // isAnimating.value = true;
   handlePageClick();
 });
 
-watch(
-  () => props.visible,
-  (newValue, oldValue) => {
-    isAnimating.value = true;
-  }
-);
+// watch(
+//   () => props.visible,
+//   (newValue, oldValue) => {
+//     isAnimating.value = true;
+//   }
+// );
 </script>
 
 <style>

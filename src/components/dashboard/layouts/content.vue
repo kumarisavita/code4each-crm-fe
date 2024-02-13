@@ -138,6 +138,36 @@ const emptyForm = () => {
       </div>
       <div v-else class="main-container container">
         <div id="wrapper" :class="loading ? 'fade' : ''">
+          <section
+            v-if="dashboardData?.agency_website_info?.length === 1"
+            class="speedy-subscription bg-white"
+          >
+            <div class="container">
+              <div class="row">
+                <div class="col-lg-12">
+                  <div class="speedy-subscription-wrapper">
+                    <div class="subscription-text-side">
+                      <h3 class="subscription-heading">
+                        Only
+                        {{
+                          calculateDaysDifference(
+                            dashboardData.agency_website_info[0].created_at
+                          )
+                        }}
+                        days left in your free trial! ⏳ Upgrade now for
+                        seamless website creation
+                      </h3>
+                    </div>
+                    <div class="subscription-form-side">
+                      <a class="subscription-btn" style="cursor: pointer"
+                        ><i class="fa fa-paypal"></i> Payment
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
           <div class="page-header">
             <ol class="breadcrumb">
               <!-- breadcrumb -->
@@ -153,7 +183,8 @@ const emptyForm = () => {
               class="ms-auto"
               v-if="
                 dashboardData?.agency_website_info?.length < 1 ||
-                !dashboardData?.agency_website_info
+                !dashboardData?.agency_website_info ||
+                dashboardData.user.user_type === 'developer'
               "
             >
               <div>
@@ -266,7 +297,8 @@ const emptyForm = () => {
               @click="openModalWithCategories"
               v-if="
                 dashboardData?.agency_website_info?.length < 1 ||
-                !dashboardData?.agency_website_info
+                !dashboardData?.agency_website_info ||
+                dashboardData.user.user_type === 'developer'
               "
             >
               <a href="#" class="ag-courses-item_link">

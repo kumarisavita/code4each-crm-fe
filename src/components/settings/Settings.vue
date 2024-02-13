@@ -175,7 +175,7 @@ const updateWebsiteSettings = handleSubmit(async () => {
       await getSiteDeatils();
       await openModalWithCategories();
       resetForm();
-      store.updateFlashMeassge(true, "Site setting update sucessfully");
+      // store.updateFlashMeassge(true, "Site setting update sucessfully");
     }
   } catch (validationErrors) {
     const errors = validationErrors.inner.reduce((acc, error) => {
