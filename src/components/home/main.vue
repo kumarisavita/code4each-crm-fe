@@ -77,33 +77,33 @@ const showModal = (modal) => {
 };
 
 const validationSchema = yup.object({
-  company_name: yup.string().required("Company name is a required field"),
-  name: yup.string().required("Name is a required field"),
+  company_name: yup.string().required("Please enter your company name."),
+  name: yup.string().required("Please enter your name."),
   email: yup
     .string()
-    .email("Invalid email format")
-    .required("Email is a required field"),
+    .email("Please enter a valid email address.")
+    .required("Please enter your email address."),
   password: yup
     .string()
-    .min(6, "Password must be at least 6 characters")
-    .max(20, "Password must not exceed 20 characters")
-    .required("Password is a required field"),
+    .min(6, "Password must be at least 6 characters.")
+    .max(20, "Password must not exceed 20 characters.")
+    .required("Please enter your password."),
   phone: yup
     .string()
-    .required("Phone Number is a required field")
-    .matches(/^\d{10}$/, "Enter a valid 10-digit phone number"),
+    .required("Please enter your phone number.")
+    .matches(/^\d{10}$/, "Enter a valid 10-digit phone number."),
 });
 
 const validationSchemaLogin = yup.object({
   email: yup
     .string()
-    .email("Invalid email format")
-    .required("Email is a required field"),
+    .email("Please enter a valid email address.")
+    .required("Please enter your email address."),
   password: yup
     .string()
-    .min(6, "Password must be at least 6 characters")
-    .max(20, "Password must not exceed 20 characters")
-    .required("Password is a required field"),
+    .min(6, "Password must be at least 6 characters.")
+    .max(20, "Password must not exceed 20 characters.")
+    .required("Please enter your password."),
 });
 
 const registerUser = handleSubmit(async () => {
@@ -238,8 +238,8 @@ onMounted(async () => {
 const validationSchemaForget = yup.object({
   email: yup
     .string()
-    .email("Invalid email format")
-    .required("Email is a required field"),
+    .email("Please enter a valid email address.")
+    .required("Please provide your email address."),
 });
 
 const sendMailToVerifyEmail = handleSubmit(async () => {
@@ -393,7 +393,7 @@ const navigate = () => {
           <div class="col-md-6 col-lg-6 text-center text-md-start">
             <span
               class="badge bg-light rounded-pill text-dark align-items-center d-flex flex-row-reverse justify-content-end mx-auto mx-md-0 ps-0 w-75 w-sm-50 w-md-75 w-xl-50 mb-3"
-              >#1 Editiors Choice App of 2020<img
+              >Average website creation time on SpeedySites is 5 SEC<img
                 class="img-fluid float-start me-3"
                 src="/images/arrow-right.png"
                 alt=""
@@ -402,13 +402,14 @@ const navigate = () => {
               Build Your Website. <br /><span
                 class="d-block d-lg-none d-xl-block"
                 style="color: #1c316a"
-                >Start A Funnel. Sell Anything!</span
+                >In Less Then 10 Seconds</span
               >
             </h1>
             <p class="mt-3 mb-4">
-              Start your website, engage with your audience,and grow
-              <br class="d-none d-lg-block" />and grow your business online from
-              one place.
+              Create your website with no coding skills and no designing expertise! 
+              <br class="d-none d-lg-block" />
+              SpeedySites will design a completely unique website that you can start using right away.
+             
             </p>
             <div class="buttons-design">
               <a
@@ -437,7 +438,7 @@ const navigate = () => {
     <div class="container">
       <div class="row d-flex justify-content-center">
         <div class="col-12">
-          <h2>Websites & Funnels Working Together</h2>
+          <h2>Build A Fully Functional Website</h2>
           <p>
             The first platform that combines both under one place working
             seamlessly.
@@ -469,15 +470,7 @@ const navigate = () => {
           </div>
           <div class="col-lg-7 col-md-6">
             <div class="about-img">
-              <video
-                class="simple-video"
-                poster="#"
-                playsinline=""
-                autoplay="autoplay"
-                loop="loop"
-                muted="muted"
-                style="opacity: 1"
-              ></video>
+              <img src="/images/datailedimg1.png" />
             </div>
           </div>
         </div>
@@ -491,10 +484,9 @@ const navigate = () => {
           </div>
           <div class="col-lg-6 col-md-6">
             <div class="textarea1">
-              <h3>Achieve Much More With Funnels</h3>
+              <h3>Think of SpeedySites as your personal website developer</h3>
               <p class="abouttext2">
-                Funnels are pages connected together with a specific goal that
-                can have a HUGE impact on your business.
+                Where you partner with SpeedySites who grasp your business objectives and design a customized website aligned with your brand guidelines, ensuring continuous support.
               </p>
               <div
                 class="type1 icon-section"
@@ -509,47 +501,29 @@ const navigate = () => {
                   <div class="icon-title text-widget-content">
                     <h4 style="line-height: 1.4">
                       <span style="font-size: 20px"
-                        >A/B Split Test Your Pages</span
+                        >Fast & Easy To Use</span
                       >
                     </h4>
                   </div>
                 </div>
                 <div class="icon-content">
                   <div class="text-widget-content">
-                    <p>
+                    <!--<p>
                       The first platform that allows you to A/B test your
                       website pages thanks to the built-in funnels.
-                    </p>
+                    </p>-->
+                    <div class="custom-list">
+                      <ul>
+                        <li><strong>Step 1:</strong> Login / Signup to SpeedySites</li>
+                        <li><strong>Step 1:</strong> Enter the name of your business</li>
+                        <li><strong>Step 2:</strong> Submit keywords describing your business</li>
+                        <li><strong>Step 3:</strong> Get your website ready in seconds!</li>
+                      </ul>
+                    </div>
                   </div>
                 </div>
               </div>
-              <div
-                class="type1 icon-section"
-                style="background: transparent; padding: 6px"
-              >
-                <div class="icon-header-wrapper">
-                  <div class="icon border-color-secondary1">
-                    <i
-                      class="icon-section-icon fa fa-hand-o-right color-secondary1"
-                    ></i>
-                  </div>
-                  <div class="icon-title text-widget-content">
-                    <h4 style="line-height: 1.4">
-                      <span style="font-size: 20px"
-                        >Sales Funnels & Custom Checkouts</span
-                      >
-                    </h4>
-                  </div>
-                </div>
-                <div class="icon-content">
-                  <div class="text-widget-content">
-                    <p>
-                      Customize the sales steps for the customer that wants to
-                      buy your products.
-                    </p>
-                  </div>
-                </div>
-              </div>
+             
               <div class="custom-button1" id="button-hover">
                 <a
                   class="btn btn-lg button-trial rounded-pill hover-top"
@@ -573,14 +547,16 @@ const navigate = () => {
       <div class="row">
         <div class="col-lg-12">
           <div class="section-title-wrap text-center section-space--mb_40">
-            <h6 class="section-sub-title mb-20">Industries we Serve</h6>
+            <!--<h6 class="section-sub-title mb-20">Industries we Serve</h6>-->
             <h3 class="heading">
-              Services We Deliver <br />
-              we provide
-              <span class="text-color-primary">
-                truly prominent IT solutions.</span
-              >
+              More Than Just A Website Builder <br />
+              
             </h3>
+            <h5><span class="text-color-primary">
+                The most unique and powerful platform on the planet as your own
+                </span
+              >
+              </h5>
           </div>
         </div>
       </div>
@@ -598,10 +574,9 @@ const navigate = () => {
                       <i class="fa fa-heart-o"></i>
                     </div>
                     <div class="content">
-                      <h5 class="heading">IT Design</h5>
+                      <h5 class="heading">Custom Templates</h5>
                       <div class="text">
-                        We provide the most responsive and functional IT design
-                        for companies and businesses worldwide.
+                        Enjoy unlimited freedom to design numerous templates for websites, pages, blocks, pop-ups, and emails to suit your needs.
                       </div>
                     </div>
                   </div>
@@ -617,10 +592,9 @@ const navigate = () => {
                       <i class="fa fa-suitcase" aria-hidden="true"></i>
                     </div>
                     <div class="content">
-                      <h5 class="heading">IT Management</h5>
+                      <h5 class="heading">Custom Branding</h5>
                       <div class="text">
-                        It’s possible to simultaneously manage and transform
-                        information from one server to another.
+                        Tailor your platform to reflect your brand identity with features like adding your logo, domain, and custom styling.
                       </div>
                     </div>
                   </div>
@@ -637,73 +611,9 @@ const navigate = () => {
                       <i class="fa fa-shield" aria-hidden="true"></i>
                     </div>
                     <div class="content">
-                      <h5 class="heading">Data Security</h5>
+                      <h5 class="heading">Drag & Drop Building Editor</h5>
                       <div class="text">
-                        We provide the most responsive and functional IT design
-                        for companies and businesses worldwide.
-                      </div>
-                    </div>
-                  </div>
-                  <!-- ht-box-icon End -->
-                </div>
-              </div>
-              <div
-                class="col-lg-4 col-md-6 wow move-up animated"
-                style="visibility: visible"
-              >
-                <div class="ht-box-icon style-02 single-svg-icon-box">
-                  <!-- ht-box-icon Start -->
-                  <div class="icon-box-wrap">
-                    <div class="icon">
-                      <i class="fa fa-shield" aria-hidden="true"></i>
-                    </div>
-                    <div class="content">
-                      <h5 class="heading">Business Reform</h5>
-                      <div class="text">
-                        We provide the most responsive and functional IT design
-                        for companies and businesses worldwide.
-                      </div>
-                    </div>
-                  </div>
-                  <!-- ht-box-icon End -->
-                </div>
-              </div>
-              <div
-                class="col-lg-4 col-md-6 wow move-up animated"
-                style="visibility: visible"
-              >
-                <div class="ht-box-icon style-02 single-svg-icon-box">
-                  <!-- ht-box-icon Start -->
-                  <div class="icon-box-wrap">
-                    <div class="icon">
-                      <i class="fa fa-shield" aria-hidden="true"></i>
-                    </div>
-                    <div class="content">
-                      <h5 class="heading">Infrastructure Plan</h5>
-                      <div class="text">
-                        We provide the most responsive and functional IT design
-                        for companies and businesses worldwide.
-                      </div>
-                    </div>
-                  </div>
-                  <!-- ht-box-icon End -->
-                </div>
-              </div>
-              <div
-                class="col-lg-4 col-md-6 wow move-up animated"
-                style="visibility: visible"
-              >
-                <div class="ht-box-icon style-02 single-svg-icon-box">
-                  <!-- ht-box-icon Start -->
-                  <div class="icon-box-wrap">
-                    <div class="icon">
-                      <i class="fa fa-shield" aria-hidden="true"></i>
-                    </div>
-                    <div class="content">
-                      <h5 class="heading">Firewall Advance</h5>
-                      <div class="text">
-                        We provide the most responsive and functional IT design
-                        for companies and businesses worldwide.
+                        Create pages as fast as humanly possible with our drag & drop builder.
                       </div>
                     </div>
                   </div>
@@ -733,7 +643,7 @@ const navigate = () => {
               <a
                 class="btn btn-lg button-trial rounded-pill hover-top"
                 @click="showModal('feedback')"
-                >Contact To Us
+                >Contact Us
                 <span></span>
                 <span></span>
                 <span></span>
@@ -745,83 +655,7 @@ const navigate = () => {
       </div>
     </div>
   </div>
-  <section class="sectione-Commerce1">
-    <div class="container">
-      <div class="row d-flex justify-content-center">
-        <div class="col-12">
-          <h4>E-Commerce Made Smart</h4>
-          <h2>New Evolution In Selling Online</h2>
-          <p>
-            With the power of a storefront, sales funnels, detailed analytics,
-            and full customization freedom.
-          </p>
-        </div>
-      </div>
-      <div class="row">
-        <div class="ecommerce-row">
-          <div class="col-lg-6 col-md-6">
-            <div class="E-Commerce">
-              <img src="/images/datailedimg.png" />
-            </div>
-          </div>
-          <div class="col-lg-6 col-md-12">
-            <div class="E-Commerce-text">
-              <h3>Detailed Analytics</h3>
-              <p class="e-commercetext">
-                Know more about your sales, customers, and where your revenue is
-                coming from with detailed e-commerce analytics.
-              </p>
 
-              <div class="custom-1" id="button-hover">
-                <h5>Free Trial . No Credit Card Required</h5>
-
-                <a
-                  class="btn btn-lg button-trial rounded-pill hover-top"
-                  @click="showSignUpModal = true"
-                  >Try for free
-                  <span></span>
-                  <span></span>
-                  <span></span>
-                  <span> </span>
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="custom-checkouts-row">
-          <div class="col-lg-6 col-md-12">
-            <div class="custom-checkouts-text">
-              <h3>Custom Checkouts</h3>
-              <p class="customtext">
-                Have the freedom to shape and design the looks of your checkouts
-                to build trust and convert more of your visitors.
-              </p>
-              <div class="custom-2" id="button-hover">
-                <h5>Free Trial . No Credit Card Required</h5>
-
-                <a
-                  class="btn btn-lg button-trial rounded-pill hover-top"
-                  @click="showSignUpModal = true"
-                  >Try for free
-                  <span></span>
-                  <span></span>
-                  <span></span>
-                  <span> </span>
-                </a>
-              </div>
-            </div>
-          </div>
-          <div class="col-lg-6 col-md-6">
-            <div class="E-Commerce1">
-              <img src="/images/datailedimg1.png" />
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
   <section class="email-custom">
     <div class="container-fluid grid-row">
       <div class="grid-customsection">
@@ -851,8 +685,7 @@ const navigate = () => {
                 <i class="fa fa-hand-o-right"></i>
                 <h3>Build your email lists and segments</h3>
               </div>
-              <div class="custom-3" id="button-hover">
-                <h5>Free Trial . No Credit Card Required</h5>
+              <div class="custom-3" id="button-hover">                
                 <a
                   class="btn btn-lg button-trial rounded-pill hover-top"
                   @click="showSignUpModal = true"
@@ -862,6 +695,7 @@ const navigate = () => {
                   <span></span>
                   <span> </span>
                 </a>
+                <h5>Free Trial. No Credit Card Required</h5>
               </div>
             </div>
           </div>
@@ -902,8 +736,7 @@ const navigate = () => {
           </div>
           <div class="footer-content">
             <p class="footer-details">
-              Properties are most budget friendly so you have are find
-              opportunity is main responsibility to clients
+              Instant Websites, Zero Coding, Maximum Impact!
             </p>
             <!-- <div class="footer-copyright-text small-device-none">© <a  class="company-link">Brandbes.</a> All Rights Reserved - Privacy Policy </div> -->
           </div>
@@ -939,7 +772,7 @@ const navigate = () => {
         <div class="footer-single-block address-block">
           <div class="footer-title-block">
             <h3 class="footer-heading">
-              Soical links <span class="color-shape"></span>
+              Social links <span class="color-shape"></span>
             </h3>
           </div>
 
@@ -1063,6 +896,19 @@ const navigate = () => {
                 <div class="text-danger">{{ allErrors.password }}</div>
               </div>
               <div class="text-danger">{{ backendError }}</div>
+              <div class="form-group mt-3">
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" id="gridCheck">
+                  <label class="form-check-label" for="gridCheck">
+                    Remember Me
+                  </label>
+                </div>
+              </div>
+              <div class="form-group">
+                  <a class="text-body forgotPassword" @click="showModal('forget')"
+                  >Forgot password?</a
+                >
+              </div>
               <div class="dual-logo">
                 <button
                   type="submit"
@@ -1147,7 +993,7 @@ const navigate = () => {
               <i class="fa fa-times"></i>
             </button>
 
-            <h1>Login!</h1>
+            <h1>Login</h1>
 
             <form class="form-start">
               <div class="main-form1">
@@ -1264,7 +1110,7 @@ const navigate = () => {
               <i class="fa fa-times"></i>
             </button>
 
-            <h1>Forgot Password!</h1>
+            <h1>Forgot Password?</h1>
 
             <form class="form-start">
               <div class="main-form1">
@@ -1274,7 +1120,7 @@ const navigate = () => {
                     type="email"
                     class="form-control"
                     id="exampleInputEmail1"
-                    placeholder="Email"
+                    placeholder="Enter Registered Email"
                     aria-describedby="emailHelp"
                     v-model="formDataForget.email"
                   />
@@ -1302,7 +1148,7 @@ const navigate = () => {
                   @click="sendMailToVerifyEmail"
                   :disabled="isForgetAction"
                 >
-                  SEND MAIL
+                  Email Reset Link
                 </button>
                 <div v-if="loading" class="three-body3">
                   <div class="three-body__dot1"></div>
