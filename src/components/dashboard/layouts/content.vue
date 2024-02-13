@@ -81,43 +81,44 @@ const calculateDaysDifference = (stringDate) => {
   const diffMilliseconds = Math.abs(currentDate - targetDate);
   return 15 - Math.round(diffMilliseconds / oneDay);
 };
-const validationSchema = yup.object({
-  title: yup.string().required("Title is a required field"),
-  type: yup.string().required("Type is a required field"),
-  message: yup.string().required("Message is a required field"),
-});
+// const validationSchema = yup.object({
+//   title: yup.string().required("Title is a required field"),
+//   type: yup.string().required("Type is a required field"),
+//   message: yup.string().required("Message is a required field"),
+// });
 
-const submitFeedback = handleSubmit(async () => {
-  try {
-    feedBackloading.value = true;
-    let formValues = values.value;
-    await validationSchema.validate(values.value, { abortEarly: false });
-    const formData = new FormData();
-    formData.append("type", formValues.type);
-    formData.append("title", formValues.title);
-    formData.append("agency_id", allDashboardData.value?.user?.agency_id);
-    formData.append("email", allDashboardData.value?.user?.email);
-    formData.append("name", allDashboardData.value?.user?.name);
-    formData.append(
-      "phone",
-      allDashboardData.value.user.phone ? allDashboardData.value.user.phone : ""
-    );
-    formData.append("message", formValues.message);
-    const response = await WordpressService.FeedBack.submitFeedback(formData);
-    if (response.status === 200 && response.data.success) {
-      emptyForm();
-      allErrors.value = {};
-    }
-  } catch (validationErrors) {
-    const errors = validationErrors.inner.reduce((acc, error) => {
-      acc[error.path] = error.message;
-      return acc;
-    }, {});
+// const submitFeedback = handleSubmit(async () => {
+//   try {
+//     feedBackloading.value = true;
+//     let formValues = values.value;
+//     await validationSchema.validate(values.value, { abortEarly: false });
+//     const formData = new FormData();
+//     formData.append("type", formValues.type);
+//     formData.append("title", formValues.title);
+//     formData.append("agency_id", allDashboardData.value?.user?.agency_id);
+//     formData.append("email", allDashboardData.value?.user?.email);
+//     formData.append("name", allDashboardData.value?.user?.name);
+//     formData.append(
+//       "phone",
+//       allDashboardData.value.user.phone ? allDashboardData.value.user.phone : ""
+//     );
+//     formData.append("message", formValues.message);
+//     const response = await WordpressService.FeedBack.submitFeedback(formData);
+//     if (response.status === 200 && response.data.success) {
+//       emptyForm();
+//       allErrors.value = {};
+//       store.updateFlashMeassge(true, "Site setting update sucessfully");
+//     }
+//   } catch (validationErrors) {
+//     const errors = validationErrors.inner.reduce((acc, error) => {
+//       acc[error.path] = error.message;
+//       return acc;
+//     }, {});
 
-    allErrors.value = errors;
-  }
-  feedBackloading.value = false;
-});
+//     allErrors.value = errors;
+//   }
+//   feedBackloading.value = false;
+// });
 
 const emptyForm = () => {
   values.value.type = "";
@@ -292,7 +293,7 @@ const emptyForm = () => {
     @hide-modal="showModal = false"
     :dashboardData="dashboardData"
   />
-  <div
+  <!-- <div
     class="modal feedback-model fade"
     id="modalContactForm"
     tabindex="-1"
@@ -379,7 +380,8 @@ const emptyForm = () => {
         </div>
       </div>
     </div>
-  </div>
+  </div> -->
+  <div v-if="ModalShowing" class="modal-backdrop fade show"></div>
 </template>
 <style>
 .spinner-container {

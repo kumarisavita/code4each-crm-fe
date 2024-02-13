@@ -163,12 +163,7 @@
       </ul> -->
       <div class="dashboard-design" v-if="currentRoute === '/dashboard'">
         <div class="feedback-btn">
-          <button
-            type="submit"
-            class="feedback-button"
-            data-toggle="modal"
-            data-target="#modalContactForm"
-          >
+          <button type="submit" class="feedback-button" @click="showModal">
             Help?
           </button>
         </div>
@@ -194,6 +189,93 @@
     :allSitesData="dashboardData?.agency_website_info"
     :activeSite="siteSettingsDeatil?.agency_website_detail?.website_id"
   />
+
+  <div
+    class="modal feedback-model fade"
+    id="modalContactForm"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="myModalLabel"
+    aria-hidden="true"
+    :class="{ show: feedbackModalShow, 'd-block': feedbackModalShow }"
+  >
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header" style="border: 0">
+          <button
+            type="button"
+            class="btn-close"
+            @click="hideModal"
+            aria-hidden="true"
+          ></button>
+        </div>
+        <div class="modal-body mx-3">
+          <div class="card-layout layout-medium">
+            <div class="content">
+              <div class="close-button"></div>
+
+              <h1 class="title">Give feedback / Inquiry</h1>
+              <label data-error="wrong" data-success="right" for="form34"
+                >Title*</label
+              >
+              <input
+                type="text"
+                class="form-control"
+                id="field1"
+                placeholder="title"
+                v-model="values.title"
+              />
+              <div class="text-danger">{{ allErrors.title }}</div>
+
+              <label data-error="wrong" data-success="right" for="form34"
+                >Type*</label
+              >
+              <select
+                class="form-select1"
+                id="field1"
+                aria-label="Select an option"
+                v-model="values.type"
+              >
+                <option value="">Select Type</option>
+                <option value="review">Review</option>
+                <option value="complaint">Complaint</option>
+                <option value="feedback">Feedback</option>
+                <option value="suggestion">Suggestion</option>
+                <option value="inquiry">Inquiry</option>
+              </select>
+              <div class="text-danger">{{ allErrors.type }}</div>
+              <label data-error="wrong" data-success="right" for="form34"
+                >Message*</label
+              >
+              <textarea
+                class="form-control input"
+                placeholder="Write Your Message.."
+                rows="5"
+                v-model="values.message"
+              ></textarea>
+              <div class="text-danger">{{ allErrors.message }}</div>
+
+              <div class="user-actions">
+                <div v-if="feedBackloading" class="three-body3">
+                  <div class="three-body__dot1"></div>
+                  <div class="three-body__dot1"></div>
+                  <div class="three-body__dot1"></div>
+                </div>
+                <button class="feedback-btn-primary" @click="submitFeedback">
+                  Send
+                </button>
+
+                <button class="feedback-btn-outline" @click="hideModal">
+                  Cancel
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div v-if="ModalShowing" class="modal-backdrop fade show"></div>
 </template>
 
 <script setup>
@@ -204,11 +286,18 @@ import ChangeWebsiteModal from "@/components/dashboard/elements/ChangeWebsiteMod
 import { useStore } from "@/stores/store";
 import { boolean } from "yup";
 import WordpressService from "@/service/WordpressService";
+import { useForm } from "vee-validate";
+import * as yup from "yup";
 
 const props = defineProps({
   dashboardData: Object,
   toggled: Boolean,
 });
+const allErrors = ref({});
+const values = ref({});
+const feedBackloading = ref(false);
+const feedbackModalShow = ref(false);
+const ModalShowing = ref(false);
 const route = useRoute();
 const router = useRouter();
 const currentRoute = ref(route.path);
@@ -218,6 +307,7 @@ const store = useStore();
 const selectedValue = ref();
 const compoentUl = ref(false);
 const siteSettingsDeatil = ref([]);
+const { errors, resetForm, handleSubmit } = useForm();
 
 const handleSelectChange = (selectedValue) => {
   store.updateWebsiteId(selectedValue);
@@ -271,5 +361,56 @@ const getSiteDeatils = async () => {
     console.error("An error occurred:", error);
   }
 };
+
+const showModal = () => {
+  feedbackModalShow.value = true;
+  ModalShowing.value = true;
+  values.value.type = "";
+};
+
+const hideModal = () => {
+  feedbackModalShow.value = false;
+  ModalShowing.value = false;
+  allErrors.value = {};
+  values.value = {};
+};
+
+const validationSchema = yup.object({
+  title: yup.string().required("Title is a required field"),
+  type: yup.string().required("Type is a required field"),
+  message: yup.string().required("Message is a required field"),
+});
+
+const submitFeedback = handleSubmit(async () => {
+  try {
+    feedBackloading.value = true;
+    let formValues = values.value;
+    await validationSchema.validate(values.value, { abortEarly: false });
+    const formData = new FormData();
+    formData.append("type", formValues.type);
+    formData.append("title", formValues.title);
+    formData.append("agency_id", dashboardData.value?.user?.agency_id);
+    formData.append("email", dashboardData.value?.user?.email);
+    formData.append("name", dashboardData.value?.user?.name);
+    formData.append(
+      "phone",
+      dashboardData.value.user.phone ? dashboardData.value.user.phone : ""
+    );
+    formData.append("message", formValues.message);
+    const response = await WordpressService.FeedBack.submitFeedback(formData);
+    if (response.status === 200 && response.data.success) {
+      hideModal();
+      store.updateFlashMeassge(true, "Feedback shared sucessfully");
+    }
+  } catch (validationErrors) {
+    const errors = validationErrors.inner.reduce((acc, error) => {
+      acc[error.path] = error.message;
+      return acc;
+    }, {});
+
+    allErrors.value = errors;
+  }
+  feedBackloading.value = false;
+});
 </script>
 

@@ -14,7 +14,10 @@ import { useAuth } from "@/service/useAuth";
 import { useRouter, useRoute } from "vue-router";
 import * as yup from "yup";
 import config from "/config";
+import { useStore } from "@/stores/store";
+import FlashMessage from "@/components/common/FlashMessage.vue";
 
+const store = useStore();
 const route = useRoute();
 const allErrors = ref({});
 const allErrorsLogin = ref({});
@@ -252,7 +255,10 @@ const sendMailToVerifyEmail = handleSubmit(async () => {
     );
     if (response.status === 200 && response.data.success) {
       showSuccessMeassge.value = true;
-
+      store.updateFlashMeassge(
+        true,
+        "Please check your inbox and verify your email!"
+      );
       setTimeout(() => {
         showSuccessMeassge.value = false;
         hideModal();
@@ -329,6 +335,7 @@ const navigate = () => {
 };
 </script>
 <template>
+  <!-- <FlashMessage :visible="store.flashMeassge" v-if="true" /> -->
   <header class="header-section">
     <nav
       class="navbar navbar-light bg-white navbar-static-top navbar-expand-lg header-sticky"

@@ -5,10 +5,16 @@ import WordpressService from "@/service/WordpressService";
 export const useStore = defineStore('myStore', {
   state: () => ({
     websiteId: false,
+    flashMeassge: false,
+    flashMeassgeValue: 'Sucess',
   }),
   actions: {
     updateWebsiteId(newValue) {
       this.websiteId = newValue;
+    },
+    updateFlashMeassge(newValue, message = 'Sucess') {
+      this.flashMeassge = newValue;
+      this.flashMeassgeValue = message;
     },
     async fetchInitialWebsiteId() {
       try {

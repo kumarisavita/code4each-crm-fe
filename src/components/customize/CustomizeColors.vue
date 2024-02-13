@@ -23,7 +23,7 @@ import Loader from "@/components/common/Loader.vue";
 
 const router = useRouter();
 const { logout } = useAuth();
-const isSidebarToggled = ref(false);
+const isSidebarToggled = ref(true);
 const activeComponentsDetail = ref([]);
 const allComponentsDetailAccToType = ref();
 const selectedImage = ref();
