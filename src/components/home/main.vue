@@ -406,10 +406,11 @@ const navigate = () => {
               >
             </h1>
             <p class="mt-3 mb-4">
-              Create your website with no coding skills and no designing expertise! 
+              Create your website with no coding skills and no designing
+              expertise!
               <br class="d-none d-lg-block" />
-              SpeedySites will design a completely unique website that you can start using right away.
-             
+              SpeedySites will design a completely unique website that you can
+              start using right away.
             </p>
             <div class="buttons-design">
               <a
@@ -486,7 +487,9 @@ const navigate = () => {
             <div class="textarea1">
               <h3>Think of SpeedySites as your personal website developer</h3>
               <p class="abouttext2">
-                Where you partner with SpeedySites who grasp your business objectives and design a customized website aligned with your brand guidelines, ensuring continuous support.
+                Where you partner with SpeedySites who grasp your business
+                objectives and design a customized website aligned with your
+                brand guidelines, ensuring continuous support.
               </p>
               <div
                 class="type1 icon-section"
@@ -500,9 +503,7 @@ const navigate = () => {
                   </div>
                   <div class="icon-title text-widget-content">
                     <h4 style="line-height: 1.4">
-                      <span style="font-size: 20px"
-                        >Fast & Easy To Use</span
-                      >
+                      <span style="font-size: 20px">Fast & Easy To Use</span>
                     </h4>
                   </div>
                 </div>
@@ -514,16 +515,27 @@ const navigate = () => {
                     </p>-->
                     <div class="custom-list">
                       <ul>
-                        <li><strong>Step 1:</strong> Login / Signup to SpeedySites</li>
-                        <li><strong>Step 1:</strong> Enter the name of your business</li>
-                        <li><strong>Step 2:</strong> Submit keywords describing your business</li>
-                        <li><strong>Step 3:</strong> Get your website ready in seconds!</li>
+                        <li>
+                          <strong>Step 1:</strong> Login / Signup to SpeedySites
+                        </li>
+                        <li>
+                          <strong>Step 1:</strong> Enter the name of your
+                          business
+                        </li>
+                        <li>
+                          <strong>Step 2:</strong> Submit keywords describing
+                          your business
+                        </li>
+                        <li>
+                          <strong>Step 3:</strong> Get your website ready in
+                          seconds!
+                        </li>
                       </ul>
                     </div>
                   </div>
                 </div>
               </div>
-             
+
               <div class="custom-button1" id="button-hover">
                 <a
                   class="btn btn-lg button-trial rounded-pill hover-top"
@@ -548,15 +560,12 @@ const navigate = () => {
         <div class="col-lg-12">
           <div class="section-title-wrap text-center section-space--mb_40">
             <!--<h6 class="section-sub-title mb-20">Industries we Serve</h6>-->
-            <h3 class="heading">
-              More Than Just A Website Builder <br />
-              
-            </h3>
-            <h5><span class="text-color-primary">
+            <h3 class="heading">More Than Just A Website Builder <br /></h3>
+            <h5>
+              <span class="text-color-primary">
                 The most unique and powerful platform on the planet as your own
-                </span
-              >
-              </h5>
+              </span>
+            </h5>
           </div>
         </div>
       </div>
@@ -576,7 +585,9 @@ const navigate = () => {
                     <div class="content">
                       <h5 class="heading">Custom Templates</h5>
                       <div class="text">
-                        Enjoy unlimited freedom to design numerous templates for websites, pages, blocks, pop-ups, and emails to suit your needs.
+                        Enjoy unlimited freedom to design numerous templates for
+                        websites, pages, blocks, pop-ups, and emails to suit
+                        your needs.
                       </div>
                     </div>
                   </div>
@@ -594,7 +605,9 @@ const navigate = () => {
                     <div class="content">
                       <h5 class="heading">Custom Branding</h5>
                       <div class="text">
-                        Tailor your platform to reflect your brand identity with features like adding your logo, domain, and custom styling.
+                        Tailor your platform to reflect your brand identity with
+                        features like adding your logo, domain, and custom
+                        styling.
                       </div>
                     </div>
                   </div>
@@ -613,7 +626,8 @@ const navigate = () => {
                     <div class="content">
                       <h5 class="heading">Drag & Drop Building Editor</h5>
                       <div class="text">
-                        Create pages as fast as humanly possible with our drag & drop builder.
+                        Create pages as fast as humanly possible with our drag &
+                        drop builder.
                       </div>
                     </div>
                   </div>
@@ -685,7 +699,7 @@ const navigate = () => {
                 <i class="fa fa-hand-o-right"></i>
                 <h3>Build your email lists and segments</h3>
               </div>
-              <div class="custom-3" id="button-hover">                
+              <div class="custom-3" id="button-hover">
                 <a
                   class="btn btn-lg button-trial rounded-pill hover-top"
                   @click="showSignUpModal = true"
@@ -898,14 +912,18 @@ const navigate = () => {
               <div class="text-danger">{{ backendError }}</div>
               <div class="form-group mt-3">
                 <div class="form-check">
-                  <input class="form-check-input" type="checkbox" id="gridCheck">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    id="gridCheck"
+                  />
                   <label class="form-check-label" for="gridCheck">
                     Remember Me
                   </label>
                 </div>
               </div>
               <div class="form-group">
-                  <a class="text-body forgotPassword" @click="showModal('forget')"
+                <a class="text-body forgotPassword" @click="showModal('forget')"
                   >Forgot password?</a
                 >
               </div>
@@ -1263,7 +1281,6 @@ const navigate = () => {
               <label data-error="wrong" data-success="right" for="form34"
                 >Message*</label
               >
-
               <textarea
                 class="form-control input"
                 placeholder="Write Your Message.."
