@@ -63,7 +63,6 @@ onMounted(async () => {
   await fetchDashboardData();
   EventBus.on("fetchDashboardData", fetchDashboardData);
   EventBus.on("loadingOnOff", loadingOnOff);
-  // store.updateFlashMeassge(true, "Feedback shared sucessfully");
 });
 
 const regenerateWebsite = async () => {
@@ -91,9 +90,6 @@ provide("dashBoardMethods", {
 <template>
   <div class="page">
     <FlashMessage :visible="store.flashMeassge" v-if="store.flashMeassge" />
-    <!-- <button
-      @click="store.updateFlashMeassge(true, 'this is my sucess message')"
-    ></button> -->
     <NavBar
       @logout="logout"
       @nav-bar-toggle="navBarToggle"

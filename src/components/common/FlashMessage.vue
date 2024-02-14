@@ -18,11 +18,9 @@ const props = defineProps({
 });
 
 const handlePageClick = () => {
-  console.log("flash message 11");
-
-  // setTimeout(() => {
-  store.updateFlashMeassge(false); // Corrected typo
-  // }, 5000);
+  setTimeout(() => {
+    store.updateFlashMeassge(false);
+  }, 5000);
 };
 
 onMounted(() => {

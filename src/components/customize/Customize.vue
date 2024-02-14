@@ -674,24 +674,6 @@ const regenerateWebsite = async () => {
                         </div>
                       </div>
                       <div class="button-wrapper">
-                        <!-- <button
-                          type="submit"
-                          class="preview-btn"
-                          @click="
-                            openLinkInNewTab(siteSettingsDeatil.website_domain)
-                          "
-                        >
-                          Preview
-                        </button> -->
-                        <!-- <button
-                          type="submit"
-                          class="publish-btn"
-                          @click="handleTabClick"
-                          :disabled="btnDisable"
-                        >
-                          Publish
-                          <AnimationLoader v-if="btnDisable" />
-                        </button> -->
                         <button
                           type="submit"
                           class="preview-btn"
@@ -699,7 +681,7 @@ const regenerateWebsite = async () => {
                           :disabled="btnDisable"
                         >
                           <i class="fa fa-upload" aria-hidden="true"></i>
-                          Publishs
+                          Publish
                         </button>
                       </div>
                     </div>

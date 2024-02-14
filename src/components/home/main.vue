@@ -95,6 +95,10 @@ const validationSchema = yup.object({
   email: yup
     .string()
     .email("Please enter a valid email address.")
+    .matches(
+      /^[^+]+@[^+]+\.[^+]+$/,
+      "Email address cannot contain the '+' character."
+    )
     .required("Please enter your email address."),
   password: yup
     .string()
@@ -111,6 +115,10 @@ const validationSchemaLogin = yup.object({
   email: yup
     .string()
     .email("Please enter a valid email address.")
+    .matches(
+      /^[^+]+@[^+]+\.[^+]+$/,
+      "Email address cannot contain the '+' character."
+    )
     .required("Please enter your email address."),
   password: yup
     .string()
@@ -246,10 +254,6 @@ const handleOutsideClick = (event) => {
 };
 
 onMounted(async () => {
-  store.updateFlashMeassge(
-    true,
-    "Please check your inbox and verify your email!"
-  );
   document.body.addEventListener("click", handleOutsideClick);
   setTimeout(() => {
     if (!ModalShowing.value && !loginExist.value) {
@@ -269,6 +273,10 @@ const validationSchemaForget = yup.object({
   email: yup
     .string()
     .email("Please enter a valid email address.")
+    .matches(
+      /^[^+]+@[^+]+\.[^+]+$/,
+      "Email address cannot contain the '+' character."
+    )
     .required("Please provide your email address."),
 });
 
@@ -284,17 +292,11 @@ const sendMailToVerifyEmail = handleSubmit(async () => {
       formDataForget.value
     );
     if (response.status === 200 && response.data.success) {
-      // showSuccessMeassge.value = true;
-      console.log("hereeeeeeeeeeeee");
       hideModal();
       store.updateFlashMeassge(
         true,
         "Please check your inbox and verify your email!"
       );
-      // setTimeout(() => {
-      //   showSuccessMeassge.value = false;
-      //   hideModal();
-      // }, 5000);
     }
   } catch (error) {
     const errors =
@@ -320,6 +322,10 @@ const validationSchemaFeedBack = yup.object({
   email: yup
     .string()
     .email("Invalid email format")
+    .matches(
+      /^[^+]+@[^+]+\.[^+]+$/,
+      "Email address cannot contain the '+' character."
+    )
     .required("Email is a required field"),
   phone: yup
     .string()
@@ -460,6 +466,10 @@ const navigate = () => {
               >
                 Watch demo video</a
               > -->
+              <h5>
+                <i class="fa fa-check" aria-hidden="true"></i> Free Trial . No
+                Credit Card Required
+              </h5>
             </div>
           </div>
         </div>
@@ -1184,18 +1194,6 @@ const navigate = () => {
                 </div>
                 <div class="text-danger">{{ allErrorsForget.email }}</div>
                 <div class="text-danger">{{ backendError }}</div>
-                <div
-                  v-if="showSuccessMeassge"
-                  class="mt-3"
-                  style="
-                    background-color: #dff0d8;
-                    color: #3c763d;
-                    padding: 10px;
-                    border: 1px solid #d6e9c6;
-                  "
-                >
-                  Please check your inbox and verify your email!
-                </div>
               </div>
 
               <div class="dual-logo">
@@ -1417,6 +1415,17 @@ const navigate = () => {
 }
 .alert-try-free-modal .subscription-text-side {
   width: 85%;
+}
+
+.buttons-design h5 {
+  color: #df3650;
+  text-align: left;
+  font-size: 20px;
+  padding: 15px 0;
+}
+
+.buttons-design {
+  display: block;
 }
 </style>
 
