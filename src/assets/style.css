@@ -9,7 +9,9 @@
 body {
     font-family: Avenir, sans-serif;
 }
-
+div#app {
+    overflow: hidden;
+}
 .header-section {
     background: var(--c4e-primaryColor-5);
     z-index: 9;
@@ -1055,7 +1057,7 @@ a.button-trial2.btn-md {
 @media (max-width: 550px) {
     .email-textdiv {
         width: 100%;
-        padding: 0 13px !important
+        padding: 10px 13px !important
     }
 
     .header-section .add-listing {
@@ -1652,7 +1654,7 @@ a.social-single-link.w-inline-block {
     .grid-customsection {
         display: flex;
         flex-direction: column-reverse;
-        padding: 50px 0 0
+        padding: 00px 0 0
     }
 
     .E-Commerce1 {
@@ -1689,9 +1691,17 @@ a.social-single-link.w-inline-block {
         -webkit-box-align: start;
         -webkit-align-items: flex-start;
         -ms-flex-align: start;
-        align-items: flex-start
+        align-items: center !important;
     }
-
+    .subscription-heading {
+        margin-bottom: 0px;
+        font-size: 22px;
+        line-height: 35px;
+        font-weight: 600;
+        color: #1d2b64;
+        display: flex;
+        align-items: center;
+    }
     .footer-wrapper {
         margin: 30px 15px 0;
         -webkit-flex-wrap: wrap;
@@ -1852,8 +1862,8 @@ a.social-single-link.w-inline-block {
         --c: #1d2b64;
         color: #1d2b64;
         font-size: 14px;
-        border: .3em solid var(--c);
-        border-radius: .5em;
+        border: 0.3em solid var(--c);
+        border-radius: 0.5em;
         padding: 10px 6px 8px;
         text-transform: uppercase;
         font-weight: 700;
@@ -1863,9 +1873,14 @@ a.social-single-link.w-inline-block {
         overflow: hidden;
         z-index: 1;
         transition: .5s;
-        margin: 0
+        margin: 0;
+        width: 100%;
+        margin-bottom: 30px;
     }
-
+    .buttons-design {
+        display: block  !important;
+        align-items: center;
+    }
     .ht-box-icon.style-02 .icon-box-wrap {
         padding: 15px;
         border-radius: 5px;
@@ -1878,6 +1893,51 @@ a.social-single-link.w-inline-block {
         display: -ms-flexbox;
         display: flex;
         margin-bottom: 0
+    }
+    .E-Commerce-text {
+        padding: 0 0 0 0px;
+    }
+    .flash {
+        display: block;
+        position: fixed;
+        top: 85px;
+        right: 15% !important;
+        width: 330px !important ;
+        padding: 20px 25px 20px 85px;
+        font-size: 16px;
+        font-weight: 400;
+        color: #259c08;
+        background-color: #FFF;
+        border: 2px solid #259c08;
+        border-radius: 2px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25);
+        opacity: 0;
+        z-index: 99999;
+    }
+    .about-area .textarea p.abouttext {
+        text-align: justify;
+        font-size: 20px;
+        color: #1d2b64c2;
+        padding-right: 30px;
+    }
+    #button-hover .btn {
+        --c: #1d2b64;
+        color: #1d2b64;
+        font-size: 16px;
+        border: 0.2em solid var(--c);
+        border-radius: 0.5em;
+        padding: 10px 20px 8px;
+        text-transform: uppercase;
+        font-weight: 700;
+        letter-spacing: .1em;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+        z-index: 1;
+        transition: .5s;
+        margin: 0;
+        border-radius: 5px !important;
+        margin-top: 25px !important;
     }
 }
 
@@ -1964,6 +2024,16 @@ a.social-single-link.w-inline-block {
         width: 100%;
         margin-bottom: 10px
     }
+    .email-imgdiv img {
+        padding-bottom: 30%;
+    }
+    
+    .footer-logo-block img.footer-logo-image {
+        width: 70%;
+        display: flex;
+        justify-content: center;
+        margin: 0px auto;
+    }    
 }
 
 .btn-link {
@@ -1977,7 +2047,7 @@ a.social-single-link.w-inline-block {
     display: block;
     justify-content: flex-start;
     margin: 0 auto;
-    padding-top: 35%;
+    padding-top: 0%;
     padding-left: 10px
 }
 

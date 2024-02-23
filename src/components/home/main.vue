@@ -439,7 +439,7 @@ const navigateToHome = () => {
           </div>
           <div class="col-md-6 col-lg-6 text-center text-md-start">
             <span
-              class="badge bg-light rounded-pill text-dark align-items-center d-flex flex-row-reverse justify-content-end mx-auto mx-md-0 ps-0 w-75 w-sm-50 w-md-75 w-xl-50 mb-3"
+              class="badge bg-light rounded-pill text-dark align-items-center d-flex flex-row-reverse justify-content-end mx-auto mx-md-0 ps-0 w-sm-50 w-md-75 w-xl-50 mb-3"
               >Average website creation time on SpeedySites is 5 SEC<img
                 class="img-fluid float-start me-3"
                 src="/images/arrow-right.png"
