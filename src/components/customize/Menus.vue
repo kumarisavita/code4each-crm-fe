@@ -217,7 +217,7 @@ const hideDeletePopup = () => {
 const deleteMenu = async () => {
   try {
     let data = {};
-    data.id = menuUnderDelete;
+    data.id = menuUnderDelete.value;
     const response = await WordpressService.Menus.deleteMenu({
       website_url: siteSettingsDeatil.value?.website_domain,
       menu_data: data,
@@ -237,10 +237,10 @@ const deleteMenu = async () => {
   hideDeletePopup();
 };
 
-const handleChange = async (newList) => {
+const handleChange = async (newList, menu_type) => {
   try {
     let headerItems = dataAPi.value.filter(
-      (item) => item.menu_type === values.value.menu_type
+      (item) => item.menu_type === menu_type
     );
     headerItems.forEach((item, index) => {
       item.position = index + 1;
@@ -591,7 +591,7 @@ const regenerateWebsite = async () => {
                 </form>
                 <VueDraggableNext
                   :list="dataAPi"
-                  @end="handleChange"
+                  @end="(itemValue) => handleChange(itemValue, item.value)"
                   class="menus-div"
                 >
                   <div v-for="(itemi, index) in dataAPi" :key="itemi.id">
