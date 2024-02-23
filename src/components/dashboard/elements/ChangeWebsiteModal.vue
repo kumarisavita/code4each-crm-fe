@@ -43,7 +43,7 @@
                         </h4>
                         <div class="input-group mb-3">
                           <a href="#" class="website-links">
-                            {{ site.website_detail.website_domain }}
+                            {{ site?.website_detail?.website_domain }}
                           </a>
                         </div>
                       </div>

@@ -124,48 +124,21 @@
                 <span class="sidebar-link-title">Social Links</span>
               </router-link>
             </li>
+            <li class="sidebar-list-item">
+              <router-link
+                :to="{ name: 'menusPage' }"
+                class="sidebar-link text-muted"
+                :class="{
+                  active: currentRoute.includes('/customize/menus'),
+                }"
+              >
+                <i class="fa fa-font" aria-hidden="true"></i>
+                <span class="sidebar-link-title">Site Menus</span>
+              </router-link>
+            </li>
           </ul>
         </li>
       </ul>
-      <!-- <ul class="list-unstyled">
-        <li class="sidebar-list-item">
-          <a class="sidebar-link text-muted" href="index.html">
-            <i class="fa fa-home me-3"></i>
-            <span class="sidebar-link-title"> Dashboard</span>
-          </a>
-        </li>
-        <li class="sidebar-list-item">
-          <a
-            class="sidebar-link text-muted active"
-            href="components.html"
-            data-bs-target="#cmsDropdown"
-            aria-expanded="false"
-            data-bs-toggle="collapse"
-          >
-            <i class="fa fa-book me-3"></i>
-            <span class="sidebar-link-title">Customize</span>
-          </a>
-          <ul class="sidebar-menu list-unstyled collapse" id="cmsDropdown">
-            <li class="sidebar-list-item">
-              <a class="sidebar-link text-muted" href="colors.html">Colors</a>
-            </li>
-            <li class="sidebar-list-item">
-              <a class="sidebar-link text-muted" href="fonts.html">Fonts</a>
-            </li>
-            <li class="sidebar-list-item">
-              <a class="sidebar-link text-muted" href="social-links.html"
-                >Social Links</a
-              >
-            </li>
-          </ul>
-        </li>
-        <li class="sidebar-list-item">
-          <a class="sidebar-link text-muted">
-            <i class="fa fa-line-chart me-3"></i>
-            <span class="sidebar-link-title"> Widgets </span>
-          </a>
-        </li>
-      </ul> -->
       <div class="dashboard-design" v-if="currentRoute === '/dashboard'">
         <div class="feedback-btn">
           <button type="submit" class="feedback-button" @click="showModal">

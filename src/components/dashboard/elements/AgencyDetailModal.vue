@@ -85,7 +85,7 @@ const submitAgencyDetailC = handleSubmit(async () => {
     formData.append("logo", formValues.logo);
     formData.append("business_name", formValues.businessName);
     formData.append("agency_id", allDashboardData.value?.user?.agency_id);
-    formData.append("category_id", formValues.businessCategory);
+    // formData.append("category_id", formValues.businessCategory);
     formData.append("address", formValues.address);
     formData.append("city", formValues.city);
     formData.append("state", formValues.state);
@@ -112,6 +112,7 @@ const submitAgencyDetailC = handleSubmit(async () => {
       } else {
         currentStep.value = 6;
       }
+
       EventBus.emit("fetchDashboardData");
     }
   } catch (error) {
@@ -181,6 +182,14 @@ const nextStep = async (step = false) => {
 const onFileChange = (event) => {
   values.value.logo = event.target.files[0];
 };
+
+const triggerFileInput = () => {
+  if (fileInputRef.value) {
+    fileInputRef.value.click();
+  }
+};
+
+const fileInputRef = ref(null);
 
 const oncategoryChange = (event) => {
   const selectedOption = event.target.selectedOptions[0];
@@ -298,8 +307,12 @@ const formatTime = (milliseconds) => {
                     class="form-control input form-control-lg"
                     accept=".jpg, .jpeg, .png"
                     @change="onFileChange"
+                    ref="fileInputRef"
                   />
-                  <i class="fa fa-upload"></i>
+                  <i class="fa fa-upload" @click="triggerFileInput"></i>
+                  <div v-if="values.logo" class="file-name mt-1">
+                    {{ values.logo.name }}
+                  </div>
                   <div class="text-danger">{{ allErrors.logo }}</div>
                 </div>
 
@@ -434,11 +447,7 @@ const formatTime = (milliseconds) => {
                     </div>
                     <p>
                       Successfully created your Site
-                      <a
-                        class="wesbite-url"
-                        @click="openLinkInNewTab(domainUrl)"
-                        >{{ domainUrl }}</a
-                      >
+                      <a class="wesbite-url">{{ domainUrl }}</a>
                     </p>
                     <div class="buttons-share">
                       <div class="button1">
@@ -488,11 +497,11 @@ const formatTime = (milliseconds) => {
   </div>
 </template>
 <style scoped>
-.select-category {
+/* .select-category {
   height: 50px;
   padding: 10px 20px;
   font-size: 14px;
   margin-bottom: 15px;
   border: 1px solid lightgray;
-}
+} */
 </style>

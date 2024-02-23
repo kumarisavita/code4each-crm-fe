@@ -148,7 +148,30 @@ const WordpressService = {
         params: data
       },)
     },
+  },
+
+  Menus: {
+    addMenu: (data) => {
+      return requests(baseUrl).post(`/add-site-menus`, data)
+    },
+    editMenu: (data) => {
+      return requests(baseUrl).post(`/update-site-menu`, data)
+    },
+    getMenus: (data) => {
+      return requests(baseUrl).get(`/get-site-menus`, {
+        params: data
+      },)
+    },
+    deleteMenu: (data) => {
+      return requests(baseUrl).delete(`/delete-site-menu`, {
+        params: data
+      })
+    },
+    changePosition: (data) => {
+      return requests(baseUrl).post(`/change-menu-position`, data)
+    },
   }
+
 
 }
 export default WordpressService

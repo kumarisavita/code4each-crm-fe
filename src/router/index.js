@@ -4,6 +4,7 @@ import EmailVerify from '../views/EmailVerify.vue'
 import DashboardView from '../views/Dashboard.vue'
 import MyHomeView from '../views/HomeView.vue'
 import CustomizeView from '../views/CustomizeView.vue'
+import MenusView from '../views/MenusView.vue'
 import CustomizeColors from '../views/CustomizeWebsiteColors.vue'
 import SiteSettings from '../views/SiteSettings.vue'
 import CustomizeWebsiteFonts from '../views/CustomizeWebsiteFonts.vue'
@@ -80,6 +81,11 @@ const router = createRouter({
       path: '/home',
       name: 'homePage',
       component: MyHomeView
+    },
+    {
+      path: '/customize/menus',
+      name: 'menusPage',
+      component: MenusView
     },
   ]
 });

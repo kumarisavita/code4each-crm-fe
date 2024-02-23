@@ -46,6 +46,7 @@ const feedbackMsg = ref(false);
 const feedBackloading = ref(false);
 const loginExist = ref(false);
 const allErrorsFeedback = ref({});
+const alertRef = ref(null);
 
 const showModal = (modal) => {
   hideModal();
@@ -248,7 +249,7 @@ const googleSignUp = async (response) => {
 };
 
 const handleOutsideClick = (event) => {
-  if (alertShow.value) {
+  if (alertShow.value && event.target === alertRef.value) {
     hideModal();
   }
 };
@@ -259,7 +260,7 @@ onMounted(async () => {
     if (!ModalShowing.value && !loginExist.value) {
       showModal("alert");
     }
-  }, 10000);
+  }, 15000);
   const storedToken = localStorage.getItem("access_token");
   if (storedToken) {
     loginExist.value = storedToken;
@@ -371,6 +372,10 @@ const submitFeedback = handleSubmit(async () => {
 const navigate = () => {
   router.push("/dashboard");
 };
+
+const navigateToHome = () => {
+  router.push("/");
+};
 </script>
 <template>
   <FlashMessage :visible="store.flashMeassge" v-if="store.flashMeassge" />
@@ -387,7 +392,11 @@ const navigate = () => {
         >
           <i class="fa fa-align-left"></i>
         </button>
-        <a class="navbar-brand-logo">
+        <a
+          class="navbar-brand-logo"
+          @click="navigateToHome"
+          style="cursor: pointer"
+        >
           <img class="img-fluid" src="/images/logo-beta.png" alt="logo" />
         </a>
         <div class="add-listing d-none d-sm-block">
@@ -706,7 +715,7 @@ const navigate = () => {
               <a
                 class="btn btn-lg button-trial rounded-pill hover-top"
                 @click="showModal('feedback')"
-                >Contact Us
+                >CONTACT US
                 <span></span>
                 <span></span>
                 <span></span>
@@ -782,7 +791,7 @@ const navigate = () => {
           <a
             class="btn btn-lg button-trial rounded-pill hover-top"
             @click="showModal('feedback')"
-            >Contact Us
+            >CONTACT US
             <span></span>
             <span></span>
             <span></span>
@@ -1370,6 +1379,7 @@ const navigate = () => {
     tabindex="-1"
     role="dialog"
     :class="{ show: alertShow, 'd-block': alertShow }"
+    ref="alertRef"
   >
     <div class="modal-dialog">
       <div class="modal-content">
@@ -1378,7 +1388,7 @@ const navigate = () => {
             <div class="subscription-text-side">
               <h3 class="subscription-heading">
                 Hey! We've noticed you've been exploring our website for the
-                last 10 seconds. Guess what our average website creation time is
+                last 15 seconds. Guess what our average website creation time is
                 5 seconds. Your business will be online in this time period.
                 Ready to take your online presence to new heights?
               </h3>
