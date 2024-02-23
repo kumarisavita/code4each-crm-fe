@@ -119,6 +119,11 @@ const validationSchemaExternal = yup.object({
     .required("Please provide a external link"),
 });
 
+const handleSubmitAddMenu = (id) => {
+  values.value.menu_type = id;
+  submitAddMenu();
+};
+
 const submitAddMenu = handleSubmit(async () => {
   try {
     submitLoading.value = true;
@@ -148,7 +153,6 @@ const submitAddMenu = handleSubmit(async () => {
         type: "",
         menu_value_type: "",
       };
-
       // store.updateFlashMeassge(true, "Menus Updated sucessfully");
     }
   } catch (validationErrors) {
@@ -156,7 +160,6 @@ const submitAddMenu = handleSubmit(async () => {
       acc[error.path] = error.message;
       return acc;
     }, {});
-
     allErrors.value = errors;
   }
   submitLoading.value = false;
@@ -272,7 +275,7 @@ const toggleItem = (index, eachVal) => {
 const toggleItemOuter = (index, menu_type) => {
   showForm.value = false;
   outeritems.value[index].open = !outeritems.value[index].open;
-  values.value.menu_type = menu_type;
+  // values.value.menu_type = menu_type;
 };
 
 const fetchDashboardData = async () => {
@@ -571,7 +574,7 @@ const regenerateWebsite = async () => {
                         class="btn speedy-btn"
                         type="button"
                         :disabled="!values.menu_value_type"
-                        @click="submitAddMenu()"
+                        @click="handleSubmitAddMenu(item.value)"
                       >
                         Submit
                       </button>
