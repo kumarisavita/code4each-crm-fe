@@ -20,6 +20,7 @@ import ConfirmModal from "@/components/common/ConfirmModal.vue";
 import ProcessCompleteModal from "@/components/common/ProcessCompleteModal.vue";
 import AnimationLoader from "@/components/common/AnimationLoader.vue";
 import Loader from "@/components/common/Loader.vue";
+import FlashMessage from "@/components/common/FlashMessage.vue";
 
 const router = useRouter();
 const { logout } = useAuth();
@@ -138,6 +139,7 @@ const saveSocialLinks = async (data) => {
       social_links: data,
     });
     if (response.status === 200) {
+      store.updateFlashMeassge(true, "Social Link Saved Sucessfully");
       await getsocialLinks();
     }
   } catch (error) {
@@ -233,6 +235,7 @@ const saveLinkValue = async (key) => {
 
 <template>
   <div class="page">
+    <FlashMessage :visible="store.flashMeassge" v-if="store.flashMeassge" />
     <NavBar
       @logout="logout"
       @nav-bar-toggle="navBarToggle"

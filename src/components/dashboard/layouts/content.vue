@@ -120,11 +120,11 @@ const emptyForm = () => {
                         seamless website creation
                       </h3>
                     </div>
-                    <div class="subscription-form-side">
+                    <!-- <div class="subscription-form-side">
                       <a class="subscription-btn" style="cursor: pointer"
                         ><i class="fa fa-paypal"></i> Payment
                       </a>
-                    </div>
+                    </div> -->
                   </div>
                 </div>
               </div>

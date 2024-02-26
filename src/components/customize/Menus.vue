@@ -31,6 +31,7 @@ import Loader from "@/components/common/Loader.vue";
 import { VueDraggableNext } from "vue-draggable-next";
 import { useForm } from "vee-validate";
 import * as yup from "yup";
+import FlashMessage from "@/components/common/FlashMessage.vue";
 
 const router = useRouter();
 const { logout } = useAuth();
@@ -147,13 +148,13 @@ const submitAddMenu = handleSubmit(async () => {
       menu_data: data,
     });
     if (response.status === 200 && response.data.success) {
+      store.updateFlashMeassge(true, "Menus Added sucessfully");
       await fetchDashboardData();
       await getMenus();
       values.value = {
         type: "",
         menu_value_type: "",
       };
-      // store.updateFlashMeassge(true, "Menus Updated sucessfully");
     }
   } catch (validationErrors) {
     const errors = validationErrors.inner.reduce((acc, error) => {
@@ -189,9 +190,9 @@ const editMenu = handleSubmit(async () => {
       menu_data: data,
     });
     if (response.status === 200 && response.data.success) {
+      store.updateFlashMeassge(true, "Menus Updated sucessfully");
       await fetchDashboardData();
       await getMenus();
-      // store.updateFlashMeassge(true, "Menus Updated sucessfully");
     }
   } catch (validationErrors) {
     const errors = validationErrors.inner.reduce((acc, error) => {
@@ -223,6 +224,7 @@ const deleteMenu = async () => {
       menu_data: data,
     });
     if (response.status === 200 && response.data.success) {
+      store.updateFlashMeassge(true, "Menus Deleted Sucessfully");
       await fetchDashboardData();
       await getMenus();
     }
@@ -251,9 +253,9 @@ const handleChange = async (newList, menu_type) => {
       menu_data: headerItems,
     });
     if (response.status === 200 && response.data.success) {
+      store.updateFlashMeassge(true, "Menus Position Changed sucessfully");
       await fetchDashboardData();
       await getMenus();
-      // store.updateFlashMeassge(true, "Menus Updated sucessfully");
     }
   } catch (validationErrors) {}
 };
@@ -397,6 +399,7 @@ const regenerateWebsite = async () => {
 
 <template>
   <div class="page">
+    <FlashMessage :visible="store.flashMeassge" v-if="store.flashMeassge" />
     <NavBar
       @logout="logout"
       @nav-bar-toggle="navBarToggle"

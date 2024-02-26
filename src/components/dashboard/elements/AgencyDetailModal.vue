@@ -374,9 +374,9 @@ const formatTime = (milliseconds) => {
                     v-model="values.country"
                   >
                     <option value="">Select Country</option>
-                    <option value="india">India</option>
-                    <option value="europe">Europe</option>
-                    <option value="england">England</option>
+                    <option value="India">India</option>
+                    <option value="Europe">Europe</option>
+                    <option value="England">England</option>
                   </select>
                   <div class="text-danger">{{ allErrors.country }}</div>
                 </div>

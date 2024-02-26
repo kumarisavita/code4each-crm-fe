@@ -20,6 +20,7 @@ import DeleteModal from "@/components/common/DeleteModal.vue";
 import ConfirmModal from "@/components/common/ConfirmModal.vue";
 import ProcessCompleteModal from "@/components/common/ProcessCompleteModal.vue";
 import AnimationLoader from "@/components/common/AnimationLoader.vue";
+import FlashMessage from "@/components/common/FlashMessage.vue";
 
 const router = useRouter();
 const { logout } = useAuth();
@@ -95,8 +96,6 @@ const getActiveComponentsData = async () => {
     if (response.status === 200 && response.data.success) {
       activeComponentsDetail.value = response.data.components_detail;
       let firstActiveComponent = activeComponentsDetail.value[0];
-      console.log(activeComponentsDetail.value[0].id, "ccccccccccc");
-
       await openModal(
         firstActiveComponent.type,
         firstActiveComponent.id,
@@ -192,6 +191,7 @@ const changeComponent = async () => {
     });
 
     if (response.status === 200) {
+      store.updateFlashMeassge(true, "Changes Saved Sucessfully");
       await getActiveComponentsData();
     }
   } catch (error) {
@@ -272,6 +272,7 @@ const submitCustomFields = async (data) => {
       });
     if (response.status === 200 && response.data.success) {
       loadingForComonents.value = false;
+      store.updateFlashMeassge(true, "Changes Saved Sucessfully");
     }
   } catch (error) {
     console.error("An error occurred:", error);
@@ -415,6 +416,7 @@ const submitForm = async () => {
         customHeaders
       );
     if (response.status === 200 && response.data.success) {
+      store.updateFlashMeassge(true, "Changes Saved Sucessfully");
       btnDisable.value = false;
       getComponentsImages();
     }
@@ -489,6 +491,7 @@ const regenerateWebsite = async () => {
 
 <template>
   <div class="page">
+    <FlashMessage :visible="store.flashMeassge" v-if="store.flashMeassge" />
     <NavBar
       @logout="logout"
       @nav-bar-toggle="navBarToggle"
