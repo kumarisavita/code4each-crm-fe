@@ -85,7 +85,7 @@ const submitAgencyDetailC = handleSubmit(async () => {
     formData.append("logo", formValues.logo);
     formData.append("business_name", formValues.businessName);
     formData.append("agency_id", allDashboardData.value?.user?.agency_id);
-    // formData.append("category_id", formValues.businessCategory);
+    formData.append("category_id", formValues.businessCategory);
     formData.append("address", formValues.address);
     formData.append("city", formValues.city);
     formData.append("state", formValues.state);
