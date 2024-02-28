@@ -308,7 +308,7 @@ const activateColorSet = (id, setIndex) => {
                         <div class="three-body__dot"></div>
                         <div class="three-body__dot"></div>
                         <div class="three-body__dot"></div>
-                      </div>
+                </div>
           </div>
         </div>
       </div>
