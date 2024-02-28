@@ -6,6 +6,7 @@
         <button type="button" class="close" data-dismiss="modal">
           &times;
         </button>
+        
         <div class="modal-header">
           <h3>Change your wesbite</h3>
         </div>
