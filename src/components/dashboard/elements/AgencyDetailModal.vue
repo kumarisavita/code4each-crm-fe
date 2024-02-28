@@ -179,6 +179,7 @@ const nextStep = async (step = false) => {
   }
 };
 
+
 const onFileChange = (event) => {
   values.value.logo = event.target.files[0];
 };
