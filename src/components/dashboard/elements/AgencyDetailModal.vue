@@ -132,7 +132,7 @@ const setFormValues = () => {
   values.value.businessName = allDashboardData.value?.user?.agency?.name;
   values.value.phone = allDashboardData.value?.user?.phone;
   values.value.businessCategory = "";
-  values.value.country = "india";
+  values.value.country = "India";
 };
 onMounted(() => {
   allDashboardData.value = props.dashboardData;
